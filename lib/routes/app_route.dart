@@ -1,10 +1,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:keeplo/providers/app_provider.dart';
 import 'package:keeplo/screens/dashboard_screen.dart';
 import 'package:keeplo/screens/main/login_screen.dart';
 import 'package:keeplo/screens/main/register_screen.dart';
 import 'package:keeplo/screens/main/splash_screen.dart';
+import 'package:keeplo/services/preferences.dart';
+import 'package:provider/provider.dart';
 
 class AppRoute {
   static RouterConfig<Object>? getGoRoutes(GlobalKey<NavigatorState> navigatorKey) {
@@ -37,7 +40,14 @@ class AppRoute {
     return GoRouter(
       routes: routes,
       navigatorKey: navigatorKey,
-      
+      redirect: (context, state) {
+        bool isDisplayedSplash = Preferences.displayedSplash;
+        AppProvider appProvider = context.read<AppProvider>();
+        if(isDisplayedSplash && state.matchedLocation == '/') {
+          return (appProvider.isLogged) ? "/${DashboardScreen.routeName}" : "/${LoginScreen.routeName}";
+        }
+        return null;
+      },
     );
   }
 }
