@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:keeplo/providers/app_provider.dart';
 import 'package:keeplo/routes/app_route.dart';
+import 'package:keeplo/services/preferences.dart';
 import 'package:provider/provider.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-void main() {
+void main() async {
+  await Preferences.initPreferences();
+  await dotenv.load(fileName: '.env');
   runApp(MyApp());
 }
 
