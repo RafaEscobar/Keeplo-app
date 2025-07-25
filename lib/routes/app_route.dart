@@ -23,14 +23,13 @@ class AppRoute {
             routes: [
               GoRoute(
                 path: RegisterScreen.routeName,
-                name: RegisterScreen.routeName
+                name: RegisterScreen.routeName,
+                builder: (BuildContext context, GoRouterState state) => RegisterScreen(),
               ),
               GoRoute(
                 path: DashboardScreen.routeName,
                 name: DashboardScreen.routeName,
-                routes: [
-                  //! Demas rutas de la app
-                ]
+                builder: (BuildContext context, GoRouterState state) => DashboardScreen(),
               )
             ]
           )

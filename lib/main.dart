@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Preferences.initPreferences();
   await dotenv.load(fileName: '.env');
   runApp(MyApp());
