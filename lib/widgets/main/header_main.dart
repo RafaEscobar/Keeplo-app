@@ -21,7 +21,7 @@ class HeaderMain extends StatelessWidget {
         SizedBox(height: 20,),
         Text(
           title,
-          style: TextStyle(fontSize: 30),
+          style: TextStyle(fontSize: 30, fontWeight: FontWeight.w700, color: Colors.white),
         ),
         SizedBox(height: 10,),
         Center(
