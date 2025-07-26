@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:keeplo/widgets/main/header_main.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -12,15 +13,9 @@ class LoginScreen extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Align(
-                alignment: Alignment.topRight,
-                child: SizedBox(
-                  width: 120,
-                  height: 80,
-                  child: Placeholder(),
-                ),
-              )
+              HeaderMain(imageUrl: "assets/pictures/login.png", title: "Iniciar sesión",)
             ],
           ),
         ),
