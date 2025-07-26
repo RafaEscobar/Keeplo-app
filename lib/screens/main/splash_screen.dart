@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:keeplo/providers/app_provider.dart';
 import 'package:keeplo/screens/dashboard_screen.dart';
@@ -16,53 +15,50 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin  {
-  late AppProvider appProvider;
   late final AnimationController _entryController;
   late final AnimationController _exitController;
   late final Animation<double> _opacityIn;
   late final Animation<double> _opacityOut;
 
+  //* Método para verificar estado de la sesión
   Future<void> initLoad() async {
+    AppProvider appProvider = context.read<AppProvider>();
     try {
-      await Future.delayed(Duration(seconds: 1));
-      //String token = Preferences.token;
-      // login     
-      (true) ? _onLoginSucces() : _onLogginFailure();
+      if(Preferences.token.isNotEmpty) {
+        int statusCode = await appProvider.verifyToken();
+        (statusCode == 204) ? _redirectToDashboard() : _redirectToLogin();
+      } else {
+        _redirectToLogin();
+      }
     } catch (e) {
-      throw Exception(e.toString());
+      //! Lanzar toast
     }
   }
 
-  Future<void> _onLoginSucces() async {
-    _exitController.forward().then((value) => context.goNamed(DashboardScreen.routeName)) ;
-  }
+  //? Ejecución de animación de salida y redirección a Dashboard
+  void _redirectToDashboard() => _exitController.forward().then((value) => context.goNamed(DashboardScreen.routeName)) ;
 
-  void _onLogginFailure() => _exitController.forward().then((value) => context.goNamed(LoginScreen.routeName));
+  //? Ejecución de animación de salida y redirección al Login
+  void _redirectToLogin() => _exitController.forward().then((value) => context.goNamed(LoginScreen.routeName));
 
   @override
   void initState() {
     super.initState();
-    appProvider = context.read<AppProvider>();
-        _entryController = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 1),
-    );
-    _opacityIn = Tween(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _entryController, curve: Curves.easeOut),
-    );
+    //? Controladores para la animacion
+    _entryController = AnimationController(vsync: this, duration: const Duration(seconds: 1),);
+    _exitController = AnimationController(vsync: this,duration: const Duration(seconds: 1),);
 
-    _exitController = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 1),
-    );
-    _opacityOut = Tween(begin: 1.0, end: 0.0).animate(
-      CurvedAnimation(parent: _exitController, curve: Curves.easeIn),
-    );
+    //? Gestores de animación
+    _opacityIn = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(parent: _entryController, curve: Curves.easeOut),);
+    _opacityOut = Tween(begin: 1.0, end: 0.0).animate(CurvedAnimation(parent: _exitController, curve: Curves.easeIn),);
+
+    //? Ejecución de animación de entrada
     _entryController.forward().then((_) => initLoad());
   }
 
   @override
   void dispose() {
+    _entryController.dispose();
     _exitController.dispose();
     super.dispose();
   }
@@ -83,7 +79,11 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
               child: child,
             );
           },
-          child: Image.asset("assets/logos/logo.jpeg")
+          child: Image.asset(
+            "assets/logos/logo.jpeg",
+            width: 200,
+
+          )
         ),
       ),
     );
