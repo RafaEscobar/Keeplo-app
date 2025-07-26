@@ -6,9 +6,25 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.red,
-      body: Placeholder(),
+    return  Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: Column(
+            children: [
+              Align(
+                alignment: Alignment.topRight,
+                child: SizedBox(
+                  width: 120,
+                  height: 80,
+                  child: Placeholder(),
+                ),
+              )
+            ],
+          ),
+        ),
+      )
     );
   }
 }

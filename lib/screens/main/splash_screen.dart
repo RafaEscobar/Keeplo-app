@@ -23,6 +23,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   //* Método para verificar estado de la sesión
   Future<void> initLoad() async {
     AppProvider appProvider = context.read<AppProvider>();
+    Preferences.displayedSplash = true;
     try {
       if(Preferences.token.isNotEmpty) {
         int statusCode = await appProvider.verifyToken();
