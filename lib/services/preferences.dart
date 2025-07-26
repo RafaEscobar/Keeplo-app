@@ -8,7 +8,4 @@ class Preferences {
 
   static String get token => preference.getString('_token') ?? '';
   static set token(String newToken) => preference.setString('_token', newToken);
-
-  static bool get displayedSplash => preference.getBool('_displayedSplash') ?? false;
-  static set displayedSplash(bool newValue) => preference.setBool('_displayedSplash', newValue);
 }

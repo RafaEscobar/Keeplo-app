@@ -3,6 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:keeplo/providers/app_provider.dart';
 import 'package:keeplo/routes/app_route.dart';
 import 'package:keeplo/services/preferences.dart';
+import 'package:keeplo/theme/app_theme.dart';
 import 'package:provider/provider.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
       ],
       builder: (_, __) {
         return MaterialApp.router(
+          theme: AppTheme.lightTheme,
           debugShowCheckedModeBanner: false,
           routerConfig: AppRoute.getGoRoutes(navigatorKey),
         );

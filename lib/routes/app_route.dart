@@ -6,7 +6,6 @@ import 'package:keeplo/screens/dashboard_screen.dart';
 import 'package:keeplo/screens/main/login_screen.dart';
 import 'package:keeplo/screens/main/register_screen.dart';
 import 'package:keeplo/screens/main/splash_screen.dart';
-import 'package:keeplo/services/preferences.dart';
 import 'package:provider/provider.dart';
 
 class AppRoute {
@@ -40,8 +39,8 @@ class AppRoute {
       routes: routes,
       navigatorKey: navigatorKey,
       redirect: (context, state) {
-        bool isDisplayedSplash = Preferences.displayedSplash;
         AppProvider appProvider = context.read<AppProvider>();
+        bool isDisplayedSplash = appProvider.displayedSplash;
         if(isDisplayedSplash && state.matchedLocation == '/') {
           return (appProvider.isLogged) ? "/${DashboardScreen.routeName}" : "/${LoginScreen.routeName}";
         }

@@ -4,10 +4,17 @@ import 'package:keeplo/services/api_service.dart';
 
 class AppProvider extends ChangeNotifier{
   bool _isLogged = false;
+  bool _displayedSplash = false;
 
   bool get isLogged => _isLogged;
   set isLogged(bool value) {
     _isLogged = value;
+    notifyListeners();
+  }
+
+  bool get displayedSplash => _displayedSplash;
+  set displayedSplash(bool value) {
+    _displayedSplash = value;
     notifyListeners();
   }
 
