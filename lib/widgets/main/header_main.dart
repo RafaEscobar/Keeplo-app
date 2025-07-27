@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:keeplo/providers/app_provider.dart';
+import 'package:provider/provider.dart';
 
 class HeaderMain extends StatelessWidget {
   const HeaderMain({super.key, required this.imageUrl, required this.title});
@@ -7,6 +9,7 @@ class HeaderMain extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isTablet = context.read<AppProvider>().isTablet(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -21,13 +24,13 @@ class HeaderMain extends StatelessWidget {
         SizedBox(height: 20,),
         Text(
           title,
-          style: TextStyle(fontSize: 30, fontWeight: FontWeight.w700, color: Colors.white),
+          style: TextStyle(fontSize: isTablet ? 40 : 30, fontWeight: FontWeight.w700, color: Colors.white),
         ),
         SizedBox(height: 10,),
         Center(
           child: Image.asset(
             imageUrl,
-            width: 340,
+            width: isTablet ? 460 : 340 ,
           )
         ),
       ],

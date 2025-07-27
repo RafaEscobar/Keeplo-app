@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:keeplo/providers/app_provider.dart';
 import 'package:keeplo/theme/app_theme.dart';
 import 'package:keeplo/widgets/simple_button.dart';
+import 'package:provider/provider.dart';
 
 class FooterMain extends StatelessWidget {
   const FooterMain({super.key, required this.btnText, required this.callback, this.isLogin = true});
@@ -10,6 +12,7 @@ class FooterMain extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isTablet = context.read<AppProvider>().isTablet(context);
     return Column(
       children: [
         SimpleButton(text: btnText, callback: callback),
@@ -21,16 +24,16 @@ class FooterMain extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
+                  Text(
                     "¿Aún no tienes una cuenta?",
-                    style: TextStyle(color: Colors.white, fontSize: 16),
+                    style: TextStyle(color: Colors.white, fontSize: isTablet ? 22 : 16),
                   ),
                   const SizedBox(width: 6),
                   GestureDetector(
                     onTap: () {},
                     child: Text(
                       "Crear una",
-                      style: TextStyle(color: AppTheme.error, fontSize: 16, fontWeight: FontWeight.bold),
+                      style: TextStyle(color: AppTheme.error, fontSize: isTablet ? 22 : 16, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ],
