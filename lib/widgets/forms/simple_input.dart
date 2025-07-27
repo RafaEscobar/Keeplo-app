@@ -96,11 +96,11 @@ class _SimpleInputState extends State<SimpleInput> {
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.red, width: 3),
+          borderSide: BorderSide(color: AppTheme.error, width: 3),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.red, width: 3),
+          borderSide: BorderSide(color: AppTheme.error, width: 3),
         ),
         contentPadding: widget.contentPadding ?? const EdgeInsets.all(16),
         suffixIcon: widget.isPassword

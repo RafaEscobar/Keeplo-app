@@ -27,6 +27,7 @@ class _LoginFormState extends State<LoginForm> {
     return FormBuilder(
       key: _formKey,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SimpleInput(
             name: 'email',
@@ -38,13 +39,13 @@ class _LoginFormState extends State<LoginForm> {
             validator: FormBuilderValidators.compose([
               FormBuilderValidators.required(errorText: 'El correo electrónico es obligatorio.'),
               FormBuilderValidators.email(errorText: 'El correo electrónico no es válido.'),
-              FormBuilderValidators.maxLength(60, errorText: 'La correo es demasiado grande')
+              FormBuilderValidators.maxLength(60, errorText: 'El correo es demasiado grande')
             ]),
-            onEditingComplete: (){
-              //FocusScope.of(context).requestFocus(_passwordFocuesNode);
+            onEditingComplete: () {
+              FocusScope.of(context).requestFocus(_passwordFocuesNode);
             },
           ),
-          SizedBox(height: 20,),
+          const SizedBox(height: 20),
           SimpleInput(
             name: 'password',
             focusNode: _passwordFocuesNode,
@@ -61,7 +62,7 @@ class _LoginFormState extends State<LoginForm> {
             onEditingComplete: () {},
           ),
         ],
-      )
+      ),
     );
   }
 }
