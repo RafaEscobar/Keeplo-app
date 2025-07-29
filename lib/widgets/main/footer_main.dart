@@ -25,7 +25,7 @@ class FooterMain extends StatelessWidget {
                 children: [
                   Text(
                     "¿Aún no tienes una cuenta?",
-                    style: TextStyle(color: Colors.white, fontSize: Responsive.resize(size: 16.sp, reduction: .9)),
+                    style: TextStyle(color: Colors.white, fontSize:  Responsive.resize(size: 16.sp, reduction: .9)),
                   ),
                   const SizedBox(width: 6),
                   GestureDetector(

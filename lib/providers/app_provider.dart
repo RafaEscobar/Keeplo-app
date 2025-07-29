@@ -18,15 +18,6 @@ class AppProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  bool isTablet(BuildContext context) => MediaQuery.of(context).size.shortestSide >= 600;
-  bool isLandscape(BuildContext context) => MediaQuery.of(context).orientation == Orientation.landscape;
-  bool isHorizontalTablet(BuildContext context) => MediaQuery.of(context).size.shortestSide >= 600 && MediaQuery.of(context).orientation == Orientation.landscape;
-
-  double safeHeight(double base, double porcentaje, double max) {
-    final result = base * porcentaje;
-    return result > max ? max : result;
-  }
-
   Future<int> verifyToken() async {
     try {
       Response response = await ApiService.request("/me");

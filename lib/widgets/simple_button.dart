@@ -10,6 +10,7 @@ class SimpleButton extends StatelessWidget{
 
   @override
   Widget build(BuildContext context){
+    bool isHorizontal = Responsive.isHorizontalTablet(context);
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
       width: double.infinity,
@@ -19,7 +20,11 @@ class SimpleButton extends StatelessWidget{
       ),
       child: GestureDetector(
         onTap: callback,
-        child: Text(text, style: TextStyle(color: AppTheme.primary, fontSize: Responsive.resize(size:22.sp, reduction: .8), fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
+        child: Text(
+          text,
+          style: TextStyle(color: AppTheme.primary, fontSize: isHorizontal ? 34 : Responsive.resize(size:22.sp, reduction: .8), fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
+        ),
       ),
     );
   }

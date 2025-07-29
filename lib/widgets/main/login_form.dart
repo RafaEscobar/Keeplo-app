@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:keeplo/providers/app_provider.dart';
+import 'package:keeplo/utils/responsive.dart';
 import 'package:keeplo/widgets/forms/simple_input.dart';
-import 'package:provider/provider.dart';
 
 class LoginForm extends StatefulWidget{
   const LoginForm({super.key});
@@ -27,16 +26,16 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    bool isHorizontalTablet = context.read<AppProvider>().isHorizontalTablet(context);
+    bool isHorizontal = Responsive.isHorizontalTablet(context);
     return FormBuilder(
       key: _formKey,
       child: Column(
-        spacing: isHorizontalTablet ? 10 : 0,
+        spacing: isHorizontal ? 10 : 0,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          if(isHorizontalTablet) SizedBox(height: 20,),
+          if(isHorizontal) SizedBox(height: 20,),
           SimpleInput(
-            textStyle: TextStyle(fontSize: 16.sp),
+            textStyle: TextStyle(fontSize: isHorizontal ? 38 : 16.sp),
             name: 'email',
             hintText: 'Correo electrónico',
             keyboardType: TextInputType.emailAddress,
@@ -54,7 +53,7 @@ class _LoginFormState extends State<LoginForm> {
           ),
           const SizedBox(height: 20),
           SimpleInput(
-            textStyle: TextStyle(fontSize: 16.sp),
+            textStyle: TextStyle(fontSize: isHorizontal ? 38 : 16.sp),
             name: 'password',
             focusNode: _passwordFocuesNode,
             obscureText: true,
