@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:keeplo/providers/auth_provider.dart';
+import 'package:keeplo/screens/dashboard_screen.dart';
 import 'package:keeplo/theme/app_theme.dart';
 import 'package:keeplo/utils/responsive.dart';
+import 'package:keeplo/utils/simple_toast.dart';
 import 'package:keeplo/widgets/main/footer_main.dart';
 import 'package:keeplo/widgets/main/header_main.dart';
 import 'package:keeplo/widgets/main/login_form.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -15,6 +20,31 @@ class LoginScreen extends StatelessWidget {
     bool isHorizontal = Responsive.isHorizontalTablet(context);
     final isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
 
+    void processResponse(bool status) {
+      (status) ?
+        context.goNamed(DashboardScreen.routeName) :
+        SimpleToast.error(context: context, message: "Credenciales incorrectas");
+    }
+
+    Future<void> login() async {
+      try {
+        bool status = await context.read<AuthProvider>().login();
+        if (!context.mounted) return;
+        processResponse(status);
+      } catch (e) {
+        SimpleToast.error(context: context, message: e.toString(), size: 14, iconSize: 50);
+      }
+    }
+
+    Future<void> validateForm() async {
+      AuthProvider authProvider = context.read<AuthProvider>();
+      if (authProvider.formKey.currentState!.saveAndValidate()) {
+        await login();
+      } else {
+        SimpleToast.info(context: context, message: "¡Oops! Revisa los campos y vuelve a intentarlo.", size: 14, iconSize: 60);
+      }
+    }
+
     Widget headerMain = HeaderMain(
       imageUrl: "assets/pictures/login.png",
       title: "Iniciar sesión",
@@ -22,7 +52,7 @@ class LoginScreen extends StatelessWidget {
 
     Widget footerMain = FooterMain(
       btnText: 'Iniciar sesión',
-      callback: () {},
+      callback: () async => await validateForm(),
     );
 
     Widget horizontalTabletBody = Row(

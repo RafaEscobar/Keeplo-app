@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:keeplo/providers/auth_provider.dart';
 import 'package:keeplo/utils/responsive.dart';
 import 'package:keeplo/widgets/forms/simple_input.dart';
+import 'package:provider/provider.dart';
 
 class LoginForm extends StatefulWidget{
   const LoginForm({super.key});
@@ -13,7 +15,6 @@ class LoginForm extends StatefulWidget{
 }
 
 class _LoginFormState extends State<LoginForm> {
-  final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _passwordFocuesNode = FocusNode();
 
@@ -26,9 +27,10 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider = context.read<AuthProvider>();
     bool isHorizontal = Responsive.isHorizontalTablet(context);
     return FormBuilder(
-      key: _formKey,
+      key: authProvider.formKey,
       child: Column(
         spacing: isHorizontal ? 10 : 0,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -41,6 +43,7 @@ class _LoginFormState extends State<LoginForm> {
             keyboardType: TextInputType.emailAddress,
             contentPadding: const EdgeInsets.symmetric(horizontal: 12),
             focusNode: _emailFocusNode,
+            controller: authProvider.emailController,
             maxLength: 60,
             validator: FormBuilderValidators.compose([
               FormBuilderValidators.required(errorText: 'El correo electrónico es obligatorio.'),
@@ -56,6 +59,7 @@ class _LoginFormState extends State<LoginForm> {
             textStyle: TextStyle(fontSize: isHorizontal ? 38 : 16.sp),
             name: 'password',
             focusNode: _passwordFocuesNode,
+            controller: authProvider.passwordController,
             obscureText: true,
             hintText: 'Contraseña',
             contentPadding: const EdgeInsets.symmetric(horizontal: 12),
