@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:keeplo/theme/app_theme.dart';
+import 'package:keeplo/utils/responsive.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
@@ -10,9 +11,9 @@ class SimpleToast {
       CustomSnackBar.success(
         icon: Icon(Icons.check_circle_outline, size: iconSize.sp, color: Colors.white,),
         message: message,
-        textStyle: TextStyle(fontSize: size.sp, color: Colors.white, fontWeight: FontWeight.bold),
+        textStyle: TextStyle(fontSize: Responsive.isHorizontalTablet(context) ? 30 : size.sp, color: Colors.white, fontWeight: FontWeight.bold),
         textAlign: TextAlign.center,
-        messagePadding: EdgeInsetsGeometry.symmetric(horizontal: 20),
+        messagePadding: EdgeInsetsGeometry.symmetric(horizontal: Responsive.isTablet(context) ? 100 : 20, vertical: 0),
       ),
   );
 
@@ -20,11 +21,11 @@ class SimpleToast {
       Overlay.of(context),
       CustomSnackBar.info(
         backgroundColor: AppTheme.secondary,
-        icon: Icon(Icons.question_mark, size: iconSize.sp, color: Colors.white,),
+        icon: Icon(Icons.question_mark, size: Responsive.resize(size: Responsive.isHorizontalTablet(context) ? 100 : iconSize.sp, reduction: .8), color: Colors.white,),
         message: message,
-        textStyle: TextStyle(fontSize: size.sp, color: Colors.white, fontWeight: FontWeight.bold),
+        textStyle: TextStyle(fontSize: Responsive.isHorizontalTablet(context) ? 30 : size.sp, color: Colors.white, fontWeight: FontWeight.bold),
         textAlign: TextAlign.center,
-        messagePadding: EdgeInsetsGeometry.symmetric(horizontal: 20),
+        messagePadding: EdgeInsetsGeometry.symmetric(horizontal: Responsive.isTablet(context) ? 100 : 20, vertical: 0),
       ),
   );
 
@@ -32,11 +33,11 @@ class SimpleToast {
       Overlay.of(context),
       CustomSnackBar.error(
         backgroundColor: AppTheme.error,
-        icon: Icon(Icons.close, size: iconSize.sp, color: Colors.white,),
+        icon: Icon(Icons.close, size: Responsive.resize(size: Responsive.isHorizontalTablet(context) ? 100 : iconSize.sp, reduction: .8), color: Colors.white,),
         message: message,
-        textStyle: TextStyle(fontSize: size.sp, color: Colors.white, fontWeight: FontWeight.bold),
+        textStyle: TextStyle(fontSize: Responsive.isHorizontalTablet(context) ? 30 : size.sp, color: Colors.white, fontWeight: FontWeight.bold),
         textAlign: TextAlign.center,
-        messagePadding: EdgeInsetsGeometry.symmetric(horizontal: 20),
+        messagePadding: EdgeInsetsGeometry.symmetric(horizontal: Responsive.isTablet(context) ? 100 : 20, vertical: 0),
       ),
   );
 }
