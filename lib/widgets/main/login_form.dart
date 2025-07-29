@@ -36,7 +36,7 @@ class _LoginFormState extends State<LoginForm> {
         children: [
           if(isHorizontalTablet) SizedBox(height: 20,),
           SimpleInput(
-            textStyle: TextStyle(fontSize: isTablet ? 22 : 14),
+            textStyle: TextStyle(fontSize: isTablet ? 22 : 16),
             name: 'email',
             hintText: 'Correo electrónico',
             keyboardType: TextInputType.emailAddress,
@@ -54,7 +54,7 @@ class _LoginFormState extends State<LoginForm> {
           ),
           const SizedBox(height: 20),
           SimpleInput(
-            textStyle: TextStyle(fontSize: isTablet ? 22 : 14),
+            textStyle: TextStyle(fontSize: isTablet ? 22 : 16),
             name: 'password',
             focusNode: _passwordFocuesNode,
             obscureText: true,
