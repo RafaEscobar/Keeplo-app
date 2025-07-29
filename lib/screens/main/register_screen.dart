@@ -4,6 +4,7 @@ import 'package:keeplo/theme/app_theme.dart';
 import 'package:keeplo/utils/responsive.dart';
 import 'package:keeplo/widgets/main/footer_main.dart';
 import 'package:keeplo/widgets/main/header_main.dart';
+import 'package:keeplo/widgets/main/register_form.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
@@ -31,7 +32,7 @@ class RegisterScreen extends StatelessWidget {
         Expanded(
           child: Column(
             children: [
-              //LoginForm(),
+              RegisterForm(),
               const SizedBox(height: 20),
               Spacer(),
               footerMain
@@ -45,7 +46,7 @@ class RegisterScreen extends StatelessWidget {
       children: [
         headerMain,
         SizedBox(height: 20.h),
-        //LoginForm(),
+        RegisterForm(),
         const Spacer(),
         footerMain
       ],
