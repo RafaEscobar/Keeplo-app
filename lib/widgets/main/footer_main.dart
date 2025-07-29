@@ -12,6 +12,7 @@ class FooterMain extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isHorizontal = Responsive.isHorizontalTablet(context);
     return Column(
       children: [
         SimpleButton(text: btnText, callback: callback),
@@ -25,14 +26,14 @@ class FooterMain extends StatelessWidget {
                 children: [
                   Text(
                     "¿Aún no tienes una cuenta?",
-                    style: TextStyle(color: Colors.white, fontSize:  Responsive.resize(size: 16.sp, reduction: .9)),
+                    style: TextStyle(color: Colors.white, fontSize: isHorizontal ? 22 : Responsive.resize(size: 16.sp, reduction: .9)),
                   ),
                   const SizedBox(width: 6),
                   GestureDetector(
                     onTap: () {},
                     child: Text(
                       "Crear una",
-                      style: TextStyle(color: AppTheme.error, fontSize: Responsive.resize(size: 16.sp, reduction: .9), fontWeight: FontWeight.bold),
+                      style: TextStyle(color: AppTheme.error, fontSize: isHorizontal ? 22 : Responsive.resize(size: 16.sp, reduction: .9), fontWeight: FontWeight.bold),
                     ),
                   ),
                 ],
