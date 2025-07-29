@@ -8,7 +8,8 @@ import 'package:keeplo/widgets/forms/simple_input.dart';
 import 'package:provider/provider.dart';
 
 class LoginForm extends StatefulWidget{
-  const LoginForm({super.key});
+  const LoginForm({super.key, required this.callback});
+  final Function() callback;
 
   @override
   State<LoginForm> createState() => _LoginFormState();
@@ -70,7 +71,7 @@ class _LoginFormState extends State<LoginForm> {
               FormBuilderValidators.minLength(8, errorText: 'La contraseña es demasiado corta'),
             ]),
             isPassword: true,
-            onEditingComplete: () {},
+            onEditingComplete: widget.callback,
           ),
         ],
       ),

@@ -35,7 +35,7 @@ class FooterMain extends StatelessWidget {
                     onTap: () => context.goNamed(RegisterScreen.routeName),
                     child: Text(
                       "Crear una",
-                      style: TextStyle(color: AppTheme.error, fontSize: isHorizontal ? 22 : Responsive.resize(size: 18.sp, reduction: .9), fontWeight: FontWeight.bold),
+                      style: TextStyle(color: AppTheme.tertiary, fontSize: isHorizontal ? 22 : Responsive.resize(size: 18.sp, reduction: .9), fontWeight: FontWeight.bold),
                     ),
                   ),
                 ],

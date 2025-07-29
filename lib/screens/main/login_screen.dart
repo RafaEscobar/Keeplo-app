@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:keeplo/providers/auth_provider.dart';
 import 'package:keeplo/screens/dashboard_screen.dart';
 import 'package:keeplo/theme/app_theme.dart';
+import 'package:keeplo/utils/loader.dart';
 import 'package:keeplo/utils/responsive.dart';
 import 'package:keeplo/utils/simple_toast.dart';
 import 'package:keeplo/widgets/main/footer_main.dart';
@@ -28,7 +29,8 @@ class LoginScreen extends StatelessWidget {
 
     Future<void> login() async {
       try {
-        bool status = await context.read<AuthProvider>().login();
+        bool status = false;
+        await Loader.runLoad(context: context, asyncFunction: () async => status = await context.read<AuthProvider>().login());
         if (!context.mounted) return;
         processResponse(status);
       } catch (e) {
@@ -55,6 +57,8 @@ class LoginScreen extends StatelessWidget {
       callback: () async => await validateForm(),
     );
 
+    Widget loginForm = LoginForm(callback: validateForm,);
+
     Widget horizontalTabletBody = Row(
       children: [
         Expanded(child: headerMain),
@@ -62,7 +66,7 @@ class LoginScreen extends StatelessWidget {
         Expanded(
           child: Column(
             children: [
-              LoginForm(),
+              loginForm,
               const SizedBox(height: 20),
               Spacer(),
               footerMain
@@ -76,7 +80,7 @@ class LoginScreen extends StatelessWidget {
       children: [
         headerMain,
         SizedBox(height: 20.h),
-        LoginForm(),
+        loginForm,
         const Spacer(),
         Visibility(visible: !isKeyboardOpen, child: footerMain)
       ],
