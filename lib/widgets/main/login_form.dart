@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:keeplo/providers/app_provider.dart';
 import 'package:keeplo/widgets/forms/simple_input.dart';
@@ -27,7 +28,6 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     bool isHorizontalTablet = context.read<AppProvider>().isHorizontalTablet(context);
-    bool isTablet = context.read<AppProvider>().isTablet(context);
     return FormBuilder(
       key: _formKey,
       child: Column(
@@ -36,7 +36,7 @@ class _LoginFormState extends State<LoginForm> {
         children: [
           if(isHorizontalTablet) SizedBox(height: 20,),
           SimpleInput(
-            textStyle: TextStyle(fontSize: isTablet ? 22 : 16),
+            textStyle: TextStyle(fontSize: 16.sp),
             name: 'email',
             hintText: 'Correo electrónico',
             keyboardType: TextInputType.emailAddress,
@@ -54,7 +54,7 @@ class _LoginFormState extends State<LoginForm> {
           ),
           const SizedBox(height: 20),
           SimpleInput(
-            textStyle: TextStyle(fontSize: isTablet ? 22 : 16),
+            textStyle: TextStyle(fontSize: 16.sp),
             name: 'password',
             focusNode: _passwordFocuesNode,
             obscureText: true,

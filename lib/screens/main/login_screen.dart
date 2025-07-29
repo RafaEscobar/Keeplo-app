@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:keeplo/providers/app_provider.dart';
 import 'package:keeplo/theme/app_theme.dart';
 import 'package:keeplo/widgets/main/footer_main.dart';
@@ -57,7 +58,7 @@ class LoginScreen extends StatelessWidget {
                           : Column(
                               children: [
                                 headerMain,
-                                const SizedBox(height: 20),
+                                SizedBox(height: 20.h),
                                 LoginForm(),
                                 const Spacer(),
                                 FooterMain(

@@ -5,6 +5,7 @@ import 'package:keeplo/routes/app_route.dart';
 import 'package:keeplo/services/preferences.dart';
 import 'package:keeplo/theme/app_theme.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
@@ -24,10 +25,15 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AppProvider(),)
       ],
       builder: (_, __) {
-        return MaterialApp.router(
-          theme: AppTheme.lightTheme,
-          debugShowCheckedModeBanner: false,
-          routerConfig: AppRoute.getGoRoutes(navigatorKey),
+        return ScreenUtilInit(
+          designSize: Size(390, 844),
+          minTextAdapt: true,
+          splitScreenMode: true,
+          child: MaterialApp.router(
+            theme: AppTheme.lightTheme,
+            debugShowCheckedModeBanner: false,
+            routerConfig: AppRoute.getGoRoutes(navigatorKey),
+          ),
         );
       },
     );
