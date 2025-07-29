@@ -13,6 +13,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isHorizontal = Responsive.isHorizontalTablet(context);
+    final isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
 
     Widget headerMain = HeaderMain(
       imageUrl: "assets/pictures/login.png",
@@ -47,7 +48,7 @@ class LoginScreen extends StatelessWidget {
         SizedBox(height: 20.h),
         LoginForm(),
         const Spacer(),
-        footerMain
+        Visibility(visible: !isKeyboardOpen, child: footerMain)
       ],
     );
 
