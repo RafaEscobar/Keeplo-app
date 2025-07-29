@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:keeplo/theme/app_theme.dart';
+import 'package:keeplo/utils/responsive.dart';
 
 class SimpleButton extends StatelessWidget{
   const SimpleButton({super.key, required this.text, required this.callback});
@@ -18,7 +19,7 @@ class SimpleButton extends StatelessWidget{
       ),
       child: GestureDetector(
         onTap: callback,
-        child: Text(text, style: TextStyle(color: AppTheme.primary, fontSize: (22.sp) * .8, fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
+        child: Text(text, style: TextStyle(color: AppTheme.primary, fontSize: Responsive.resize(size:22.sp, reduction: .8), fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
       ),
     );
   }

@@ -21,6 +21,38 @@ class LoginScreen extends StatelessWidget {
       title: "Iniciar sesión",
     );
 
+    Widget footerMain = FooterMain(
+      btnText: 'Iniciar sesión',
+      callback: () {},
+    );
+
+    Widget horizontalTabletBody = Row(
+      children: [
+        Expanded(child: headerMain),
+        const SizedBox(width: 60),
+        Expanded(
+          child: Column(
+            children: [
+              LoginForm(),
+              const SizedBox(height: 20),
+              Spacer(),
+              footerMain
+            ],
+          ),
+        ),
+      ],
+    );
+
+    Widget regularBody = Column(
+      children: [
+        headerMain,
+        SizedBox(height: 20.h),
+        LoginForm(),
+        const Spacer(),
+        footerMain
+      ],
+    );
+
     return PopScope(
       canPop: false,
       child: Scaffold(
@@ -35,38 +67,7 @@ class LoginScreen extends StatelessWidget {
                   child: IntrinsicHeight(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      child: isHorizontalTablet
-                          ? Row(
-                              children: [
-                                Expanded(child: headerMain),
-                                const SizedBox(width: 60),
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                      LoginForm(),
-                                      const SizedBox(height: 20),
-                                      Spacer(),
-                                      FooterMain(
-                                        btnText: 'Iniciar sesión',
-                                        callback: () {},
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            )
-                          : Column(
-                              children: [
-                                headerMain,
-                                SizedBox(height: 20.h),
-                                LoginForm(),
-                                const Spacer(),
-                                FooterMain(
-                                  btnText: 'Iniciar sesión',
-                                  callback: () {},
-                                ),
-                              ],
-                            ),
+                      child: isHorizontalTablet ? horizontalTabletBody : regularBody
                     ),
                   ),
                 ),

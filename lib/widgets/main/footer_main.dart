@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:keeplo/theme/app_theme.dart';
+import 'package:keeplo/utils/responsive.dart';
 import 'package:keeplo/widgets/simple_button.dart';
 
 class FooterMain extends StatelessWidget {
@@ -24,14 +25,14 @@ class FooterMain extends StatelessWidget {
                 children: [
                   Text(
                     "¿Aún no tienes una cuenta?",
-                    style: TextStyle(color: Colors.white, fontSize: (16.sp) * .9),
+                    style: TextStyle(color: Colors.white, fontSize: Responsive.resize(size: 16.sp, reduction: .9)),
                   ),
                   const SizedBox(width: 6),
                   GestureDetector(
                     onTap: () {},
                     child: Text(
                       "Crear una",
-                      style: TextStyle(color: AppTheme.error, fontSize: (16.sp) * .9, fontWeight: FontWeight.bold),
+                      style: TextStyle(color: AppTheme.error, fontSize: Responsive.resize(size: 16.sp, reduction: .9), fontWeight: FontWeight.bold),
                     ),
                   ),
                 ],
