@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:keeplo/bloc/app_bloc/app_bloc.dart';
+import 'package:keeplo/bloc/app_bloc/app_event.dart';
+import 'package:keeplo/bloc/app_bloc/app_state.dart';
 import 'package:keeplo/providers/app_provider.dart';
 import 'package:keeplo/screens/dashboard_screen.dart';
 import 'package:keeplo/screens/main/login_screen.dart';
@@ -22,8 +25,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
 
   //* Método para verificar estado de la sesión
   Future<void> initLoad() async {
-    AppProvider appProvider = context.read<AppProvider>();
-    appProvider.displayedSplash = true;
+    context.read<AppBloc>().add(UpdateDisplayedSplash(true));
     try {
       if(Preferences.token.isNotEmpty) {
         int statusCode = await appProvider.verifyToken();
