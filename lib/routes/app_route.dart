@@ -41,7 +41,7 @@ class AppRoute {
       navigatorKey: navigatorKey,
       redirect: (context, state) {
         final AppState appState = context.read<AppBloc>().state;
-        bool isDisplayedSplash = appState.displayedSplash; 
+        bool isDisplayedSplash = appState.displayedSplash;
         if(isDisplayedSplash && state.matchedLocation == '/') {
           return (appState.isLogged) ? "/${DashboardScreen.routeName}" : "/${LoginScreen.routeName}";
         }

@@ -6,6 +6,6 @@ class Preferences {
     preference = await SharedPreferences.getInstance();
   }
 
-  static String get token => preference.getString('_token') ?? '';
+  static String get token => preference.getString('_token') ?? 'token';
   static set token(String newToken) => preference.setString('_token', newToken);
 }

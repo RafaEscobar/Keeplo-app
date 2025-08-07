@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:keeplo/bloc/auth_bloc/auth_bloc.dart';
 import 'package:keeplo/utils/responsive.dart';
 import 'package:keeplo/widgets/forms/simple_input.dart';
 
@@ -16,6 +14,9 @@ class LoginForm extends StatefulWidget{
 }
 
 class _LoginFormState extends State<LoginForm> {
+  final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _passwordFocuesNode = FocusNode();
 
@@ -23,15 +24,16 @@ class _LoginFormState extends State<LoginForm> {
   void dispose() {
     _emailFocusNode.dispose();
     _passwordFocuesNode.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final authProvider = context.read<AuthBloc>().state;
     bool isHorizontal = Responsive.isHorizontalTablet(context);
     return FormBuilder(
-      key: authProvider.formKey,
+      key: _formKey,
       child: Column(
         spacing: isHorizontal ? 10 : 0,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -44,7 +46,7 @@ class _LoginFormState extends State<LoginForm> {
             keyboardType: TextInputType.emailAddress,
             contentPadding: const EdgeInsets.symmetric(horizontal: 12),
             focusNode: _emailFocusNode,
-            controller: authProvider.emailController,
+            controller: _emailController,
             maxLength: 60,
             validator: FormBuilderValidators.compose([
               FormBuilderValidators.required(errorText: 'El correo electrónico es obligatorio.'),
@@ -60,7 +62,7 @@ class _LoginFormState extends State<LoginForm> {
             textStyle: TextStyle(fontSize: isHorizontal ? 38 : 16.sp),
             name: 'password',
             focusNode: _passwordFocuesNode,
-            controller: authProvider.passwordController,
+            controller: _passwordController,
             obscureText: true,
             hintText: 'Contraseña',
             contentPadding: const EdgeInsets.symmetric(horizontal: 12),

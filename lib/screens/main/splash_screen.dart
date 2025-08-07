@@ -9,6 +9,7 @@ import 'package:keeplo/bloc/auth_bloc/auth_state.dart';
 import 'package:keeplo/screens/dashboard_screen.dart';
 import 'package:keeplo/screens/main/login_screen.dart';
 import 'package:keeplo/services/preferences.dart';
+import 'package:keeplo/utils/simple_toast.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -34,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
         _redirectToLogin();
       }
     } catch (e) {
-      //! Lanzar toast
+      SimpleToast.error(context: context, message: e.toString(), size: 14, iconSize: 50);
     }
   }
 
@@ -71,14 +72,11 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     return Scaffold(
       backgroundColor: Colors.white,
       body: BlocListener<AuthBloc, AuthState>(
-        listener: (context, state) { 
+        listener: (context, state) {
           if (state is AuthTokenValid) {
             _redirectToDashboard();
           } else if (state is AuthTokenInvalid) {
             _redirectToLogin();
-          } else if(state is AuthTokenError) {
-            // Lanzar toast
-            print("object");
           }
         },
         child: Center(

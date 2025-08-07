@@ -11,6 +11,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>{
 
   Future<void> _onVerifyTokenRequested(VerifyTokenRequest event, Emitter<AuthState> emit) async {
     try {
+      emit(AuthVerifyingToken());
       final response = await ApiService.request("/me", auth: Preferences.token);
       if (response.statusCode == 204) {
         emit(AuthTokenValid());
@@ -18,7 +19,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>{
         emit(AuthTokenInvalid());
       }
     } catch (e) {
-      emit(AuthTokenError(e.toString()));
+      throw e.toString();
     }
   }
 
