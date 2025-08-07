@@ -16,7 +16,7 @@ class AppBloc extends Bloc<AppEvent, AppState>{
 
   void _onUpdateDisplayedSplash(UpdateDisplayedSplash event, Emitter<AppState> emit) {
     emit(state.copyWith(
-      displayedSplash: state.displayedSplash
+      displayedSplash: event.displayedSplash
     ));
   }
 

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:keeplo/bloc/app_bloc/app_bloc.dart';
 import 'package:keeplo/bloc/app_bloc/app_event.dart';
-import 'package:keeplo/bloc/app_bloc/app_state.dart';
-import 'package:keeplo/providers/app_provider.dart';
+import 'package:keeplo/bloc/auth_bloc/auth_bloc.dart';
+import 'package:keeplo/bloc/auth_bloc/auth_event.dart';
+import 'package:keeplo/bloc/auth_bloc/auth_state.dart';
 import 'package:keeplo/screens/dashboard_screen.dart';
 import 'package:keeplo/screens/main/login_screen.dart';
 import 'package:keeplo/services/preferences.dart';
-import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -28,8 +29,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     context.read<AppBloc>().add(UpdateDisplayedSplash(true));
     try {
       if(Preferences.token.isNotEmpty) {
-        int statusCode = await appProvider.verifyToken();
-        (statusCode == 204) ? _redirectToDashboard() : _redirectToLogin();
+        context.read<AuthBloc>().add(VerifyTokenRequest());
       } else {
         _redirectToLogin();
       }
@@ -70,25 +70,36 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(
-        child: AnimatedBuilder(
-          animation: Listenable.merge([_entryController, _exitController]),
-          builder: (_, child) {
-            double opacity = (_exitController.status != AnimationStatus.dismissed)
-                ? _opacityOut.value
-                : _opacityIn.value;
-            return Opacity(
-              opacity: opacity,
-              child: child,
-            );
-          },
-          child: Image.asset(
-            "assets/logos/logo.jpeg",
-            width: 200,
-
-          )
+      body: BlocListener<AuthBloc, AuthState>(
+        listener: (context, state) { 
+          if (state is AuthTokenValid) {
+            _redirectToDashboard();
+          } else if (state is AuthTokenInvalid) {
+            _redirectToLogin();
+          } else if(state is AuthTokenError) {
+            // Lanzar toast
+            print("object");
+          }
+        },
+        child: Center(
+          child: AnimatedBuilder(
+            animation: Listenable.merge([_entryController, _exitController]),
+            builder: (_, child) {
+              double opacity = (_exitController.status != AnimationStatus.dismissed)
+                  ? _opacityOut.value
+                  : _opacityIn.value;
+              return Opacity(
+                opacity: opacity,
+                child: child,
+              );
+            },
+            child: Image.asset(
+              "assets/logos/logo.jpeg",
+              width: 200,
+            )
+          ),
         ),
-      ),
+      )
     );
   }
 }

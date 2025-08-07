@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:keeplo/providers/auth_provider.dart';
+import 'package:keeplo/bloc/auth_bloc/auth_bloc.dart';
 import 'package:keeplo/utils/responsive.dart';
 import 'package:keeplo/widgets/forms/simple_input.dart';
-import 'package:provider/provider.dart';
 
 class LoginForm extends StatefulWidget{
   const LoginForm({super.key, required this.callback});
@@ -28,7 +28,7 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    AuthProvider authProvider = context.read<AuthProvider>();
+    final authProvider = context.read<AuthBloc>().state;
     bool isHorizontal = Responsive.isHorizontalTablet(context);
     return FormBuilder(
       key: authProvider.formKey,

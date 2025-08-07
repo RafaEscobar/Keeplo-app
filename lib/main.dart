@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:keeplo/providers/app_provider.dart';
-import 'package:keeplo/providers/auth_provider.dart';
+import 'package:keeplo/bloc/app_bloc/app_bloc.dart';
+import 'package:keeplo/bloc/auth_bloc/auth_bloc.dart';
 import 'package:keeplo/routes/app_route.dart';
 import 'package:keeplo/services/preferences.dart';
 import 'package:keeplo/theme/app_theme.dart';
@@ -20,23 +21,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => AppProvider(),),
-        ChangeNotifierProvider(create: (_) => AuthProvider(),)
-      ],
-      builder: (_, __) {
-        return ScreenUtilInit(
-          designSize: Size(390, 844),
-          minTextAdapt: true,
-          splitScreenMode: true,
-          child: MaterialApp.router(
-            theme: AppTheme.lightTheme,
-            debugShowCheckedModeBanner: false,
-            routerConfig: AppRoute.getGoRoutes(navigatorKey),
-          ),
-        );
-      },
+    return ScreenUtilInit(
+      designSize: Size(390, 844),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (_) => AppBloc(),),
+          BlocProvider(create: (_) => AuthBloc(),)
+        ],
+        child: MaterialApp.router(
+          theme: AppTheme.lightTheme,
+          debugShowCheckedModeBanner: false,
+          routerConfig: AppRoute.getGoRoutes(navigatorKey),
+        ),
+      )
     );
   }
 }

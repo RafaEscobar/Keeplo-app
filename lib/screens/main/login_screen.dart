@@ -10,7 +10,6 @@ import 'package:keeplo/utils/simple_toast.dart';
 import 'package:keeplo/widgets/main/footer_main.dart';
 import 'package:keeplo/widgets/main/header_main.dart';
 import 'package:keeplo/widgets/main/login_form.dart';
-import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -30,7 +29,7 @@ class LoginScreen extends StatelessWidget {
     Future<void> login() async {
       try {
         bool status = false;
-        await Loader.runLoad(context: context, asyncFunction: () async => status = await context.read<AuthProvider>().login());
+        //await Loader.runLoad(context: context, asyncFunction: () async => status = await context.read<AuthProvider>().login());
         if (!context.mounted) return;
         processResponse(status);
       } catch (e) {
@@ -39,12 +38,14 @@ class LoginScreen extends StatelessWidget {
     }
 
     Future<void> validateForm() async {
+      /*
       AuthProvider authProvider = context.read<AuthProvider>();
       if (authProvider.formKey.currentState!.saveAndValidate()) {
         await login();
       } else {
         SimpleToast.info(context: context, message: "¡Oops! Revisa los campos y vuelve a intentarlo.", size: 14, iconSize: 60);
       }
+      */
     }
 
     Widget headerMain = HeaderMain(
