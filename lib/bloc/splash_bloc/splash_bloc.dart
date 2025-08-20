@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:keeplo/bloc/app_bloc/app_event.dart';
-import 'package:keeplo/bloc/app_bloc/app_state.dart';
+import 'package:keeplo/bloc/splash_bloc/splash_event.dart';
+import 'package:keeplo/bloc/splash_bloc/splash_state.dart';
 
 class AppBloc extends Bloc<AppEvent, AppState>{
   AppBloc() : super(AppState()) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:keeplo/bloc/app_bloc/app_bloc.dart';
+import 'package:keeplo/bloc/splash_bloc/splash_bloc.dart';
 import 'package:keeplo/bloc/auth_bloc/auth_bloc.dart';
 import 'package:keeplo/routes/app_route.dart';
 import 'package:keeplo/services/preferences.dart';
