@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:keeplo/bloc/splash_bloc/splash_bloc.dart';
 import 'package:keeplo/bloc/auth_bloc/auth_bloc.dart';
+import 'package:keeplo/bloc/splash_bloc/splash_bloc.dart';
+import 'package:keeplo/bloc/token_bloc/token_bloc.dart';
 import 'package:keeplo/routes/app_route.dart';
 import 'package:keeplo/services/preferences.dart';
 import 'package:keeplo/theme/app_theme.dart';
@@ -27,8 +28,9 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       child: MultiBlocProvider(
         providers: [
-          BlocProvider(create: (_) => AppBloc(),),
-          BlocProvider(create: (_) => AuthBloc(),)
+          BlocProvider(create: (_) => SplashBloc(),),
+          BlocProvider(create: (_) => TokenBloc(),),
+          BlocProvider(create: (context) => AuthBloc(),)
         ],
         child: MaterialApp.router(
           theme: AppTheme.lightTheme,

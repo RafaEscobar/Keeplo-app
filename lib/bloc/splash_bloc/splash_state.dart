@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
-class AppState extends Equatable{
-  const AppState({
+class SplashState extends Equatable{
+  const SplashState({
     this.isLogged = false,
     this.displayedSplash = false
   });
@@ -9,10 +9,10 @@ class AppState extends Equatable{
   final bool isLogged;
   final bool displayedSplash;
 
-  AppState copyWith({
+  SplashState copyWith({
     bool? isLogged,
     bool? displayedSplash,
-  }) => AppState(
+  }) => SplashState(
     isLogged: isLogged ?? this.isLogged,
     displayedSplash: displayedSplash ?? this.displayedSplash
   );

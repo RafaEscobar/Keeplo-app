@@ -1,5 +1,5 @@
-abstract class AuthEvent {
-  const AuthEvent();
-}
+abstract class AuthEvent {}
 
-class VerifyTokenRequest extends AuthEvent {}
+class LoginEmailChange extends AuthEvent {
+  
+}

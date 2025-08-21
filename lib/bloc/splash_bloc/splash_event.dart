@@ -1,14 +1,14 @@
 
-abstract class AppEvent {
-  const AppEvent();
+abstract class SplashEvent {
+  const SplashEvent();
 }
 
-class UpdateIsLogged extends AppEvent {
+class UpdateIsLogged extends SplashEvent {
   UpdateIsLogged(this.isLogged);
   final bool isLogged;
 }
 
-class UpdateDisplayedSplash extends AppEvent {
+class UpdateDisplayedSplash extends SplashEvent {
   UpdateDisplayedSplash(this.displayedSplash);
   final bool displayedSplash;
 }

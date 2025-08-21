@@ -6,15 +6,15 @@ import 'package:keeplo/utils/responsive.dart';
 import 'package:keeplo/widgets/forms/simple_input.dart';
 
 class LoginForm extends StatefulWidget{
-  const LoginForm({super.key, required this.callback});
+  const LoginForm({super.key, required this.callback, required this.formKey});
   final Function() callback;
+  final GlobalKey<FormBuilderState> formKey;
 
   @override
   State<LoginForm> createState() => _LoginFormState();
 }
 
 class _LoginFormState extends State<LoginForm> {
-  final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final FocusNode _emailFocusNode = FocusNode();
@@ -33,7 +33,7 @@ class _LoginFormState extends State<LoginForm> {
   Widget build(BuildContext context) {
     bool isHorizontal = Responsive.isHorizontalTablet(context);
     return FormBuilder(
-      key: _formKey,
+      key: widget.formKey,
       child: Column(
         spacing: isHorizontal ? 10 : 0,
         crossAxisAlignment: CrossAxisAlignment.stretch,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:keeplo/screens/dashboard_screen.dart';
@@ -17,6 +18,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isHorizontal = Responsive.isHorizontalTablet(context);
     final isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
+    final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
 
     void processResponse(bool status) {
       (status) ?
@@ -36,14 +38,11 @@ class LoginScreen extends StatelessWidget {
     }
 
     Future<void> validateForm() async {
-      /*
-      AuthProvider authProvider = context.read<AuthProvider>();
-      if (authProvider.formKey.currentState!.saveAndValidate()) {
+      if (_formKey.currentState!.saveAndValidate(focusOnInvalid: false)) {
         await login();
       } else {
         SimpleToast.info(context: context, message: "¡Oops! Revisa los campos y vuelve a intentarlo.", size: 14, iconSize: 60);
       }
-      */
     }
 
     Widget headerMain = HeaderMain(
@@ -56,7 +55,7 @@ class LoginScreen extends StatelessWidget {
       callback: () async => await validateForm(),
     );
 
-    Widget loginForm = LoginForm(callback: validateForm,);
+    Widget loginForm = LoginForm(callback: validateForm, formKey: _formKey,);
 
     Widget horizontalTabletBody = Row(
       children: [

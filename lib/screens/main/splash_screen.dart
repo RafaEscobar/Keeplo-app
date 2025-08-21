@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:keeplo/bloc/splash_bloc/splash_bloc.dart';
 import 'package:keeplo/bloc/splash_bloc/splash_event.dart';
-import 'package:keeplo/bloc/auth_bloc/auth_bloc.dart';
-import 'package:keeplo/bloc/auth_bloc/auth_event.dart';
-import 'package:keeplo/bloc/auth_bloc/auth_state.dart';
+import 'package:keeplo/bloc/token_bloc/token_bloc.dart';
+import 'package:keeplo/bloc/token_bloc/token_event.dart';
+import 'package:keeplo/bloc/token_bloc/token_state.dart';
 import 'package:keeplo/screens/dashboard_screen.dart';
 import 'package:keeplo/screens/main/login_screen.dart';
 import 'package:keeplo/services/preferences.dart';
@@ -27,10 +27,10 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
 
   //* Método para verificar estado de la sesión
   Future<void> initLoad() async {
-    context.read<AppBloc>().add(UpdateDisplayedSplash(true));
+    context.read<SplashBloc>().add(UpdateDisplayedSplash(true));
     try {
       if(Preferences.token.isNotEmpty) {
-        context.read<AuthBloc>().add(VerifyTokenRequest());
+        context.read<TokenBloc>().add(VerifyTokenRequest());
       } else {
         _redirectToLogin();
       }
@@ -71,7 +71,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: BlocListener<AuthBloc, AuthState>(
+      body: BlocListener<TokenBloc, TokenState>(
         listener: (context, state) {
           if (state is AuthTokenValid) {
             _redirectToDashboard();
