@@ -19,3 +19,6 @@ class AuthState extends Equatable{
   @override
   List<Object?> get props => [email, password];
 }
+
+class LoginSuccess extends AuthState {}
+class LoginFailed extends AuthState {}
