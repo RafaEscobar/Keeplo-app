@@ -24,6 +24,13 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>() ;
+  final FocusNode _emailFocusNode = FocusNode();
+  final FocusNode _passwordFocuesNode = FocusNode();
+
+  void _unFocusNode() {
+    _emailFocusNode.unfocus();
+    _passwordFocuesNode.unfocus();
+  }
 
   Future<void> login() async {
     try {
@@ -34,6 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> validateForm() async {
+    _unFocusNode();
     if (formKey.currentState!.saveAndValidate(focusOnInvalid: false)) {
       await login();
     } else {
@@ -56,7 +64,12 @@ class _LoginScreenState extends State<LoginScreen> {
       callback: () async => await validateForm(),
     );
 
-    Widget loginForm = LoginForm(callback: validateForm, formKey: formKey,);
+    Widget loginForm = LoginForm(
+      callback: validateForm,
+      formKey: formKey,
+      emailFocusNode: _emailFocusNode,
+      passwordFocuesNode: _passwordFocuesNode,
+    );
 
     Widget horizontalTabletBody = Row(
       children: [
@@ -89,7 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
       canPop: false,
       child: Scaffold(
         backgroundColor: AppTheme.primary,
-        body: BlocListener<AuthBloc, AuthState>(
+        body: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is LoginSuccess) {
               context.goNamed(DashboardScreen.routeName);
@@ -97,24 +110,37 @@ class _LoginScreenState extends State<LoginScreen> {
               SimpleToast.error(context: context, message: "Credenciales incorrectas");
             }
           },
-          child: SafeArea(
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                return SingleChildScrollView(
-                  keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                    child: IntrinsicHeight(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                        child: isHorizontal ? horizontalTabletBody : regularBody
-                      ),
+          builder: (context, state) {
+            return Stack(
+              children: [
+                SafeArea(
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      return SingleChildScrollView(
+                        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                          child: IntrinsicHeight(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                              child: isHorizontal ? horizontalTabletBody : regularBody,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                if (state.isLoading)
+                  Positioned.fill(
+                    child: Container(
+                      color: AppTheme.primary.withAlpha(200),
+                      child: const Center(child: CircularProgressIndicator(backgroundColor: AppTheme.secondary,)),
                     ),
                   ),
-                );
-              },
-            ),
-          ),
+              ],
+            );
+          },
         ),
       ),
     );

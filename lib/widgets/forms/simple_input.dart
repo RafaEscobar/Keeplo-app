@@ -18,6 +18,7 @@ class SimpleInput extends StatefulWidget {
     this.onTap,
     this.validator,
     this.onEditingComplete,
+    this.onChange,
     this.initialValue,
     this.inputDecoration,
     this.controller,
@@ -47,6 +48,7 @@ class SimpleInput extends StatefulWidget {
   final bool isPassword;
   final String name;
   final Function()? onEditingComplete;
+  final ValueChanged<String?>? onChange;
   final String? initialValue;
   final int maxLines;
   final InputDecoration? inputDecoration;
@@ -70,6 +72,7 @@ class _SimpleInputState extends State<SimpleInput> {
   @override
   Widget build(BuildContext context) {
     return FormBuilderTextField(
+      onChanged: widget.onChange,
       controller: widget.controller,
       maxLines: widget.maxLines,
       initialValue: widget.initialValue,

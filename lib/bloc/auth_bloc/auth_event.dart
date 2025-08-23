@@ -10,4 +10,9 @@ class PasswordChange extends AuthEvent{
   PasswordChange(this.password);
 }
 
+class LoadingChange extends AuthEvent {
+  final bool isLoading;
+  LoadingChange(this.isLoading);
+}
+
 class LoginSubmitted extends AuthEvent{}
