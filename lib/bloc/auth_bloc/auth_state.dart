@@ -1,28 +1,31 @@
 import 'package:equatable/equatable.dart';
 
-class AuthState extends Equatable{
+enum AuthStatus { initial, loading, success, failure }
+
+class AuthState extends Equatable {
+  final String email;
+  final String password;
+  final AuthStatus status;
+
   const AuthState({
     this.email = '',
     this.password = '',
-    this.isLoading = false
+    this.status = AuthStatus.initial,
   });
-  final String email;
-  final String password;
-  final bool isLoading;
 
   AuthState copyWith({
     String? email,
     String? password,
-    bool? isLoading
-  }) => AuthState(
-    email: email ?? this.email,
-    password: password ?? this.password,
-    isLoading: isLoading ?? this.isLoading
-  );
+    AuthStatus? status,
+    String? errorMessage,
+  }) {
+    return AuthState(
+      email: email ?? this.email,
+      password: password ?? this.password,
+      status: status ?? this.status,
+    );
+  }
 
   @override
-  List<Object?> get props => [email, password, isLoading];
+  List<Object?> get props => [email, password, status];
 }
-
-class LoginSuccess extends AuthState {}
-class LoginFailed extends AuthState {}

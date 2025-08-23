@@ -104,9 +104,9 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor: AppTheme.primary,
         body: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
-            if (state is LoginSuccess) {
+            if (state.status == AuthStatus.success) {
               context.goNamed(DashboardScreen.routeName);
-            } else if (state is LoginFailed) {
+            } else if (state.status == AuthStatus.failure) {
               SimpleToast.error(context: context, message: "Credenciales incorrectas");
             }
           },
@@ -131,7 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                   ),
                 ),
-                if (state.isLoading)
+                if (state.status == AuthStatus.loading)
                   Positioned.fill(
                     child: Container(
                       color: AppTheme.primary.withAlpha(200),

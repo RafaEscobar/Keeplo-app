@@ -11,24 +11,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>{
   }
 
   Future<void> _onSubmitted(LoginSubmitted event, Emitter<AuthState> emit) async {
-    emit(state.copyWith(isLoading: true));
+    final email = state.email;
+    final password = state.password;
+
+    emit(state.copyWith(status: AuthStatus.loading));
+
     try {
-      final response = await ApiService.request(
-        "/login",
-        body: {
-          "email": state.email,
-          "password": state.password
-        }
-      );
-      await Future.delayed(Duration(seconds: 1));
-      emit(state.copyWith(isLoading: true));
-      if (response.statusCode == 204) {
-        emit(LoginSuccess());
+      final response = await ApiService.request("/login", body: {"email": email, "password": password});
+      await Future.delayed(const Duration(seconds: 1));
+
+      if (response.statusCode == 200) {
+        emit(state.copyWith(status: AuthStatus.success));
       } else {
-        emit(LoginFailed());
+        emit(state.copyWith(status: AuthStatus.failure));
       }
     } catch (e) {
-      throw e.toString();
+      emit(state.copyWith(status: AuthStatus.failure));
     }
   }
 
