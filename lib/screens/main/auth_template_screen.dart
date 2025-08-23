@@ -6,6 +6,7 @@ import 'package:keeplo/bloc/auth_bloc/auth_bloc.dart';
 import 'package:keeplo/bloc/auth_bloc/auth_event.dart';
 import 'package:keeplo/bloc/auth_bloc/auth_state.dart';
 import 'package:keeplo/screens/dashboard_screen.dart';
+import 'package:keeplo/screens/main/login_screen.dart';
 import 'package:keeplo/theme/app_theme.dart';
 import 'package:keeplo/utils/responsive.dart';
 import 'package:keeplo/utils/simple_toast.dart';
@@ -69,6 +70,10 @@ class AuthTemplateScreen extends StatelessWidget {
 
     return PopScope(
       canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if(didPop) return;
+        if (!isLogin) context.goNamed(LoginScreen.routeName);
+      },
       child: Scaffold(
         backgroundColor: AppTheme.primary,
         body: BlocConsumer<AuthBloc, AuthState>(
