@@ -2,6 +2,16 @@ import 'package:keeplo/bloc/auth_bloc/auth_state.dart';
 
 abstract class AuthEvent {}
 
+class NameChange extends AuthEvent {
+  final String name;
+  NameChange(this.name);
+}
+
+class LastNameChange extends AuthEvent {
+  final String lastName;
+  LastNameChange(this.lastName);
+}
+
 class EmailChange extends AuthEvent{
   final String email;
   EmailChange(this.email);
@@ -23,3 +33,4 @@ class AuthStatusChange extends AuthEvent {
 }
 
 class LoginSubmitted extends AuthEvent{}
+class RegisterSubmitted extends AuthEvent{}

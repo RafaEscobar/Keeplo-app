@@ -1,86 +1,64 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:keeplo/theme/app_theme.dart';
-import 'package:keeplo/utils/responsive.dart';
-import 'package:keeplo/widgets/main/footer_main.dart';
-import 'package:keeplo/widgets/main/header_main.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:keeplo/bloc/auth_bloc/auth_bloc.dart';
+import 'package:keeplo/bloc/auth_bloc/auth_event.dart';
+import 'package:keeplo/screens/main/auth_template_screen.dart';
+import 'package:keeplo/utils/simple_toast.dart';
 import 'package:keeplo/widgets/main/register_form.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
   static const String routeName = 'register-screen';
 
   @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
+  final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>() ;
+  final FocusNode _emailFocusNode = FocusNode();
+  final FocusNode _passwordFocuesNode = FocusNode();
+  final FocusNode _nameFocuesNode = FocusNode();
+  final FocusNode _lastNameFocuesNode = FocusNode();
+
+  void _unFocusNode() {
+    _emailFocusNode.unfocus();
+    _passwordFocuesNode.unfocus();
+  }
+
+  Future<void> register() async {
+    try {
+      context.read<AuthBloc>().add(RegisterSubmitted());
+    } catch (e) {
+      SimpleToast.error(context: context, message: e.toString(), size: 14, iconSize: 50);
+    }
+  }
+
+  Future<void> validateForm() async {
+    _unFocusNode();
+    if (formKey.currentState!.saveAndValidate(focusOnInvalid: false)) {
+      await register();
+    } else {
+      SimpleToast.info(context: context, message: "¡Oops! Revisa los campos y vuelve a intentarlo.", size: 14, iconSize: 60);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    bool isHorizontal = Responsive.isHorizontalTablet(context);
+    Widget registerForm = RegisterForm(
+    callback: validateForm,
+    formKey: formKey,
+    nameFocusNode: _nameFocuesNode,
+    lastNameFocuesNode: _lastNameFocuesNode,
+    emailFocusNode: _emailFocusNode,
+    passwordFocuesNode: _passwordFocuesNode,
+  );
 
-    Widget headerMain = HeaderMain(
-      imageUrl: "assets/pictures/register.png",
-      title: "Registrarme",
-    );
-
-    Widget footerMain = FooterMain(
-      btnText: 'Crear cuenta',
-      callback: () {},
+    return AuthTemplateScreen(
+      action: validateForm,
+      form: registerForm,
       isLogin: false,
-    );
-
-    Widget horizontalTabletBody = Row(
-      children: [
-        Expanded(child: headerMain),
-        const SizedBox(width: 60),
-        Expanded(
-          child: Column(
-            children: [
-              RegisterForm(),
-              const SizedBox(height: 20),
-              Spacer(),
-              footerMain
-            ],
-          ),
-        ),
-      ],
-    );
-
-    Widget regularBody = Column(
-      children: [
-        headerMain,
-        SizedBox(height: 20.h),
-        RegisterForm(),
-        const Spacer(),
-        footerMain
-      ],
-    );
-
-    return Scaffold(
-      appBar: AppBar(
-        leading: Container(
-          margin: EdgeInsets.only(left: 20),
-          child: GestureDetector(
-            onTap: () => Navigator.pop(context),
-            child: Icon(Icons.arrow_back_ios, color: Colors.white, size: 30,),
-          ),
-        ),
-      ),
-      backgroundColor: AppTheme.primary,
-      body: SafeArea(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return SingleChildScrollView(
-              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-              child: ConstrainedBox(
-                constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                child: IntrinsicHeight(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    child: isHorizontal ? horizontalTabletBody : regularBody
-                  ),
-                ),
-              ),
-            );
-          },
-        ),
-      ),
     );
   }
 }

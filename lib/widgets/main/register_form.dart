@@ -6,25 +6,34 @@ import 'package:keeplo/utils/responsive.dart';
 import 'package:keeplo/widgets/forms/simple_input.dart';
 
 class RegisterForm extends StatefulWidget{
-  const RegisterForm({super.key});
+  const RegisterForm({
+    super.key,
+    required this.nameFocusNode,
+    required this.lastNameFocuesNode,
+    required this.emailFocusNode,
+    required this.passwordFocuesNode,
+    required this.callback,
+    required this.formKey
+  });
+  final FocusNode nameFocusNode;
+  final FocusNode lastNameFocuesNode;
+  final FocusNode emailFocusNode;
+  final FocusNode passwordFocuesNode;
+  final Function() callback;
+  final GlobalKey<FormBuilderState> formKey;
 
   @override
   State<RegisterForm> createState() => _RegisterFormState();
 }
 
 class _RegisterFormState extends State<RegisterForm> {
-  final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
-  final FocusNode _nameFocusNode = FocusNode();
-  final FocusNode _lastNameFocuesNode = FocusNode();
-  final FocusNode _emailFocusNode = FocusNode();
-  final FocusNode _passwordFocuesNode = FocusNode();
 
   @override
   void dispose() {
-    _nameFocusNode.dispose();
-    _lastNameFocuesNode.dispose();
-    _emailFocusNode.dispose();
-    _passwordFocuesNode.dispose();
+    widget.nameFocusNode.dispose();
+    widget.lastNameFocuesNode.dispose();
+    widget.emailFocusNode.dispose();
+    widget.passwordFocuesNode.dispose();
     super.dispose();
   }
 
@@ -32,7 +41,7 @@ class _RegisterFormState extends State<RegisterForm> {
   Widget build(BuildContext context) {
     bool isHorizontal = Responsive.isHorizontalTablet(context);
     return FormBuilder(
-      key: _formKey,
+      key: widget.formKey,
       child: Column(
         spacing: isHorizontal ? 10 : 0,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -44,7 +53,7 @@ class _RegisterFormState extends State<RegisterForm> {
             hintText: 'Nombre',
             keyboardType: TextInputType.text,
             contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-            focusNode: _nameFocusNode,
+            focusNode: widget.nameFocusNode,
             maxLength: 60,
             validator: FormBuilderValidators.compose([
               FormBuilderValidators.required(errorText: 'El nombre es obligatorio.'),
@@ -52,7 +61,7 @@ class _RegisterFormState extends State<RegisterForm> {
               FormBuilderValidators.maxLength(40, errorText: 'El nombre es demasiado grande')
             ]),
             onEditingComplete: () {
-              FocusScope.of(context).requestFocus(_lastNameFocuesNode);
+              FocusScope.of(context).requestFocus(widget.lastNameFocuesNode);
             },
           ),
           const SizedBox(height: 20),
@@ -62,7 +71,7 @@ class _RegisterFormState extends State<RegisterForm> {
             hintText: 'Apellido',
             keyboardType: TextInputType.text,
             contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-            focusNode: _lastNameFocuesNode,
+            focusNode: widget.lastNameFocuesNode,
             maxLength: 60,
             validator: FormBuilderValidators.compose([
               FormBuilderValidators.required(errorText: 'El apellido es obligatorio.'),
@@ -70,7 +79,7 @@ class _RegisterFormState extends State<RegisterForm> {
               FormBuilderValidators.maxLength(80, errorText: 'El apellido es demasiado grande')
             ]),
             onEditingComplete: () {
-              FocusScope.of(context).requestFocus(_emailFocusNode);
+              FocusScope.of(context).requestFocus(widget.emailFocusNode);
             },
           ),
           const SizedBox(height: 20),
@@ -80,7 +89,7 @@ class _RegisterFormState extends State<RegisterForm> {
             hintText: 'Correo electrónico',
             keyboardType: TextInputType.emailAddress,
             contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-            focusNode: _emailFocusNode,
+            focusNode: widget.emailFocusNode,
             maxLength: 60,
             validator: FormBuilderValidators.compose([
               FormBuilderValidators.required(errorText: 'El correo electrónico es obligatorio.'),
@@ -88,14 +97,14 @@ class _RegisterFormState extends State<RegisterForm> {
               FormBuilderValidators.maxLength(60, errorText: 'El correo es demasiado grande')
             ]),
             onEditingComplete: () {
-              FocusScope.of(context).requestFocus(_passwordFocuesNode);
+              FocusScope.of(context).requestFocus(widget.passwordFocuesNode);
             },
           ),
           const SizedBox(height: 20),
           SimpleInput(
             textStyle: TextStyle(fontSize: isHorizontal ? 38 : 16.sp),
             name: 'password',
-            focusNode: _passwordFocuesNode,
+            focusNode: widget.passwordFocuesNode,
             obscureText: true,
             hintText: 'Contraseña',
             contentPadding: const EdgeInsets.symmetric(horizontal: 12),

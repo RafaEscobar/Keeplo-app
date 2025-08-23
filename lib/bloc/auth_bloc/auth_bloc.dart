@@ -6,6 +6,7 @@ import 'package:keeplo/services/api_service.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState>{
   AuthBloc() : super(AuthState()){
     on<LoginSubmitted>(_onSubmitted);
+    on<RegisterSubmitted>(_onRegisterSubmitted);
     on<EmailChange>(_onEmailChange);
     on<PasswordChange>(_onPasswordChange);
     on<AuthStatusChange>(_onAuthStatusChange);
@@ -21,6 +22,34 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>{
       final response = await ApiService.request("/login", body: {"email": email, "password": password});
       await Future.delayed(const Duration(seconds: 1));
 
+      if (response.statusCode == 200) {
+        emit(state.copyWith(status: AuthStatus.success));
+      } else {
+        emit(state.copyWith(status: AuthStatus.failure));
+      }
+    } catch (e) {
+      emit(state.copyWith(status: AuthStatus.failure));
+    }
+  }
+
+  Future<void> _onRegisterSubmitted(RegisterSubmitted event, Emitter<AuthState> emit) async {
+    final String name = state.name;
+    final String lastName = state.lastName;
+    final String email = state.email;
+    final String password = state.password;
+
+    emit(state.copyWith(status: AuthStatus.loading));
+
+    try {
+      final response = await ApiService.request(
+        '/register',
+        body: {
+          'name': name,
+          'lastName': lastName,
+          'email': email,
+          'password': password
+        }
+      );
       if (response.statusCode == 200) {
         emit(state.copyWith(status: AuthStatus.success));
       } else {

@@ -34,6 +34,7 @@ class AuthTemplateScreen extends StatelessWidget {
     );
 
     Widget footerMain = FooterMain(
+      isLogin: isLogin,
       btnText: isLogin ? 'Iniciar sesión' : 'Crear cuenta',
       callback: () async => await action(),
     );
