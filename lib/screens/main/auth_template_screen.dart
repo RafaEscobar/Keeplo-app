@@ -81,7 +81,7 @@ class AuthTemplateScreen extends StatelessWidget {
             if (state.status == AuthStatus.success) {
               context.goNamed(DashboardScreen.routeName);
             } else if (state.status == AuthStatus.failure) {
-              SimpleToast.error(context: context, message: isLogin ? "Credenciales incorrectas" : "Ocurrio un error al crear la cuenta");
+              SimpleToast.error(context: context, message: isLogin ? "Credenciales incorrectas" : "Ocurrio un error al crear la cuenta", size: isLogin ? 18 : 14);
               context.read<AuthBloc>().add(AuthStatusChange(AuthStatus.initial));
 
             }

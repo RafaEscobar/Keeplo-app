@@ -7,6 +7,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>{
   AuthBloc() : super(AuthState()){
     on<LoginSubmitted>(_onSubmitted);
     on<RegisterSubmitted>(_onRegisterSubmitted);
+    on<NameChange>(_onNameChange);
+    on<LastNameChange>(_onLastNameChange);
     on<EmailChange>(_onEmailChange);
     on<PasswordChange>(_onPasswordChange);
     on<AuthStatusChange>(_onAuthStatusChange);
@@ -45,12 +47,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>{
         '/register',
         body: {
           'name': name,
-          'lastName': lastName,
+          'last_name': lastName,
           'email': email,
           'password': password
         }
       );
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         emit(state.copyWith(status: AuthStatus.success));
       } else {
         emit(state.copyWith(status: AuthStatus.failure));
@@ -58,6 +60,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>{
     } catch (e) {
       emit(state.copyWith(status: AuthStatus.failure));
     }
+  }
+
+  void _onNameChange(NameChange event, Emitter<AuthState> emit) {
+    emit(state.copyWith(
+      name: event.name
+    ));
+  }
+
+  void _onLastNameChange(LastNameChange event, Emitter<AuthState> emit) {
+    emit(state.copyWith(
+      lastName: event.lastName
+    ));
   }
 
   void _onEmailChange(EmailChange event, Emitter<AuthState> emit){

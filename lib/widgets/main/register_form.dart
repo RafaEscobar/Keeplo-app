@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:keeplo/bloc/auth_bloc/auth_bloc.dart';
+import 'package:keeplo/bloc/auth_bloc/auth_event.dart';
 import 'package:keeplo/utils/responsive.dart';
 import 'package:keeplo/widgets/forms/simple_input.dart';
 
@@ -48,6 +51,7 @@ class _RegisterFormState extends State<RegisterForm> {
         children: [
           if(isHorizontal) SizedBox(height: 20,),
           SimpleInput(
+            onChange: (name) => context.read<AuthBloc>().add(NameChange(name!)),
             textStyle: TextStyle(fontSize: isHorizontal ? 38 : 16.sp),
             name: 'name',
             hintText: 'Nombre',
@@ -66,6 +70,7 @@ class _RegisterFormState extends State<RegisterForm> {
           ),
           const SizedBox(height: 20),
           SimpleInput(
+            onChange: (lastName) => context.read<AuthBloc>().add(LastNameChange(lastName!)),
             textStyle: TextStyle(fontSize: isHorizontal ? 38 : 16.sp),
             name: 'last_name',
             hintText: 'Apellido',
@@ -84,6 +89,7 @@ class _RegisterFormState extends State<RegisterForm> {
           ),
           const SizedBox(height: 20),
           SimpleInput(
+            onChange: (email) => context.read<AuthBloc>().add(EmailChange(email!)),
             textStyle: TextStyle(fontSize: isHorizontal ? 38 : 16.sp),
             name: 'email',
             hintText: 'Correo electrónico',
@@ -102,6 +108,7 @@ class _RegisterFormState extends State<RegisterForm> {
           ),
           const SizedBox(height: 20),
           SimpleInput(
+            onChange: (password) => context.read<AuthBloc>().add(PasswordChange(password!)),
             textStyle: TextStyle(fontSize: isHorizontal ? 38 : 16.sp),
             name: 'password',
             focusNode: widget.passwordFocuesNode,
@@ -115,7 +122,7 @@ class _RegisterFormState extends State<RegisterForm> {
               FormBuilderValidators.minLength(8, errorText: 'La contraseña es demasiado corta'),
             ]),
             isPassword: true,
-            onEditingComplete: () {},
+            onEditingComplete: widget.callback,
           ),
         ],
       ),
