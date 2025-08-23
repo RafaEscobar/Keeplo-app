@@ -8,6 +8,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>{
     on<LoginSubmitted>(_onSubmitted);
     on<EmailChange>(_onEmailChange);
     on<PasswordChange>(_onPasswordChange);
+    on<AuthStatusChange>(_onAuthStatusChange);
   }
 
   Future<void> _onSubmitted(LoginSubmitted event, Emitter<AuthState> emit) async {
@@ -39,6 +40,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>{
   void _onPasswordChange(PasswordChange event, Emitter<AuthState> emit){
     emit(state.copyWith(
       password: event.password
+    ));
+  }
+
+  void _onAuthStatusChange(AuthStatusChange event, Emitter<AuthState> emit) {
+    emit(state.copyWith(
+      status: event.staus
     ));
   }
 }
