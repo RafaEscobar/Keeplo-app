@@ -43,6 +43,13 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   @override
+  void dispose() {
+    _emailFocusNode.dispose();
+    _passwordFocuesNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     Widget loginForm = LoginForm(
       callback: validateForm,

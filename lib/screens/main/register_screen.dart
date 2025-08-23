@@ -23,6 +23,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final FocusNode _lastNameFocuesNode = FocusNode();
 
   void _unFocusNode() {
+    _nameFocuesNode.unfocus();
+    _lastNameFocuesNode.unfocus();
     _emailFocusNode.unfocus();
     _passwordFocuesNode.unfocus();
   }
@@ -42,6 +44,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
     } else {
       SimpleToast.info(context: context, message: "¡Oops! Revisa los campos y vuelve a intentarlo.", size: 14, iconSize: 60);
     }
+  }
+
+  @override
+  void dispose() {
+    _nameFocuesNode.dispose();
+    _lastNameFocuesNode.dispose();
+    _emailFocusNode.dispose();
+    _passwordFocuesNode.dispose();
+    super.dispose();
   }
 
   @override

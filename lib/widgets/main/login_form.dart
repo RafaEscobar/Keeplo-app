@@ -14,7 +14,7 @@ class LoginForm extends StatefulWidget{
     required this.callback,
     required this.formKey,
     required this.emailFocusNode,
-    required this.passwordFocuesNode
+    required this.passwordFocuesNode,
   });
   final Function() callback;
   final GlobalKey<FormBuilderState> formKey;
@@ -26,18 +26,6 @@ class LoginForm extends StatefulWidget{
 }
 
 class _LoginFormState extends State<LoginForm> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-
-  @override
-  void dispose() {
-    widget.emailFocusNode.dispose();
-    widget.passwordFocuesNode.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     bool isHorizontal = Responsive.isHorizontalTablet(context);
@@ -56,7 +44,6 @@ class _LoginFormState extends State<LoginForm> {
             keyboardType: TextInputType.emailAddress,
             contentPadding: const EdgeInsets.symmetric(horizontal: 12),
             focusNode: widget.emailFocusNode,
-            controller: _emailController,
             maxLength: 60,
             validator: FormBuilderValidators.compose([
               FormBuilderValidators.required(errorText: 'El correo electrónico es obligatorio.'),
@@ -73,7 +60,6 @@ class _LoginFormState extends State<LoginForm> {
             textStyle: TextStyle(fontSize: isHorizontal ? 38 : 16.sp),
             name: 'password',
             focusNode: widget.passwordFocuesNode,
-            controller: _passwordController,
             obscureText: true,
             hintText: 'Contraseña',
             contentPadding: const EdgeInsets.symmetric(horizontal: 12),

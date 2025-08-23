@@ -30,16 +30,6 @@ class RegisterForm extends StatefulWidget{
 }
 
 class _RegisterFormState extends State<RegisterForm> {
-
-  @override
-  void dispose() {
-    widget.nameFocusNode.dispose();
-    widget.lastNameFocuesNode.dispose();
-    widget.emailFocusNode.dispose();
-    widget.passwordFocuesNode.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     bool isHorizontal = Responsive.isHorizontalTablet(context);
