@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:keeplo/bloc/auth_bloc/auth_bloc.dart';
 import 'package:keeplo/bloc/auth_bloc/auth_event.dart';
 import 'package:keeplo/bloc/auth_bloc/auth_state.dart';
+import 'package:keeplo/bloc/token_bloc/token_bloc.dart';
+import 'package:keeplo/bloc/token_bloc/token_event.dart';
 import 'package:keeplo/screens/dashboard_screen.dart';
 import 'package:keeplo/screens/main/login_screen.dart';
 import 'package:keeplo/theme/app_theme.dart';
@@ -61,7 +63,7 @@ class AuthTemplateScreen extends StatelessWidget {
       children: [
         headerMain,
         SizedBox(height: 20.h),
-        form,
+        form, 
         const Spacer(),
         Visibility(visible: !isKeyboardOpen, child: footerMain)
       ],
@@ -83,7 +85,6 @@ class AuthTemplateScreen extends StatelessWidget {
             } else if (state.status == AuthStatus.failure) {
               SimpleToast.error(context: context, message: isLogin ? "Credenciales incorrectas" : "Ocurrio un error al crear la cuenta", size: isLogin ? 18 : 14);
               context.read<AuthBloc>().add(AuthStatusChange(AuthStatus.initial));
-
             }
           },
           builder: (context, state) {

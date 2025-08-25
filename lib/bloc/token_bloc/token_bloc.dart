@@ -5,22 +5,25 @@ import 'package:keeplo/services/api_service.dart';
 import 'package:keeplo/services/preferences.dart';
 
 class TokenBloc extends Bloc<TokenEvent, TokenState>{
-  TokenBloc() : super(AuthInitialState()) {
+  TokenBloc() : super(TokenState()) {
     on<VerifyTokenRequest>(_onVerifyTokenRequested);
   }
 
   Future<void> _onVerifyTokenRequested(VerifyTokenRequest event, Emitter<TokenState> emit) async {
     try {
-      emit(AuthVerifyingToken());
+      // TODO: RETIRAR ESTO
+      emit(state.copyWith(status: TokenStatus.validated));
+      /*
+      emit(state.copyWith(status: TokenStatus.verifying));
       final response = await ApiService.request("/me", auth: Preferences.token);
       if (response.statusCode == 204) {
-        emit(AuthTokenValid());
+        emit(state.copyWith(status: TokenStatus.validated));
       } else {
-        emit(AuthTokenInvalid());
+        emit(state.copyWith(status: TokenStatus.failure));
       }
+      */
     } catch (e) {
       throw e.toString();
     }
   }
-
 }

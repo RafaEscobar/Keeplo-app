@@ -1,7 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keeplo/bloc/auth_bloc/auth_event.dart';
 import 'package:keeplo/bloc/auth_bloc/auth_state.dart';
+import 'package:keeplo/models/user.dart';
 import 'package:keeplo/services/api_service.dart';
+import 'package:keeplo/services/preferences.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState>{
   AuthBloc() : super(AuthState()){
@@ -25,7 +27,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>{
       await Future.delayed(const Duration(seconds: 1));
 
       if (response.statusCode == 200) {
-        emit(state.copyWith(status: AuthStatus.success));
+        User usr = User.fromJson(response.data['data']);
+        Preferences.token = response.data['data']['token'];
+        emit(state.copyWith(status: AuthStatus.success, user: usr));
       } else {
         emit(state.copyWith(status: AuthStatus.failure));
       }
@@ -53,6 +57,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>{
         }
       );
       if (response.statusCode == 201) {
+        emit(state.copyWith(user: User.fromJson(response.data['data'])));
         emit(state.copyWith(status: AuthStatus.success));
       } else {
         emit(state.copyWith(status: AuthStatus.failure));

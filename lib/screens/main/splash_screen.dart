@@ -73,9 +73,9 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
       backgroundColor: Colors.white,
       body: BlocListener<TokenBloc, TokenState>(
         listener: (context, state) {
-          if (state is AuthTokenValid) {
+          if (state.status == TokenStatus.validated) {
             _redirectToDashboard();
-          } else if (state is AuthTokenInvalid) {
+          } else if (state.status == TokenStatus.failure) {
             _redirectToLogin();
           }
         },
