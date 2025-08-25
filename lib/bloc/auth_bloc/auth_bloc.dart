@@ -27,11 +27,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>{
       await Future.delayed(const Duration(seconds: 1));
 
       if (response.statusCode == 200) {
-        User usr = User.fromJson(response.data['data']);
-        Preferences.token = response.data['data']['token'];
-        emit(state.copyWith(status: AuthStatus.success, user: usr));
+        Preferences.token = response.data['data']['token']; // Guardamos el token recibido
+        emit(state.copyWith(status: AuthStatus.success, user: User.fromJson(response.data['data']))); // Emitimos un status -success- y usuario
       } else {
-        emit(state.copyWith(status: AuthStatus.failure));
+        emit(state.copyWith(status: AuthStatus.failure)); // Lanzamos un status -failure-
       }
     } catch (e) {
       emit(state.copyWith(status: AuthStatus.failure));
@@ -57,10 +56,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>{
         }
       );
       if (response.statusCode == 201) {
-        emit(state.copyWith(user: User.fromJson(response.data['data'])));
-        emit(state.copyWith(status: AuthStatus.success));
+        Preferences.token = response.data['data']['token']; // Guardamos el token recibido
+        emit(state.copyWith(status: AuthStatus.success, user: User.fromJson(response.data['data']))); // Emitimos un status -success- y usuario
       } else {
-        emit(state.copyWith(status: AuthStatus.failure));
+        emit(state.copyWith(status: AuthStatus.failure)); // Lanzamos un status -failure-
       }
     } catch (e) {
       emit(state.copyWith(status: AuthStatus.failure));

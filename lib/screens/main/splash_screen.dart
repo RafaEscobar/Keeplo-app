@@ -27,12 +27,14 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
 
   //* Método para verificar estado de la sesión
   Future<void> initLoad() async {
+    // Con esto nos aseguramos que la splash no se muestre en desarrollo
     context.read<SplashBloc>().add(UpdateDisplayedSplash(true));
     try {
+      // Verificamos sí tenemos un token que validar.
       if(Preferences.token.isNotEmpty) {
-        context.read<TokenBloc>().add(VerifyTokenRequest());
+        context.read<TokenBloc>().add(VerifyTokenRequest()); // Validamos el token.
       } else {
-        _redirectToLogin();
+        _redirectToLogin(); // Redireccionamos al login si es que no tenemos token.
       }
     } catch (e) {
       SimpleToast.error(context: context, message: e.toString(), size: 14, iconSize: 50);
@@ -74,9 +76,9 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
       body: BlocListener<TokenBloc, TokenState>(
         listener: (context, state) {
           if (state.status == TokenStatus.validated) {
-            _redirectToDashboard();
+            _redirectToDashboard(); // Sí el token esta validado redireccionamos al dash
           } else if (state.status == TokenStatus.failure) {
-            _redirectToLogin();
+            _redirectToLogin(); // Sí el token no es valido redireccionamos al login
           }
         },
         child: Center(
