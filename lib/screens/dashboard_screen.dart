@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:keeplo/theme/app_theme.dart';
 import 'package:keeplo/widgets/dashboard/dash_header.dart';
+import 'package:keeplo/widgets/dashboard/dash_new_vahul.dart';
 import 'package:keeplo/widgets/dashboard/dash_search_bar.dart';
 
 class DashboardScreen extends StatefulWidget{
@@ -36,7 +37,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ],
             ),
           ),
-        )
+        ),
+        floatingActionButton: DashNewVahul()
       ),
     );
   }
