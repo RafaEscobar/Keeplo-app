@@ -1,15 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:keeplo/widgets/filter_button.dart';
 
-class DashSearchBar extends StatefulWidget {
-  const DashSearchBar({super.key});
-
-  @override
-  State<DashSearchBar> createState() => _DashSearchBarState();
-}
-
-class _DashSearchBarState extends State<DashSearchBar> {
-  TextEditingController controller = TextEditingController();
+class DashSearchBar extends StatelessWidget {
+  const DashSearchBar({super.key, required this.focusNode});
+  final FocusNode focusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +15,9 @@ class _DashSearchBarState extends State<DashSearchBar> {
           child: SizedBox(
             height: 44,
             child: TextField(
+              cursorColor: Colors.white,
+              focusNode: focusNode,
               style: TextStyle(color: Colors.white),
-              controller: controller,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.search, color: Colors.white),
                 contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 14),
