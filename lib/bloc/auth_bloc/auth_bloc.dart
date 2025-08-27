@@ -30,10 +30,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>{
         Preferences.token = response.data['data']['token']; // Guardamos el token recibido
         emit(state.copyWith(status: AuthStatus.success, user: User.fromJson(response.data['data']))); // Emitimos un status -success- y usuario
       } else {
-        emit(state.copyWith(status: AuthStatus.failure)); // Lanzamos un status -failure-
+        emit(state.copyWith(status: AuthStatus.failure, errorMessage: response.data['message'])); // Lanzamos un status -failure- de otro error
       }
     } catch (e) {
       emit(state.copyWith(status: AuthStatus.failure));
+      throw Exception(e.toString());
     }
   }
 
@@ -59,7 +60,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>{
         Preferences.token = response.data['data']['token']; // Guardamos el token recibido
         emit(state.copyWith(status: AuthStatus.success, user: User.fromJson(response.data['data']))); // Emitimos un status -success- y usuario
       } else {
-        emit(state.copyWith(status: AuthStatus.failure)); // Lanzamos un status -failure-
+        emit(state.copyWith(status: AuthStatus.failure, errorMessage: response.data['message'])); // Lanzamos un status -failure-
       }
     } catch (e) {
       emit(state.copyWith(status: AuthStatus.failure));

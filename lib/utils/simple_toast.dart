@@ -13,7 +13,7 @@ class SimpleToast {
         message: message,
         textStyle: TextStyle(fontSize: Responsive.isHorizontalTablet(context) ? 30 : size.sp, color: Colors.white, fontWeight: FontWeight.bold),
         textAlign: TextAlign.center,
-        messagePadding: EdgeInsetsGeometry.symmetric(horizontal: Responsive.isTablet(context) ? 100 : 20, vertical: 0),
+        messagePadding: EdgeInsetsGeometry.symmetric(horizontal: Responsive.isTablet(context) ? 100 : 30, vertical: 0),
       ),
   );
 
@@ -25,7 +25,7 @@ class SimpleToast {
         message: message,
         textStyle: TextStyle(fontSize: Responsive.isHorizontalTablet(context) ? 30 : size.sp, color: Colors.white, fontWeight: FontWeight.bold),
         textAlign: TextAlign.center,
-        messagePadding: EdgeInsetsGeometry.symmetric(horizontal: Responsive.isTablet(context) ? 100 : 20, vertical: 0),
+        messagePadding: EdgeInsetsGeometry.symmetric(horizontal: Responsive.isTablet(context) ? 100 : 30, vertical: 0),
       ),
   );
 
@@ -37,7 +37,7 @@ class SimpleToast {
         message: message,
         textStyle: TextStyle(fontSize: Responsive.isHorizontalTablet(context) ? 30 : size.sp, color: Colors.white, fontWeight: FontWeight.bold),
         textAlign: TextAlign.center,
-        messagePadding: EdgeInsetsGeometry.symmetric(horizontal: Responsive.isTablet(context) ? 100 : 20, vertical: 0),
+        messagePadding: EdgeInsetsGeometry.symmetric(horizontal: Responsive.isTablet(context) ? 100 : 30, vertical: 0),
       ),
   );
 }

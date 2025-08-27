@@ -43,8 +43,9 @@ class AppRoute {
         navigatorKey: navigatorKey,
         redirect: (context, state) {
           final SplashState appState = context.read<SplashBloc>().state;
-          bool isDisplayedSplash = appState.displayedSplash;
+          bool isDisplayedSplash = appState.displayedSplash; // Bandera temporal para evitar mostrar la splash en desarrollo
           if(isDisplayedSplash && state.matchedLocation == '/') {
+            //* Si tenemos un token redireccionamos al dash, de lo contrario al login.
             return (Preferences.token.isNotEmpty) ? "/${DashboardScreen.routeName}" : "/${LoginScreen.routeName}";
           }
           return null;

@@ -11,9 +11,6 @@ class TokenBloc extends Bloc<TokenEvent, TokenState>{
 
   Future<void> _onVerifyTokenRequested(VerifyTokenRequest event, Emitter<TokenState> emit) async {
     try {
-      // TODO: RETIRAR ESTO
-      emit(state.copyWith(status: TokenStatus.validated));
-      /*
       emit(state.copyWith(status: TokenStatus.verifying));
       final response = await ApiService.request("/me", auth: Preferences.token);
       if (response.statusCode == 204) {
@@ -21,7 +18,6 @@ class TokenBloc extends Bloc<TokenEvent, TokenState>{
       } else {
         emit(state.copyWith(status: TokenStatus.failure));
       }
-      */
     } catch (e) {
       throw e.toString();
     }

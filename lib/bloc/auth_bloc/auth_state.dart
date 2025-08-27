@@ -10,6 +10,7 @@ class AuthState extends Equatable {
   final String password;
   final AuthStatus status;
   final User? user;
+  final String errorMessage;
 
   const AuthState({
     this.name = '',
@@ -17,6 +18,7 @@ class AuthState extends Equatable {
     this.email = '',
     this.password = '',
     this.status = AuthStatus.initial,
+    this.errorMessage = '',
     this.user
   });
 
@@ -35,10 +37,11 @@ class AuthState extends Equatable {
       email: email ?? this.email,
       password: password ?? this.password,
       status: status ?? this.status,
-      user: user ?? this.user
+      user: user ?? this.user,
+      errorMessage: errorMessage ?? this.errorMessage
     );
   }
 
   @override
-  List<Object?> get props => [name, lastName, email, password, status];
+  List<Object?> get props => [name, lastName, email, password, status, errorMessage];
 }
