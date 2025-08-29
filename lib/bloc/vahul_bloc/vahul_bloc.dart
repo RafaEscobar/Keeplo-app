@@ -15,7 +15,7 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
       emit(state.copyWith(status: VahulStatus.loading));
       final respose = await ApiService.request("/vahuls", auth: Preferences.token);
       if (respose.statusCode == 200) {
-        List<Vahul> list = respose.data['data'].map((vahul) => Vahul.fromJson(vahul));
+        List<Vahul> list = (respose.data['data'] as List).map((vahul) => Vahul.fromJson(vahul)).toList();
         emit(state.copyWith(
           status: VahulStatus.success,
           vahules: List.from(list)
