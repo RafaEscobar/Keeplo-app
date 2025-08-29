@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:keeplo/bloc/auth_bloc/auth_bloc.dart';
+import 'package:keeplo/bloc/auth_bloc/auth_event.dart';
 import 'package:keeplo/bloc/splash_bloc/splash_bloc.dart';
 import 'package:keeplo/bloc/splash_bloc/splash_event.dart';
 import 'package:keeplo/bloc/token_bloc/token_bloc.dart';
@@ -76,6 +78,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
       body: BlocListener<TokenBloc, TokenState>(
         listener: (context, state) {
           if (state.status == TokenStatus.validated) {
+            //context.read<AuthBloc>().add(UserChange(user));
             _redirectToDashboard(); // Sí el token esta validado redireccionamos al dash
           } else if (state.status == TokenStatus.failure) {
             _redirectToLogin(); // Sí el token no es valido redireccionamos al login

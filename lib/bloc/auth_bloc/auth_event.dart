@@ -1,4 +1,5 @@
 import 'package:keeplo/bloc/auth_bloc/auth_state.dart';
+import 'package:keeplo/models/user.dart';
 
 abstract class AuthEvent {}
 
@@ -30,6 +31,11 @@ class LoadingChange extends AuthEvent {
 class AuthStatusChange extends AuthEvent {
   final AuthStatus staus;
   AuthStatusChange(this.staus);
+}
+
+class UserChange extends AuthEvent {
+  final User user;
+  UserChange(this.user);
 }
 
 class LoginSubmitted extends AuthEvent{}
