@@ -14,7 +14,7 @@ class TokenBloc extends Bloc<TokenEvent, TokenState>{
     try {
       emit(state.copyWith(status: TokenStatus.verifying));
       final response = await ApiService.request("/me", auth: Preferences.token);
-      if (response.statusCode == 204) {
+      if (response.statusCode == 200) {
         emit(state.copyWith(
           status: TokenStatus.validated,
           userTemp: User.fromJson(response.data['data'])
