@@ -45,6 +45,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           child: Padding(
             padding: EdgeInsetsGeometry.symmetric(horizontal: 14, vertical: 10),
             child: Column(
+              spacing: 26,
               children: [
                 DashSearchBar(focusNode: _searchFocusNode,),
                 BlocBuilder<VahulBloc, VahulState>(
@@ -62,12 +63,37 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         itemCount: list.length,
                         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 3,
-                          crossAxisSpacing: 8,
-                          mainAxisSpacing: 8,
-                          childAspectRatio: 0.75,
+                          crossAxisSpacing: 18,
+                          mainAxisSpacing: 12,
+                          childAspectRatio: 0.6,
                         ),
                         itemBuilder: (context, index) {
-                          return Text(list[index].name);
+                          return SizedBox(
+                            child: Column(
+                              spacing: 10,
+                              children: [
+                                SizedBox(
+                                  width: 80,
+                                  height: 80,
+                                  child: ClipOval(
+                                    child: Image.network(
+                                      "https://i.postimg.cc/QMsfsJJW/images.jpg",
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    "data dedjejkde kdej",
+                                    style: TextStyle(fontSize: 20, color: Colors.white),
+                                    textAlign: TextAlign.center,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                )
+                              ],
+                            ),
+                          );
                         },
                       )
                     );
