@@ -8,6 +8,7 @@ import 'package:keeplo/theme/app_theme.dart';
 import 'package:keeplo/widgets/dashboard/dash_header.dart';
 import 'package:keeplo/widgets/dashboard/dash_new_vahul.dart';
 import 'package:keeplo/widgets/dashboard/dash_search_bar.dart';
+import 'package:keeplo/widgets/dashboard/vahul_card.dart';
 
 class DashboardScreen extends StatefulWidget{
   const DashboardScreen({super.key});
@@ -68,32 +69,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           childAspectRatio: 0.6,
                         ),
                         itemBuilder: (context, index) {
-                          return SizedBox(
-                            child: Column(
-                              spacing: 10,
-                              children: [
-                                SizedBox(
-                                  width: 80,
-                                  height: 80,
-                                  child: ClipOval(
-                                    child: Image.network(
-                                      "https://i.postimg.cc/QMsfsJJW/images.jpg",
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    "data dedjejkde kdej",
-                                    style: TextStyle(fontSize: 20, color: Colors.white),
-                                    textAlign: TextAlign.center,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                )
-                              ],
-                            ),
-                          );
+                          return VahulCard(vahul: list[index]);
                         },
                       )
                     );
