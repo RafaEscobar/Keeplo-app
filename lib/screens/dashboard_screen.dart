@@ -50,10 +50,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 BlocBuilder<VahulBloc, VahulState>(
                   builder: (context, state) {
                     if (state.status == VahulStatus.loading) {
-                      return Center(child: CircularProgressIndicator(),);
+                      return Expanded(
+                        child: Center(
+                          child: CircularProgressIndicator(color: Colors.white,)
+                        ,)
+                      );
                     }
                     List<Vahul> list = state.vahules;
-                    return Expanded(
+                    return  Expanded(
                       child: GridView.builder(
                         itemCount: list.length,
                         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
