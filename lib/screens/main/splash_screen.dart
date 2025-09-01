@@ -8,6 +8,7 @@ import 'package:keeplo/bloc/splash_bloc/splash_event.dart';
 import 'package:keeplo/bloc/token_bloc/token_bloc.dart';
 import 'package:keeplo/bloc/token_bloc/token_event.dart';
 import 'package:keeplo/bloc/token_bloc/token_state.dart';
+import 'package:keeplo/models/user.dart';
 import 'package:keeplo/screens/dashboard_screen.dart';
 import 'package:keeplo/screens/main/login_screen.dart';
 import 'package:keeplo/services/preferences.dart';
@@ -78,7 +79,8 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
       body: BlocListener<TokenBloc, TokenState>(
         listener: (context, state) {
           if (state.status == TokenStatus.validated) {
-            //context.read<AuthBloc>().add(UserChange(user));
+            User currentUser = context.read<TokenBloc>().state.userTemp!;
+          context.read<AuthBloc>().add(UserChangeAuth(currentUser));
             _redirectToDashboard(); // Sí el token esta validado redireccionamos al dash
           } else if (state.status == TokenStatus.failure) {
             _redirectToLogin(); // Sí el token no es valido redireccionamos al login

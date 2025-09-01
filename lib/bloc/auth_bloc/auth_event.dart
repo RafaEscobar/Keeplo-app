@@ -33,9 +33,9 @@ class AuthStatusChange extends AuthEvent {
   AuthStatusChange(this.staus);
 }
 
-class UserChange extends AuthEvent {
+class UserChangeAuth extends AuthEvent {
   final User user;
-  UserChange(this.user);
+  UserChangeAuth(this.user);
 }
 
 class LoginSubmitted extends AuthEvent{}

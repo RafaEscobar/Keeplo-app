@@ -21,12 +21,12 @@ class DashHeader extends StatelessWidget implements PreferredSize{
             SizedBox(height: 16,),
             Align(
               alignment: Alignment.centerLeft,
-              child: Text("Nombre coompleto", style: TextStyle(fontSize: 24, color: Colors.white),),
+              child: Text(name, style: TextStyle(fontSize: 24, color: Colors.white),),
             ),
             SizedBox(height: 10,),
             Align(
               alignment: Alignment.centerLeft,
-              child: Text("Correo", style: TextStyle(fontSize: 24, color: Colors.white),),
+              child: Text(email, style: TextStyle(fontSize: 24, color: Colors.white),),
             ),
             SizedBox(height: 36,),
             Row(
