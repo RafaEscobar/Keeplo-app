@@ -37,7 +37,8 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
       emit(state.copyWith(
         vahules: (event.text.isEmpty) ?
           state.initialVahules :
-          state.vahules.where((vahul) => vahul.name.toLowerCase().contains(event.text.toLowerCase()),).toList()
+          state.vahules.where((vahul) => vahul.name.toLowerCase().contains(event.text.toLowerCase()),).toList(),
+        status: VahulStatus.searching
       ));
     } catch (e) {
       emit(state.copyWith(status: VahulStatus.failure));
