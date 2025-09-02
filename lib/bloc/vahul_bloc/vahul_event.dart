@@ -6,3 +6,5 @@ class SearchVahulEvent extends VahulEvent {
   final String text;
   SearchVahulEvent(this.text);
 }
+
+class OrderListEvent extends VahulEvent {}

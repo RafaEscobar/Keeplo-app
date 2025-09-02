@@ -9,6 +9,7 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
   VahulBloc() : super(VahulState()){
     on<GetVahulesEvent>(_getVahules);
     on<SearchVahulEvent>(_onSearchVahulEvent);
+    on<OrderListEvent>(_onOrderListEvent);
   }
 
   Future<void> _getVahules(GetVahulesEvent event, Emitter<VahulState> emit) async {
@@ -39,6 +40,18 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
           state.initialVahules :
           state.vahules.where((vahul) => vahul.name.toLowerCase().contains(event.text.toLowerCase()),).toList(),
         status: VahulStatus.searching
+      ));
+    } catch (e) {
+      emit(state.copyWith(status: VahulStatus.failure));
+      throw e.toString();
+    }
+  }
+
+  void _onOrderListEvent(OrderListEvent event, Emitter<VahulState> emit) {
+    try {
+      emit(state.copyWith(
+        vahules: state.vahules.reversed.toList(),
+        hasOrder: !state.hasOrder
       ));
     } catch (e) {
       emit(state.copyWith(status: VahulStatus.failure));

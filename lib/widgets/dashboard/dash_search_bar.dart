@@ -13,7 +13,12 @@ class DashSearchBar extends StatelessWidget {
     return Row(
       spacing: 10,
       children: [
-        FilterButton(icon: Icons.filter_list_alt, callback: () {},),
+        FilterButton(
+          icon: Icons.sort,
+          callback: () {
+            context.read<VahulBloc>().add(OrderListEvent());
+          },
+        ),
         Expanded(
           child: SizedBox(
             height: 44,
