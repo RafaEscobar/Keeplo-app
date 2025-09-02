@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:keeplo/bloc/vahul_bloc/vahul_bloc.dart';
+import 'package:keeplo/bloc/vahul_bloc/vahul_event.dart';
 import 'package:keeplo/widgets/filter_button.dart';
 
 class DashSearchBar extends StatelessWidget {
@@ -15,6 +18,7 @@ class DashSearchBar extends StatelessWidget {
           child: SizedBox(
             height: 44,
             child: TextField(
+              onChanged: (value) => context.read<VahulBloc>().add(SearchVahulEvent(value)),
               cursorColor: Colors.white,
               focusNode: focusNode,
               style: TextStyle(color: Colors.white),

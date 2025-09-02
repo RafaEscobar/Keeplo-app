@@ -8,6 +8,7 @@ import 'package:keeplo/services/preferences.dart';
 class VahulBloc extends Bloc<VahulEvent, VahulState>{
   VahulBloc() : super(VahulState()){
     on<GetVahulesEvent>(_getVahules);
+    on<SearchVahulEvent>(_onSearchVahulEvent);
   }
 
   Future<void> _getVahules(GetVahulesEvent event, Emitter<VahulState> emit) async {
@@ -19,11 +20,25 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
         List<Vahul> list = (respose.data['data'] as List).map((vahul) => Vahul.fromJson(vahul)).toList();
         emit(state.copyWith(
           status: VahulStatus.success,
-          vahules: List.from(list)
+          vahules: List.from(list),
+          initialVahules: List.from(list)
         ));
       } else {
         emit(state.copyWith(status: VahulStatus.failure, errorMessage: respose.data['message']));
       }
+    } catch (e) {
+      emit(state.copyWith(status: VahulStatus.failure));
+      throw e.toString();
+    }
+  }
+
+  void _onSearchVahulEvent(SearchVahulEvent event, Emitter<VahulState> emit){
+    try {
+      emit(state.copyWith(
+        vahules: (event.text.isEmpty) ?
+          state.initialVahules :
+          state.vahules.where((vahul) => vahul.name.toLowerCase().contains(event.text.toLowerCase()),).toList()
+      ));
     } catch (e) {
       emit(state.copyWith(status: VahulStatus.failure));
       throw e.toString();
