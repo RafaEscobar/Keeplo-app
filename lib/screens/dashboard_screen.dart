@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keeplo/bloc/vahul_bloc/vahul_bloc.dart';
 import 'package:keeplo/bloc/vahul_bloc/vahul_event.dart';
 import 'package:keeplo/bloc/vahul_bloc/vahul_state.dart';
+import 'package:keeplo/enums/empty_state_type.dart';
 import 'package:keeplo/models/vahul.dart';
 import 'package:keeplo/theme/app_theme.dart';
 import 'package:keeplo/widgets/dashboard/dash_header.dart';
@@ -59,28 +60,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       );
                     }
                     List<Vahul> list = state.vahules;
-                    if (list.isEmpty && state.status == VahulStatus.searching) {
-                      return Expanded(
-                        child: Center(
-                          child: Text(
-                            "No tienes baúles que coincidan con la búsqueda.",
-                            style: TextStyle(color: Colors.white, fontSize: 26),
-                            textAlign: TextAlign.center,
-                          )
-                        )
-                      );
-                    }
-                    if (list.isEmpty) {
-                      return Expanded(
-                        child: Center(
-                          child: Text(
-                            "Aún no tienes baúles, crea uno.",
-                            style: TextStyle(color: Colors.white, fontSize: 26),
-                            textAlign: TextAlign.center,
-                          )
-                        )
-                      );
-                    }
+                    if (list.isEmpty && state.status == VahulStatus.searching) return EmptyStateType.noSearchVahuls.emptyState;
+                    if (list.isEmpty) return EmptyStateType.noVahuls.emptyState;
                     return  Expanded(
                       child: GridView.builder(
                         itemCount: list.length,
