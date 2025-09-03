@@ -51,6 +51,7 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
     try {
       emit(state.copyWith(
         vahules: state.vahules.reversed.toList(),
+        initialVahules: state.initialVahules.reversed.toList(),
         hasOrder: !state.hasOrder
       ));
     } catch (e) {
