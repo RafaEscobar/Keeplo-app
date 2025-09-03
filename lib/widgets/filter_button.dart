@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:keeplo/bloc/vahul_bloc/vahul_bloc.dart';
 
 class FilterButton extends StatelessWidget {
@@ -13,7 +14,7 @@ class FilterButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isOrder = context.read<VahulBloc>().state.hasOrder;
+    bool isOrder = context.watch<VahulBloc>().state.hasOrder;
     return Material(
       color: Colors.transparent,
       borderRadius: BorderRadius.circular(20),
@@ -30,11 +31,18 @@ class FilterButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
           ),
           child: isOrder ?
-            RotatedBox(
-              quarterTurns: 2,
-              child: Icon(icon, color: Colors.white, size: 22),
+            SvgPicture.asset(
+              "assets/icons/up.svg",
+              height: 20,
+              width: 20,
+              colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
             ) :
-            Icon(icon, color: Colors.white, size: 22),
+            SvgPicture.asset(
+              "assets/icons/down.svg",
+              height: 20,
+              width: 20,
+              colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
+            )
         ),
       ),
     );
