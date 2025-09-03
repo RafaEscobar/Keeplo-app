@@ -14,6 +14,7 @@ class SimpleModal {
           child: SingleChildScrollView(
             padding: EdgeInsets.only(bottom: MediaQuery.of(modalContext).viewInsets.bottom),
             child: Container(
+              width: double.infinity,
               decoration: BoxDecoration(
                 color: AppTheme.primary,
                 border: Border(top: BorderSide(width: 1, color: Colors.white)),

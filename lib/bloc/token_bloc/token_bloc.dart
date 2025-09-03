@@ -21,6 +21,7 @@ class TokenBloc extends Bloc<TokenEvent, TokenState>{
         ));
       } else {
         emit(state.copyWith(status: TokenStatus.failure));
+        if (Preferences.token.isNotEmpty) Preferences.token = '';
       }
     } catch (e) {
       throw e.toString();
