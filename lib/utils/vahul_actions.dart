@@ -1,6 +1,7 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:keeplo/widgets/simple_modal.dart';
 
 class VahulActions {
@@ -31,6 +32,17 @@ class VahulActions {
     );
   }
 
+  static Future<void> _pickImage({required BuildContext context, required ImageSource source}) async {
+    try {
+      Navigator.of(context).pop();
+      final picker = ImagePicker();
+      final currentImage = await picker.pickImage(source: source);
+      //if (null != currentImage) setState(() => context.read<EntertainmentEntityProvider>().temporaryImage = File(currentImage.path));
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
   static void openImageTypeSelection({required BuildContext context}){
     SimpleModal.openModal(
       context: context,
@@ -43,30 +55,36 @@ class VahulActions {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Column(
-                  spacing: 6,
-                  children: [
-                    SvgPicture.asset(
-                      "assets/icons/gallery.svg",
-                      height: 40,
-                      width: 40,
-                      colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
-                    ),
-                    Text("Galería", style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.w600),),
-                  ],
+                GestureDetector(
+                  onTap: () => _pickImage(context: context, source: ImageSource.gallery),
+                  child: Column(
+                    spacing: 6,
+                    children: [
+                      SvgPicture.asset(
+                        "assets/icons/gallery.svg",
+                        height: 40,
+                        width: 40,
+                        colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                      ),
+                      Text("Galería", style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.w600),),
+                    ],
+                  ),
                 ),
                 SizedBox(height: 10,),
-                Column(
-                  spacing: 6,
-                  children: [
-                    SvgPicture.asset(
-                      "assets/icons/camera.svg",
-                      height: 40,
-                      width: 40,
-                      colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
-                    ),
-                    Text("Cámara", style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.w600),),
-                  ],
+                GestureDetector(
+                  onTap: () => _pickImage(context: context, source: ImageSource.camera),
+                  child: Column(
+                    spacing: 6,
+                    children: [
+                      SvgPicture.asset(
+                        "assets/icons/camera.svg",
+                        height: 40,
+                        width: 40,
+                        colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                      ),
+                      Text("Cámara", style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.w600),),
+                    ],
+                  ),
                 )
 
               ],
