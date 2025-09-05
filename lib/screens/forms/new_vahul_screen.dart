@@ -38,7 +38,7 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
             children: [
               SizedBox(height: 20,),
               SimpleInput(
-                //onChange: (value) => context.read<AuthBloc>().add(EmailChange(value!)),
+                onChange: (value) => context.read<AuthBloc>().add(EmailChange(value!)),
                 textStyle: TextStyle(fontSize: 16.sp),
                 name: 'name',
                 hintText: 'Nombre',
