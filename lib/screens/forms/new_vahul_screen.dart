@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,10 +6,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_bloc.dart';
 import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_event.dart';
+import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_state.dart';
 import 'package:keeplo/theme/app_theme.dart';
 import 'package:keeplo/utils/hexa_color.dart';
 import 'package:keeplo/utils/simple_toast.dart';
 import 'package:keeplo/utils/vahul_actions.dart';
+import 'package:keeplo/widgets/forms/add_image_.dart';
 import 'package:keeplo/widgets/forms/simple_input.dart';
 import 'package:keeplo/widgets/simple_button.dart';
 
@@ -119,11 +122,16 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
                     onTap: () => VahulActions.openImageTypeSelection(context: context),
                     child: Align(
                       alignment: Alignment.center,
-                      child: SvgPicture.asset(
-                        "assets/icons/add_image.svg",
-                        height: 90,
-                        width: 90,
-                        colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                      child: AddImage(
+                        body: BlocSelector<NewVahulBloc, NewVahulState, File?>(
+                          selector: (state) => state.image,
+                          builder: (context, image) {
+                            return (image == null) ? SvgPicture.asset(
+                                "assets/icons/image.svg",
+                                colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                              ) : ClipOval(child: Image.file(File(image.path), fit: BoxFit.cover,));
+                          },
+                        ),
                       ),
                     ),
                   ),
