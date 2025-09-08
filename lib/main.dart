@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:keeplo/helpers/provider_box.dart';
+import 'package:keeplo/bloc/bloc_barrel.dart';
+
 import 'package:keeplo/routes/app_route.dart';
 import 'package:keeplo/services/preferences.dart';
 import 'package:keeplo/theme/app_theme.dart';
@@ -25,7 +25,12 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       child: MultiBlocProvider(
-        providers: ProviderBox.providers,
+        providers: [
+          BlocProvider(create: (_) => SplashBloc(),),
+          BlocProvider(create: (_) => TokenBloc(),),
+          BlocProvider(create: (_) => AuthBloc(),),
+          BlocProvider(create: (_) => VahulBloc())
+        ],
         child: MaterialApp.router(
           theme: AppTheme.lightTheme,
           debugShowCheckedModeBanner: false,
