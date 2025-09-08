@@ -21,3 +21,5 @@ class VahulImageChange extends NewVahulEvent {
   final File image;
   VahulImageChange(this.image);
 }
+
+class SubmitVahulForm extends NewVahulEvent {}

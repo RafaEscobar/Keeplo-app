@@ -7,8 +7,10 @@ import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_bloc.dart';
 import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_event.dart';
 import 'package:keeplo/theme/app_theme.dart';
 import 'package:keeplo/utils/hexa_color.dart';
+import 'package:keeplo/utils/simple_toast.dart';
 import 'package:keeplo/utils/vahul_actions.dart';
 import 'package:keeplo/widgets/forms/simple_input.dart';
+import 'package:keeplo/widgets/simple_button.dart';
 
 class NewVahulScreen extends StatefulWidget {
   const NewVahulScreen({super.key});
@@ -24,7 +26,18 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
   void _onColorSelected(Color color) {
     String hexaColor = HexaColor.getCode(color);
     context.read<NewVahulBloc>().add(VahulColorChange(hexaColor));
-    setState(() => _colorSelected = color);
+    setState(() {
+      _colorSelected = color;
+    });
+  }
+
+  void runValidation() {
+    NewVahulBloc bloc = context.read<NewVahulBloc>();
+    if (bloc.state.name.isNotEmpty && bloc.state.image != null) {
+      context.read<NewVahulBloc>().add(SubmitVahulForm());
+    } else {
+      SimpleToast.info(context: context, message: "Proporciona los datos obligatorios. ", size: 14, iconSize: 50);
+    }
   }
 
   @override
@@ -39,77 +52,95 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
           padding: EdgeInsetsGeometry.symmetric(horizontal: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SizedBox(height: 20,),
-              SimpleInput(
-                onChange: (value) => context.read<NewVahulBloc>().add(VahulNameChange(value!)),
-                textStyle: TextStyle(fontSize: 16.sp),
-                name: 'name',
-                hintText: 'Nombre',
-                keyboardType: TextInputType.emailAddress,
-                contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                //focusNode: widget.emailFocusNode,
-                maxLength: 60,
-                validator: FormBuilderValidators.compose([
-                  FormBuilderValidators.required(errorText: 'El nombre del baúl es obligatorio.'),
-                  FormBuilderValidators.minLength(3, errorText: 'El nombre del baúl es muy corto.'),
-                  FormBuilderValidators.maxLength(40, errorText: 'El nombre del baúl es demasiado grande')
-                ]),
-                onEditingComplete: () {
-                  //FocusScope.of(context).requestFocus(widget.passwordFocuesNode);
-                },
-              ),
-              SizedBox(height: 20,),
-              SimpleInput(
-                onChange: (value) => context.read<NewVahulBloc>().add(VahulDescriptionChange(value!)),
-                textStyle: TextStyle(fontSize: 16.sp),
-                name: 'description',
-                hintText: 'Descripición',
-                keyboardType: TextInputType.emailAddress,
-                contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                //focusNode: widget.emailFocusNode,
-                maxLength: 60,
-                validator: FormBuilderValidators.compose([
-                  FormBuilderValidators.minLength(3, errorText: 'La descripción es muy corta.'),
-                  FormBuilderValidators.maxLength(40, errorText: 'La descripción es muy extensa.')
-                ]),
-                onEditingComplete: () {
-                  //FocusScope.of(context).requestFocus(widget.passwordFocuesNode);
-                },
-              ),
-              SizedBox(height: 20,),
-              Text("Color:", style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.w600),),
-              SizedBox(height: 10,),
-              GestureDetector(
-                onTap: () => VahulActions.openColorSelection(context: context, onColorChanged: _onColorSelected),
-                child: Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: _colorSelected,
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      width: 1,
-                      color: Colors.white
-                    )
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 20,),
+                  SimpleInput(
+                    onChange: (value) => context.read<NewVahulBloc>().add(VahulNameChange(value!)),
+                    textStyle: TextStyle(fontSize: 16.sp),
+                    name: 'name',
+                    hintText: 'Nombre*',
+                    keyboardType: TextInputType.emailAddress,
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                    //focusNode: widget.emailFocusNode,
+                    maxLength: 60,
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(errorText: 'El nombre del baúl es obligatorio.'),
+                      FormBuilderValidators.minLength(3, errorText: 'El nombre del baúl es muy corto.'),
+                      FormBuilderValidators.maxLength(40, errorText: 'El nombre del baúl es demasiado grande')
+                    ]),
+                    onEditingComplete: () {
+                      //FocusScope.of(context).requestFocus(widget.passwordFocuesNode);
+                    },
                   ),
-                ),
-              ),
-              SizedBox(height: 20,),
-              Text("Imagen:", style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.w600),),
-              SizedBox(height: 14,),
-              GestureDetector(
-                onTap: () => VahulActions.openImageTypeSelection(context: context),
-                child: Align(
-                  alignment: Alignment.center,
-                  child: SvgPicture.asset(
-                    "assets/icons/add_image.svg",
-                    height: 90,
-                    width: 90,
-                    colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                  SizedBox(height: 20,),
+                  SimpleInput(
+                    onChange: (value) => context.read<NewVahulBloc>().add(VahulDescriptionChange(value!)),
+                    textStyle: TextStyle(fontSize: 16.sp),
+                    name: 'description',
+                    hintText: 'Descripición',
+                    keyboardType: TextInputType.emailAddress,
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                    //focusNode: widget.emailFocusNode,
+                    maxLength: 60,
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.minLength(3, errorText: 'La descripción es muy corta.'),
+                      FormBuilderValidators.maxLength(40, errorText: 'La descripción es muy extensa.')
+                    ]),
+                    onEditingComplete: () {
+                      //FocusScope.of(context).requestFocus(widget.passwordFocuesNode);
+                    },
                   ),
-                ),
+                  SizedBox(height: 20,),
+                  Text("Color:", style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.w600),),
+                  SizedBox(height: 10,),
+                  GestureDetector(
+                    onTap: () => VahulActions.openColorSelection(context: context, onColorChanged: _onColorSelected),
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: _colorSelected,
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          width: 1,
+                          color: Colors.white
+                        )
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20,),
+                  Text("Imagen:*", style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.w600),),
+                  SizedBox(height: 14,),
+                  GestureDetector(
+                    onTap: () => VahulActions.openImageTypeSelection(context: context),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: SvgPicture.asset(
+                        "assets/icons/add_image.svg",
+                        height: 90,
+                        width: 90,
+                        colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                      ),
+                    ),
+                  ),
+                ],
               ),
+              Column(
+                children: [
+                  SimpleButton(
+                    text: "Guardar",
+                    callback: () {
+                      runValidation();
+                    },
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  ),
+                  SizedBox(height: 10,)
+                ],
+              )
             ],
           ),
         )
