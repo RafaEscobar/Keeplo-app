@@ -17,6 +17,11 @@ class VahulColorChange extends NewVahulEvent {
   VahulColorChange(this.color);
 }
 
+class VahulUserIdChange extends NewVahulEvent {
+  final int userId;
+  VahulUserIdChange(this.userId);
+}
+
 class VahulImageChange extends NewVahulEvent {
   final File image;
   VahulImageChange(this.image);
