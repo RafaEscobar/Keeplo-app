@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_bloc.dart';
+import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_event.dart';
 import 'package:keeplo/theme/app_theme.dart';
+import 'package:keeplo/utils/hexa_color.dart';
 import 'package:keeplo/utils/vahul_actions.dart';
 import 'package:keeplo/widgets/forms/simple_input.dart';
 
@@ -18,9 +22,9 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
   Color _colorSelected = Colors.blue;
 
   void _onColorSelected(Color color) {
-    setState(() {
-      _colorSelected = color;
-    });
+    String hexaColor = HexaColor.getCode(color);
+    context.read<NewVahulBloc>().add(VahulColorChange(hexaColor));
+    setState(() => _colorSelected = color);
   }
 
   @override
@@ -38,7 +42,7 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
             children: [
               SizedBox(height: 20,),
               SimpleInput(
-                onChange: (value) => context.read<AuthBloc>().add(EmailChange(value!)),
+                onChange: (value) => context.read<NewVahulBloc>().add(VahulNameChange(value!)),
                 textStyle: TextStyle(fontSize: 16.sp),
                 name: 'name',
                 hintText: 'Nombre',
@@ -57,7 +61,7 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
               ),
               SizedBox(height: 20,),
               SimpleInput(
-                //onChange: (value) => context.read<AuthBloc>().add(EmailChange(value!)),
+                onChange: (value) => context.read<NewVahulBloc>().add(VahulDescriptionChange(value!)),
                 textStyle: TextStyle(fontSize: 16.sp),
                 name: 'description',
                 hintText: 'Descripición',

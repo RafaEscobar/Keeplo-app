@@ -1,7 +1,11 @@
+import 'dart:io';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_bloc.dart';
+import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_event.dart';
 import 'package:keeplo/widgets/simple_modal.dart';
 
 class VahulActions {
@@ -37,7 +41,9 @@ class VahulActions {
       Navigator.of(context).pop();
       final picker = ImagePicker();
       final currentImage = await picker.pickImage(source: source);
-      //if (null != currentImage) setState(() => context.read<EntertainmentEntityProvider>().temporaryImage = File(currentImage.path));
+      if (context.mounted) {
+        if (null != currentImage) context.read<NewVahulBloc>().add(VahulImageChange(File(currentImage.path)));
+      }
     } catch (e) {
       throw Exception(e.toString());
     }
