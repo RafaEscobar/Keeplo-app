@@ -68,17 +68,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       if (list.isEmpty && state.status == VahulStatus.searching) return EmptyStateType.noSearchVahuls.emptyState;
                       if (list.isEmpty) return EmptyStateType.noVahuls.emptyState;
                       return  Expanded(
-                        child: GridView.builder(
-                          itemCount: list.length,
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            crossAxisSpacing: 18,
-                            mainAxisSpacing: 12,
-                            childAspectRatio: 0.6,
-                          ),
-                          itemBuilder: (context, index) {
-                            return VahulCard(vahul: list[index]);
+                        child: RefreshIndicator(
+                          color: AppTheme.primary,
+                          backgroundColor: Colors.white,
+                          onRefresh: () async {
+                            context.read<VahulBloc>().add(GetVahulesEvent());
                           },
+                          child: GridView.builder(
+                            itemCount: list.length,
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              crossAxisSpacing: 18,
+                              mainAxisSpacing: 12,
+                              childAspectRatio: 0.6,
+                            ),
+                            itemBuilder: (context, index) {
+                              return VahulCard(vahul: list[index]);
+                            },
+                          ),
                         )
                       );
                     },
