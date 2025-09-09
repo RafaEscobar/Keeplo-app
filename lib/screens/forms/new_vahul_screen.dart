@@ -26,6 +26,8 @@ class NewVahulScreen extends StatefulWidget {
 
 class _NewVahulScreenState extends State<NewVahulScreen> {
   Color _colorSelected = Colors.blue;
+  FocusNode nameFocusNode = FocusNode();
+  FocusNode descriptionFocusNode = FocusNode();
 
   void _onColorSelected(Color color) {
     String hexaColor = HexaColor.getCode(color);
@@ -56,7 +58,7 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
         child: BlocConsumer<NewVahulBloc, NewVahulState>(
           listener: (context, state) {
             if (state.status == NewVahulStatus.success) {
-              context.goNamed(DashboardScreen.routeName);
+              context.pushNamed(DashboardScreen.routeName);
             } else if (state.status == NewVahulStatus.fail) {
               SimpleToast.info(context: context, message: state.messageError, size: 14, iconSize: 50);
               context.read<NewVahulBloc>().add(VahulStatusChange(NewVahulStatus.initial));
@@ -82,7 +84,7 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
                             hintText: 'Nombre*',
                             keyboardType: TextInputType.emailAddress,
                             contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                            //focusNode: widget.emailFocusNode,
+                            focusNode: nameFocusNode,
                             maxLength: 60,
                             validator: FormBuilderValidators.compose([
                               FormBuilderValidators.required(errorText: 'El nombre del baúl es obligatorio.'),
@@ -90,7 +92,7 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
                               FormBuilderValidators.maxLength(40, errorText: 'El nombre del baúl es demasiado grande')
                             ]),
                             onEditingComplete: () {
-                              //FocusScope.of(context).requestFocus(widget.passwordFocuesNode);
+                              FocusScope.of(context).requestFocus(descriptionFocusNode);
                             },
                           ),
                           SizedBox(height: 20,),
@@ -101,21 +103,24 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
                             hintText: 'Descripición',
                             keyboardType: TextInputType.emailAddress,
                             contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                            //focusNode: widget.emailFocusNode,
+                            focusNode: descriptionFocusNode,
                             maxLength: 60,
                             validator: FormBuilderValidators.compose([
                               FormBuilderValidators.minLength(3, errorText: 'La descripción es muy corta.'),
                               FormBuilderValidators.maxLength(40, errorText: 'La descripción es muy extensa.')
                             ]),
                             onEditingComplete: () {
-                              //FocusScope.of(context).requestFocus(widget.passwordFocuesNode);
+                              FocusScope.of(context).unfocus();
                             },
                           ),
                           SizedBox(height: 20,),
                           Text("Color:", style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.w600),),
                           SizedBox(height: 10,),
                           GestureDetector(
-                            onTap: () => VahulActions.openColorSelection(context: context, onColorChanged: _onColorSelected),
+                            onTap: () {
+                              Navigator.of(context).pop();
+                              VahulActions.openColorSelection(context: context, onColorChanged: _onColorSelected);
+                            },
                             child: Container(
                               width: 40,
                               height: 40,
