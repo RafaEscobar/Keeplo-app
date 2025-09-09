@@ -58,6 +58,7 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
         child: BlocConsumer<NewVahulBloc, NewVahulState>(
           listener: (context, state) {
             if (state.status == NewVahulStatus.success) {
+              context.read<NewVahulBloc>().add(NewVahulClean());
               context.pushNamed(DashboardScreen.routeName);
             } else if (state.status == NewVahulStatus.fail) {
               SimpleToast.info(context: context, message: state.messageError, size: 14, iconSize: 50);
@@ -118,7 +119,8 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
                           SizedBox(height: 10,),
                           GestureDetector(
                             onTap: () {
-                              Navigator.of(context).pop();
+                              nameFocusNode.unfocus();
+                              descriptionFocusNode.unfocus();
                               VahulActions.openColorSelection(context: context, onColorChanged: _onColorSelected);
                             },
                             child: Container(

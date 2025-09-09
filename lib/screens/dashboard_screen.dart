@@ -21,10 +21,13 @@ class DashboardScreen extends StatefulWidget{
 
 class _DashboardScreenState extends State<DashboardScreen> {
   final FocusNode _searchFocusNode = FocusNode();
+  final ScrollController _scrollController = ScrollController();
+  final double _threshold = 200.0;
 
   @override
   void initState() {
     super.initState();
+    _scrollController.addListener(_onScroll);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<VahulBloc>().add(GetVahulesEvent());
     },);
@@ -32,8 +35,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
     _searchFocusNode.dispose();
     super.dispose();
+  }
+
+  void _onScroll() {
+    if (!_scrollController.hasClients) return;
+    VahulBloc bloc = context.read<VahulBloc>();
+
+    final position = _scrollController.position;
+    if (position.pixels >= position.maxScrollExtent - _threshold) {
+      if (bloc.state.hasMore) {
+        int page = bloc.state.page;
+        bloc.add(VahulNewPageEvent(page++));
+        bloc.add(GetVahulesEvent());
+      }
+    }
   }
 
   @override
@@ -75,6 +94,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             context.read<VahulBloc>().add(GetVahulesEvent());
                           },
                           child: GridView.builder(
+                            controller: _scrollController,
                             itemCount: list.length,
                             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 3,

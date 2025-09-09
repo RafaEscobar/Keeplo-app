@@ -40,3 +40,4 @@ class VahulImageChange extends NewVahulEvent {
 }
 
 class SubmitVahulForm extends NewVahulEvent {}
+class NewVahulClean extends NewVahulEvent {}

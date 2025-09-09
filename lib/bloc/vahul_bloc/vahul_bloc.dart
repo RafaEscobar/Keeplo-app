@@ -10,18 +10,41 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
     on<GetVahulesEvent>(_getVahules);
     on<SearchVahulEvent>(_onSearchVahulEvent);
     on<OrderListEvent>(_onOrderListEvent);
+    on<LoadMoreVahulesEvent>(_loadMoreVahules);
+    on<VahulNewPageEvent>(_onVahulNewPageEvent);
   }
 
   Future<void> _getVahules(GetVahulesEvent event, Emitter<VahulState> emit) async {
     try {
       emit(state.copyWith(status: VahulStatus.loading));
-      final respose = await ApiService.request("/vahuls", auth: Preferences.token);
+      final respose = await ApiService.request("/vahuls?limit=10&page=${state.page}", auth: Preferences.token);
       if (respose.statusCode == 200) {
         List<Vahul> list = (respose.data['data'] as List).map((vahul) => Vahul.fromJson(vahul)).toList();
         emit(state.copyWith(
           status: VahulStatus.success,
           vahules: List.from(list),
-          initialVahules: List.from(list)
+          initialVahules: List.from(list),
+          hasMore: respose.data['meta']['links']['next'] != null
+        ));
+      } else {
+        emit(state.copyWith(status: VahulStatus.failure, errorMessage: respose.data['message']));
+      }
+    } catch (e) {
+      emit(state.copyWith(status: VahulStatus.failure));
+      throw e.toString();
+    }
+  }
+
+  Future<void> _loadMoreVahules(LoadMoreVahulesEvent event, Emitter<VahulState> emit) async {
+    try {
+      final respose = await ApiService.request("/vahuls?limit=12&page=${state.page}", auth: Preferences.token);
+      if (respose.statusCode == 200) {
+        List<Vahul> list = state.vahules;
+        list.addAll((respose.data['data'] as List).map((vahul) => Vahul.fromJson(vahul)).toList());
+        emit(state.copyWith(
+          vahules: List.from(list),
+          initialVahules: List.from(list),
+          hasMore: respose.data['meta']['links']['next'] != null
         ));
       } else {
         emit(state.copyWith(status: VahulStatus.failure, errorMessage: respose.data['message']));
@@ -59,4 +82,11 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
     }
   }
 
+  void _onVahulNewPageEvent(VahulNewPageEvent event, Emitter<VahulState> emit) {
+    try {
+      emit(state.copyWith(page: event.newPage));
+    } catch (e) {
+      throw e.toString();
+    }
+  }
 }

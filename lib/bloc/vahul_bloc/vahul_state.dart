@@ -8,6 +8,8 @@ class VahulState extends Equatable{
   final VahulStatus status;
   final String errorMessage;
   final bool hasOrder;
+  final bool hasMore;
+  final int page;
 
   const VahulState({
     this.vahules = const [],
@@ -15,6 +17,8 @@ class VahulState extends Equatable{
     this.status = VahulStatus.initial,
     this.errorMessage = '',
     this.hasOrder = false,
+    this.hasMore = false,
+    this.page = 1
   });
 
   VahulState copyWith({
@@ -23,14 +27,18 @@ class VahulState extends Equatable{
     VahulStatus? status,
     String? errorMessage,
     bool? hasOrder,
+    bool? hasMore,
+    int? page,
   }) => VahulState(
     vahules: vahules ?? this.vahules,
     initialVahules: initialVahules ?? this.initialVahules,
     status: status ?? this.status,
     errorMessage: errorMessage ?? this.errorMessage,
-    hasOrder: hasOrder ?? this.hasOrder
+    hasOrder: hasOrder ?? this.hasOrder,
+    hasMore: hasMore ?? this.hasMore,
+    page: page ?? this.page
   );
 
   @override
-  List<Object?> get props => [vahules, status, errorMessage, initialVahules, hasOrder];
+  List<Object?> get props => [vahules, status, errorMessage, initialVahules, hasOrder, hasMore, page];
 }

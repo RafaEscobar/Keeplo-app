@@ -20,6 +20,7 @@ class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
     on<VahulUserIdChange>(_onVahulUserIdChange);
     on<VahulStatusChange>(_onVahulStatusChange);
     on<VahulMessageErrorChange>(_onVahulMessageErrorChange);
+    on<NewVahulClean>(_onNewVahulClean);
   }
 
   void _onVahulNameChange(VahulNameChange event, Emitter<NewVahulState> emit) {
@@ -76,6 +77,18 @@ class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
     } catch (e) {
       throw Exception(e.toString());
     }
+  }
+
+  void _onNewVahulClean(NewVahulClean event, Emitter<NewVahulState> emit) {
+    emit(state.copyWith(
+      name: '',
+      description: '',
+      color: '',
+      image: File(''),
+      userId: 0,
+      status: NewVahulStatus.initial,
+      messageError: ''
+    ));
   }
 
   Future<void> _onSubmitVahulForm(SubmitVahulForm event, Emitter<NewVahulState> emit) async {
