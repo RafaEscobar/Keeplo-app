@@ -13,5 +13,8 @@ class SearchVahulEvent extends VahulEvent {
 
 class OrderListEvent extends VahulEvent {}
 class GetVahulesEvent extends VahulEvent {}
-class LoadMoreVahulesEvent extends VahulEvent {}
+class LoadMoreVahulesEvent extends VahulEvent {
+  final int newPage;
+  LoadMoreVahulesEvent(this.newPage);
+}
 class VahulCleanBloc extends VahulEvent {}

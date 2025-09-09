@@ -84,7 +84,7 @@ class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
       name: '',
       description: '',
       color: '',
-      image: File(''),
+      image: null,
       userId: 0,
       status: NewVahulStatus.initial,
       messageError: ''

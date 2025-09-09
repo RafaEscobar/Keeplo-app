@@ -47,10 +47,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     final position = _scrollController.position;
     if (position.pixels >= position.maxScrollExtent - _threshold) {
-      if (bloc.state.hasMore) {
-        int page = bloc.state.page;
-        bloc.add(VahulNewPageEvent(page++));
-        bloc.add(GetVahulesEvent());
+      if (bloc.state.hasMore && !bloc.state.loadingMore) {
+        bloc.add(LoadMoreVahulesEvent(bloc.state.page + 1));
       }
     }
   }

@@ -17,7 +17,7 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
   Future<void> _getVahules(GetVahulesEvent event, Emitter<VahulState> emit) async {
     try {
       emit(state.copyWith(status: VahulStatus.loading));
-      final respose = await ApiService.request("/vahuls?limit=10&page=${state.page}", auth: Preferences.token);
+      final respose = await ApiService.request("/vahuls?limit=12&", auth: Preferences.token);
       if (respose.statusCode == 200) {
         List<Vahul> list = (respose.data['data'] as List).map((vahul) => Vahul.fromJson(vahul)).toList();
         emit(state.copyWith(
@@ -37,20 +37,25 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
 
   Future<void> _loadMoreVahules(LoadMoreVahulesEvent event, Emitter<VahulState> emit) async {
     try {
-      final respose = await ApiService.request("/vahuls?limit=12&page=${state.page}", auth: Preferences.token);
+      if (state.loadingMore) return;
+      if (event.newPage <= state.page) return;
+      emit(state.copyWith(loadingMore: true));
+      final respose = await ApiService.request("/vahuls?limit=12&page=${event.newPage}", auth: Preferences.token);
       if (respose.statusCode == 200) {
         List<Vahul> list = state.vahules;
         list.addAll((respose.data['data'] as List).map((vahul) => Vahul.fromJson(vahul)).toList());
         emit(state.copyWith(
           vahules: List.from(list),
           initialVahules: List.from(list),
-          hasMore: respose.data['meta']['links']['next'] != null
+          hasMore: respose.data['meta']['links']['next'] != null,
+          page: event.newPage,
+          loadingMore: false
         ));
       } else {
-        emit(state.copyWith(status: VahulStatus.failure, errorMessage: respose.data['message']));
+        emit(state.copyWith(status: VahulStatus.failure, errorMessage: respose.data['message'], loadingMore: false));
       }
     } catch (e) {
-      emit(state.copyWith(status: VahulStatus.failure));
+      emit(state.copyWith(status: VahulStatus.failure, loadingMore: false));
       throw e.toString();
     }
   }
