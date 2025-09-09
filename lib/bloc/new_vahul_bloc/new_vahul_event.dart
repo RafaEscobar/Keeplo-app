@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_state.dart';
+
 abstract class NewVahulEvent {}
 
 class VahulNameChange extends NewVahulEvent {
@@ -20,6 +22,16 @@ class VahulColorChange extends NewVahulEvent {
 class VahulUserIdChange extends NewVahulEvent {
   final int userId;
   VahulUserIdChange(this.userId);
+}
+
+class VahulMessageErrorChange extends NewVahulEvent {
+  final String message;
+  VahulMessageErrorChange(this.message);
+}
+
+class VahulStatusChange extends NewVahulEvent {
+  final NewVahulStatus status;
+  VahulStatusChange(this.status);
 }
 
 class VahulImageChange extends NewVahulEvent {

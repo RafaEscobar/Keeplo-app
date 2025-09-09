@@ -10,6 +10,7 @@ class NewVahulState extends Equatable{
   final File? image;
   final int userId;
   final NewVahulStatus status;
+  final String messageError;
 
   const NewVahulState({
     this.name = '',
@@ -17,6 +18,7 @@ class NewVahulState extends Equatable{
     this.color = '',
     this.userId = 0,
     this.status = NewVahulStatus.initial,
+    this.messageError = '',
     this.image
   });
 
@@ -26,6 +28,7 @@ class NewVahulState extends Equatable{
     String? color,
     int? userId,
     NewVahulStatus? status,
+    String? messageError,
     File? image
   }) => NewVahulState(
     name: name ?? this.name,
@@ -33,9 +36,10 @@ class NewVahulState extends Equatable{
     color: color ?? this.color,
     userId: userId ?? this.userId,
     status: status ?? this.status,
+    messageError: messageError ?? this.messageError,
     image: image ?? this.image
   );
 
   @override
-  List<Object?> get props => [name, description, color, userId, status, image];
+  List<Object?> get props => [name, description, color, userId, status, messageError, image];
 }

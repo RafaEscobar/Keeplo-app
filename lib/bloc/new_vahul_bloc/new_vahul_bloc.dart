@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,6 +18,8 @@ class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
     on<VahulImageChange>(_onVahulImageChange);
     on<SubmitVahulForm>(_onSubmitVahulForm);
     on<VahulUserIdChange>(_onVahulUserIdChange);
+    on<VahulStatusChange>(_onVahulStatusChange);
+    on<VahulMessageErrorChange>(_onVahulMessageErrorChange);
   }
 
   void _onVahulNameChange(VahulNameChange event, Emitter<NewVahulState> emit) {
@@ -58,27 +62,31 @@ class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
     }
   }
 
+  void _onVahulMessageErrorChange(VahulMessageErrorChange event, Emitter<NewVahulState> emit) {
+    try {
+      emit(state.copyWith(messageError: event.message));
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  void _onVahulStatusChange(VahulStatusChange event, Emitter<NewVahulState> emit){
+    try {
+      emit(state.copyWith(status: event.status));
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
   Future<void> _onSubmitVahulForm(SubmitVahulForm event, Emitter<NewVahulState> emit) async {
     emit(state.copyWith(status: NewVahulStatus.loading));
 
     try {
       if (state.image == null) {
-        emit(state.copyWith(
-          status: NewVahulStatus.fail,
-        ));
+        emit(state.copyWith(status: NewVahulStatus.fail,));
         return;
       }
-
-          final safeColor = state.color.replaceAll('#', '');
-      final safeName = state.name.replaceAll(RegExp(r'[^A-Za-z0-9_\-]'), '_');
-
-      final ext = p.extension(state.image!.path);
-      final filename = '${safeName}_${safeColor}_image$ext';
-
-      final multipartFile = await MultipartFile.fromFile(
-        state.image!.path,
-        filename: filename,
-      );
+      final multipartFile = await _getMultipartFile(state.color, state.name, state.image!);
 
       final formData = FormData.fromMap({
         'name': state.name,
@@ -94,23 +102,29 @@ class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
         body: formData,
       );
 
-      final statusCode = response.statusCode ?? 500;
-      if (statusCode == 200 || statusCode == 201) {
+      if (response.statusCode == 201) {
         emit(state.copyWith(status: NewVahulStatus.success));
       } else {
-        emit(state.copyWith(
-          status: NewVahulStatus.fail,
-        ));
+        emit(state.copyWith(status: NewVahulStatus.fail, messageError: response.data['message']));
       }
-    } on DioException catch (_) {
-      emit(state.copyWith(
-        status: NewVahulStatus.fail,
-      ));
-    } catch (e, _) {
-      emit(state.copyWith(
-        status: NewVahulStatus.fail,
-      ));
+    } catch (e) {
+      emit(state.copyWith(status: NewVahulStatus.fail, messageError: e.toString()));
     }
+  }
+
+  Future<MultipartFile> _getMultipartFile(String color, String name, File image) async {
+    final safeColor = color.replaceAll('#', '');
+    final safeName = name.replaceAll(RegExp(r'[^A-Za-z0-9_\-]'), '_');
+
+    final ext = p.extension(image.path);
+    final filename = '${safeName}_${safeColor}_image$ext';
+
+    final file = await MultipartFile.fromFile(
+      state.image!.path,
+      filename: filename,
+    );
+
+    return file;
   }
 
 }
