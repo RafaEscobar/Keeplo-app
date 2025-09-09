@@ -38,51 +38,57 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => _searchFocusNode.unfocus(),
-      child: Scaffold(
-        backgroundColor: AppTheme.primary,
-        appBar: DashHeader(),
-        body: SafeArea(
-          child: Padding(
-            padding: EdgeInsetsGeometry.symmetric(horizontal: 14, vertical: 10),
-            child: Column(
-              spacing: 26,
-              children: [
-                DashSearchBar(focusNode: _searchFocusNode,),
-                BlocBuilder<VahulBloc, VahulState>(
-                  builder: (context, state) {
-                    if (state.status == VahulStatus.loading) {
-                      return Expanded(
-                        child: Center(
-                          child: CircularProgressIndicator(color: Colors.white,)
-                        ,)
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if(didPop) return;
+      },
+      child: GestureDetector(
+        onTap: () => _searchFocusNode.unfocus(),
+        child: Scaffold(
+          backgroundColor: AppTheme.primary,
+          appBar: DashHeader(),
+          body: SafeArea(
+            child: Padding(
+              padding: EdgeInsetsGeometry.symmetric(horizontal: 14, vertical: 10),
+              child: Column(
+                spacing: 26,
+                children: [
+                  DashSearchBar(focusNode: _searchFocusNode,),
+                  BlocBuilder<VahulBloc, VahulState>(
+                    builder: (context, state) {
+                      if (state.status == VahulStatus.loading) {
+                        return Expanded(
+                          child: Center(
+                            child: CircularProgressIndicator(color: Colors.white,)
+                          ,)
+                        );
+                      }
+                      List<Vahul> list = state.vahules;
+                      if (list.isEmpty && state.status == VahulStatus.searching) return EmptyStateType.noSearchVahuls.emptyState;
+                      if (list.isEmpty) return EmptyStateType.noVahuls.emptyState;
+                      return  Expanded(
+                        child: GridView.builder(
+                          itemCount: list.length,
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            crossAxisSpacing: 18,
+                            mainAxisSpacing: 12,
+                            childAspectRatio: 0.6,
+                          ),
+                          itemBuilder: (context, index) {
+                            return VahulCard(vahul: list[index]);
+                          },
+                        )
                       );
-                    }
-                    List<Vahul> list = state.vahules;
-                    if (list.isEmpty && state.status == VahulStatus.searching) return EmptyStateType.noSearchVahuls.emptyState;
-                    if (list.isEmpty) return EmptyStateType.noVahuls.emptyState;
-                    return  Expanded(
-                      child: GridView.builder(
-                        itemCount: list.length,
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          crossAxisSpacing: 18,
-                          mainAxisSpacing: 12,
-                          childAspectRatio: 0.6,
-                        ),
-                        itemBuilder: (context, index) {
-                          return VahulCard(vahul: list[index]);
-                        },
-                      )
-                    );
-                  },
-                )
-              ],
+                    },
+                  )
+                ],
+              ),
             ),
           ),
+          floatingActionButton: DashNewVahul()
         ),
-        floatingActionButton: DashNewVahul()
       ),
     );
   }

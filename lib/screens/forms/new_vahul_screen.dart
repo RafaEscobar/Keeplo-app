@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:go_router/go_router.dart';
 import 'package:keeplo/bloc/bloc_barrel.dart';
 import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_event.dart';
 import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_state.dart';
+import 'package:keeplo/screens/dashboard_screen.dart';
 import 'package:keeplo/theme/app_theme.dart';
 import 'package:keeplo/utils/hexa_color.dart';
 import 'package:keeplo/utils/simple_toast.dart';
@@ -54,7 +56,7 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
         child: BlocConsumer<NewVahulBloc, NewVahulState>(
           listener: (context, state) {
             if (state.status == NewVahulStatus.success) {
-              Navigator.of(context).pop();
+              context.goNamed(DashboardScreen.routeName);
             } else if (state.status == NewVahulStatus.fail) {
               SimpleToast.info(context: context, message: state.messageError, size: 14, iconSize: 50);
               context.read<NewVahulBloc>().add(VahulStatusChange(NewVahulStatus.initial));
