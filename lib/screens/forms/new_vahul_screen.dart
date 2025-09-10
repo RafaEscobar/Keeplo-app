@@ -42,7 +42,7 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
 
   void runValidation() {
     NewVahulBloc bloc = context.read<NewVahulBloc>();
-    if (bloc.state.name.isNotEmpty && bloc.state.image != null) {
+    if (bloc.state.name.isNotEmpty && bloc.state.image != null && bloc.state.image!.path.isNotEmpty) {
       context.read<NewVahulBloc>().add(VahulUserIdChange(context.read<AuthBloc>().state.user!.id));
       context.read<NewVahulBloc>().add(SubmitVahulForm());
     } else {

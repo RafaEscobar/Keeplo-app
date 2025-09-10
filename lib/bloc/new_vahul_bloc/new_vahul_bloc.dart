@@ -83,7 +83,7 @@ class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
     emit(state.copyWith(
       name: '',
       description: '',
-      color: '',
+      color: HexaColor.getCode(Colors.blue),
       image: File(''),
       userId: 0,
       status: NewVahulStatus.initial,
@@ -103,8 +103,8 @@ class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
 
       final formData = FormData.fromMap({
         'name': state.name,
-        'description': state.description,
-        'color': state.color,
+        if(state.description.isNotEmpty) 'description': state.description,
+        if(state.color.isNotEmpty) 'color': state.color,
         'user_id': state.userId,
         'image': multipartFile,
       });

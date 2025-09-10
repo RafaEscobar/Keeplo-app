@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:keeplo/bloc/bloc_barrel.dart';
 import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_event.dart';
 import 'package:keeplo/screens/forms/new_vahul_screen.dart';
+import 'package:keeplo/theme/app_theme.dart';
 
 class DashNewVahul extends StatelessWidget {
   const DashNewVahul({super.key});
@@ -10,7 +11,7 @@ class DashNewVahul extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+      color: AppTheme.primary,
       borderRadius: BorderRadius.circular(20),
       child: InkWell(
         borderRadius: BorderRadius.circular(20),
