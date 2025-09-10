@@ -14,7 +14,7 @@ class FooterMain extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isHorizontal = Responsive.isHorizontalTablet(context);
+    bool isHorizontal = context.isTabletLandscape;
     return Column(
       children: [
         SimpleButton(text: btnText, callback: callback),

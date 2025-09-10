@@ -4,9 +4,12 @@ class Responsive {
 
   // Método para redimencionar valor de (.sp, .h y .w)	Scaled Pixels para textos
   static double resize({required double size, double reduction = 1}) => size * reduction;
+}
 
-  // Método para comprobar si estamos ante una table horizontal
-  static bool isHorizontalTablet(BuildContext context) => MediaQuery.of(context).size.shortestSide >= 600 && MediaQuery.of(context).orientation == Orientation.landscape;
+const double kTabletBreakpoint = 600.0;
 
-  static bool isTablet(BuildContext context) => MediaQuery.of(context).size.shortestSide >= 600;
+extension DeviceExtensions on BuildContext {
+  bool get isTablet => MediaQuery.of(this).size.shortestSide >= kTabletBreakpoint; // Tablet
+  bool get isTabletLandscape => isTablet && MediaQuery.of(this).orientation == Orientation.landscape; // Tablet horizontal
+  bool get isTabletPortrait => isTablet && MediaQuery.of(this).orientation == Orientation.portrait; // Tablet vertical
 }

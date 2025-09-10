@@ -93,6 +93,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           },
                           child: GridView.builder(
                             controller: _scrollController,
+                            physics: const AlwaysScrollableScrollPhysics(),
                             itemCount: list.length,
                             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 3,

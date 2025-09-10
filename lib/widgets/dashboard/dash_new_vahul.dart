@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:keeplo/bloc/bloc_barrel.dart';
+import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_event.dart';
 import 'package:keeplo/screens/forms/new_vahul_screen.dart';
 
 class DashNewVahul extends StatelessWidget {
@@ -12,7 +14,10 @@ class DashNewVahul extends StatelessWidget {
       borderRadius: BorderRadius.circular(20),
       child: InkWell(
         borderRadius: BorderRadius.circular(20),
-        onTap: () => context.goNamed(NewVahulScreen.routeName),
+        onTap: () {
+          context.read<NewVahulBloc>().add(NewVahulClean());
+          context.goNamed(NewVahulScreen.routeName);
+        },
         splashColor: Colors.white.withAlpha(20),
         highlightColor: Colors.white.withAlpha(60),
         child: Container(

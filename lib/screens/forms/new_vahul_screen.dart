@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:keeplo/bloc/bloc_barrel.dart';
 import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_event.dart';
 import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_state.dart';
+import 'package:keeplo/bloc/vahul_bloc/vahul_event.dart';
 import 'package:keeplo/screens/dashboard_screen.dart';
 import 'package:keeplo/theme/app_theme.dart';
 import 'package:keeplo/utils/hexa_color.dart';
@@ -28,6 +29,8 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
   Color _colorSelected = Colors.blue;
   FocusNode nameFocusNode = FocusNode();
   FocusNode descriptionFocusNode = FocusNode();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
 
   void _onColorSelected(Color color) {
     String hexaColor = HexaColor.getCode(color);
@@ -48,6 +51,15 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
   }
 
   @override
+  void dispose() {
+    _nameController.dispose();
+    _descriptionController.dispose();
+    nameFocusNode.dispose();
+    descriptionFocusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -58,8 +70,8 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
         child: BlocConsumer<NewVahulBloc, NewVahulState>(
           listener: (context, state) {
             if (state.status == NewVahulStatus.success) {
-              context.read<NewVahulBloc>().add(NewVahulClean());
-              context.pushNamed(DashboardScreen.routeName);
+              context.read<VahulBloc>().add(GetVahulesEvent());
+              context.goNamed(DashboardScreen.routeName);
             } else if (state.status == NewVahulStatus.fail) {
               SimpleToast.info(context: context, message: state.messageError, size: 14, iconSize: 50);
               context.read<NewVahulBloc>().add(VahulStatusChange(NewVahulStatus.initial));
@@ -79,6 +91,7 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
                         children: [
                           SizedBox(height: 20,),
                           SimpleInput(
+                            controller: _nameController,
                             onChange: (value) => context.read<NewVahulBloc>().add(VahulNameChange(value!)),
                             textStyle: TextStyle(fontSize: 16.sp),
                             name: 'name',
@@ -98,6 +111,7 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
                           ),
                           SizedBox(height: 20,),
                           SimpleInput(
+
                             onChange: (value) => context.read<NewVahulBloc>().add(VahulDescriptionChange(value!)),
                             textStyle: TextStyle(fontSize: 16.sp),
                             name: 'description',
@@ -147,7 +161,7 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
                                 body: BlocSelector<NewVahulBloc, NewVahulState, File?>(
                                   selector: (state) => state.image,
                                   builder: (context, image) {
-                                    return (image == null) ? SvgPicture.asset(
+                                    return (image == null || image.path.isEmpty) ? SvgPicture.asset(
                                         "assets/icons/image.svg",
                                         colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
                                       ) : ClipOval(child: Image.file(File(image.path), fit: BoxFit.cover,));
