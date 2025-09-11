@@ -41,6 +41,7 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
       if (event.newPage <= state.page) return;
       emit(state.copyWith(loadingMore: true));
       final respose = await ApiService.request("/vahuls?limit=12&page=${event.newPage}", auth: Preferences.token);
+      await Future.delayed(Duration(seconds: 5));
       if (respose.statusCode == 200) {
         List<Vahul> list = state.vahules;
         list.addAll((respose.data['data'] as List).map((vahul) => Vahul.fromJson(vahul)).toList());

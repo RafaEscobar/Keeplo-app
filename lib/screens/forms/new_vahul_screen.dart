@@ -71,6 +71,7 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
           listener: (context, state) {
             if (state.status == NewVahulStatus.success) {
               context.read<VahulBloc>().add(GetVahulesEvent());
+              context.read<VahulBloc>().add(VahulNewPageEvent(1));
               context.goNamed(DashboardScreen.routeName);
             } else if (state.status == NewVahulStatus.fail) {
               SimpleToast.info(context: context, message: state.messageError, size: 14, iconSize: 50);

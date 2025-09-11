@@ -95,10 +95,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             controller: _scrollController,
                             physics: const AlwaysScrollableScrollPhysics(),
                             itemCount: list.length,
-                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 3,
                               crossAxisSpacing: 18,
-                              mainAxisSpacing: 12,
+                              mainAxisSpacing: 0,
                               childAspectRatio: 0.6,
                             ),
                             itemBuilder: (context, index) {
@@ -108,7 +108,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         )
                       );
                     },
-                  )
+                  ),
+                  BlocSelector<VahulBloc, VahulState, bool>(
+                    selector: (state) => state.loadingMore,
+                    builder: (context, loadingMore) {
+                      return (loadingMore) ? CircularProgressIndicator() : Container();
+                    },
+                  ),
+                  if (context.watch<VahulBloc>().state.loadingMore)
+                    CircularProgressIndicator(color: Colors.white,),
                 ],
               ),
             ),
