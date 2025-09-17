@@ -1,13 +1,8 @@
 
-abstract class SplashEvent {
-  const SplashEvent();
-}
+//* Clase abstracta base
+abstract class SplashEvent {}
 
-class UpdateIsLogged extends SplashEvent {
-  UpdateIsLogged(this.isLogged);
-  final bool isLogged;
-}
-
+//* Evento para cambiar el valor de la variable -displayedSplash- del state
 class UpdateDisplayedSplash extends SplashEvent {
   UpdateDisplayedSplash(this.displayedSplash);
   final bool displayedSplash;

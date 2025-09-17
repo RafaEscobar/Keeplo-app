@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:keeplo/bloc/auth_bloc/auth_bloc.dart';
+import 'package:keeplo/bloc/auth_bloc/auth_event.dart';
 import 'package:keeplo/bloc/splash_bloc/splash_bloc.dart';
 import 'package:keeplo/bloc/splash_bloc/splash_event.dart';
 import 'package:keeplo/bloc/token_bloc/token_bloc.dart';
 import 'package:keeplo/bloc/token_bloc/token_event.dart';
 import 'package:keeplo/bloc/token_bloc/token_state.dart';
+import 'package:keeplo/models/user.dart';
 import 'package:keeplo/screens/dashboard_screen.dart';
 import 'package:keeplo/screens/main/login_screen.dart';
 import 'package:keeplo/services/preferences.dart';
@@ -27,12 +30,14 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
 
   //* Método para verificar estado de la sesión
   Future<void> initLoad() async {
+    // Con esto nos aseguramos que la splash no se muestre en desarrollo
     context.read<SplashBloc>().add(UpdateDisplayedSplash(true));
     try {
+      // Verificamos sí tenemos un token que validar.
       if(Preferences.token.isNotEmpty) {
-        context.read<TokenBloc>().add(VerifyTokenRequest());
+        context.read<TokenBloc>().add(VerifyTokenRequest()); // Validamos el token.
       } else {
-        _redirectToLogin();
+        _redirectToLogin(); // Redireccionamos al login si es que no tenemos token.
       }
     } catch (e) {
       SimpleToast.error(context: context, message: e.toString(), size: 14, iconSize: 50);
@@ -73,10 +78,12 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
       backgroundColor: Colors.white,
       body: BlocListener<TokenBloc, TokenState>(
         listener: (context, state) {
-          if (state is AuthTokenValid) {
-            _redirectToDashboard();
-          } else if (state is AuthTokenInvalid) {
-            _redirectToLogin();
+          if (state.status == TokenStatus.validated) {
+            User currentUser = context.read<TokenBloc>().state.userTemp!;
+          context.read<AuthBloc>().add(UserChangeAuth(currentUser));
+            _redirectToDashboard(); // Sí el token esta validado redireccionamos al dash
+          } else if (state.status == TokenStatus.failure) {
+            _redirectToLogin(); // Sí el token no es valido redireccionamos al login
           }
         },
         child: Center(

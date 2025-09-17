@@ -4,15 +4,21 @@ import 'package:keeplo/theme/app_theme.dart';
 import 'package:keeplo/utils/responsive.dart';
 
 class SimpleButton extends StatelessWidget{
-  const SimpleButton({super.key, required this.text, required this.callback});
+  const SimpleButton({
+    super.key,
+    required this.text,
+    required this.callback,
+    this.padding = const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+  });
   final String text;
   final Function() callback;
+  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context){
-    bool isHorizontal = Responsive.isHorizontalTablet(context);
+    bool isHorizontal = context.isTabletLandscape;
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+      padding: padding,
       width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.white,

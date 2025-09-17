@@ -27,7 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> login() async {
     try {
-      context.read<AuthBloc>().add(LoginSubmitted());
+      context.read<AuthBloc>().add(LoginSubmitted()); // Lanzamos petición de login
     } catch (e) {
       SimpleToast.error(context: context, message: e.toString(), size: 14, iconSize: 50);
     }

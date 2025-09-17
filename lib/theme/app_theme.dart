@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class AppTheme {
   // Paleta de colores
   static const Color primary = Color(0XFF0C1B33);
+  static const Color primaryTwo = Color.fromARGB(255, 21, 43, 80);
   static const Color secondary = Color(0XFF34E5FF);
   static const Color tertiary = Color.fromARGB(255, 214, 209, 235);
   static const Color error = Color(0XFFB74F6F);

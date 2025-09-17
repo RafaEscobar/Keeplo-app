@@ -28,7 +28,7 @@ class LoginForm extends StatefulWidget{
 class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
-    bool isHorizontal = Responsive.isHorizontalTablet(context);
+    bool isHorizontal = context.isTabletLandscape;
     return FormBuilder(
       key: widget.formKey,
       child: Column(

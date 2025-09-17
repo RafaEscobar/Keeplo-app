@@ -26,7 +26,7 @@ class AuthTemplateScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isHorizontal = Responsive.isHorizontalTablet(context);
+    bool isHorizontal = context.isTabletLandscape;
     final isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
 
     Widget headerMain = HeaderMain(
@@ -79,11 +79,11 @@ class AuthTemplateScreen extends StatelessWidget {
         body: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state.status == AuthStatus.success) {
-              context.goNamed(DashboardScreen.routeName);
+              context.goNamed(DashboardScreen.routeName); // Sí la autenticación (login o register) es valida redireccionamos al dash
             } else if (state.status == AuthStatus.failure) {
-              SimpleToast.error(context: context, message: isLogin ? "Credenciales incorrectas" : "Ocurrio un error al crear la cuenta", size: isLogin ? 18 : 14);
+              // Lanzamos toast de autenticación incorrecta y reiniciamos status de autenticación
+              SimpleToast.error(context: context, message: context.read<AuthBloc>().state.errorMessage, size: isLogin ? 18 : 14);
               context.read<AuthBloc>().add(AuthStatusChange(AuthStatus.initial));
-
             }
           },
           builder: (context, state) {

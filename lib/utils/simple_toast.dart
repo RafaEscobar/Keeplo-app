@@ -11,9 +11,9 @@ class SimpleToast {
       CustomSnackBar.success(
         icon: Icon(Icons.check_circle_outline, size: iconSize.sp, color: Colors.white,),
         message: message,
-        textStyle: TextStyle(fontSize: Responsive.isHorizontalTablet(context) ? 30 : size.sp, color: Colors.white, fontWeight: FontWeight.bold),
+        textStyle: TextStyle(fontSize: context.isTabletLandscape ? 30 : size.sp, color: Colors.white, fontWeight: FontWeight.bold),
         textAlign: TextAlign.center,
-        messagePadding: EdgeInsetsGeometry.symmetric(horizontal: Responsive.isTablet(context) ? 100 : 20, vertical: 0),
+        messagePadding: EdgeInsetsGeometry.symmetric(horizontal: context.isTablet ? 100 : 30, vertical: 0),
       ),
   );
 
@@ -21,11 +21,11 @@ class SimpleToast {
       Overlay.of(context),
       CustomSnackBar.info(
         backgroundColor: AppTheme.secondary,
-        icon: Icon(Icons.question_mark, size: Responsive.resize(size: Responsive.isHorizontalTablet(context) ? 100 : iconSize.sp, reduction: .8), color: Colors.white,),
+        icon: Icon(Icons.question_mark, size: Responsive.resize(size: context.isTabletLandscape ? 100 : iconSize.sp, reduction: .8), color: Colors.white,),
         message: message,
-        textStyle: TextStyle(fontSize: Responsive.isHorizontalTablet(context) ? 30 : size.sp, color: Colors.white, fontWeight: FontWeight.bold),
+        textStyle: TextStyle(fontSize: context.isTabletLandscape ? 30 : size.sp, color: Colors.white, fontWeight: FontWeight.bold),
         textAlign: TextAlign.center,
-        messagePadding: EdgeInsetsGeometry.symmetric(horizontal: Responsive.isTablet(context) ? 100 : 20, vertical: 0),
+        messagePadding: EdgeInsetsGeometry.symmetric(horizontal: context.isTablet ? 100 : 30, vertical: 0),
       ),
   );
 
@@ -33,11 +33,11 @@ class SimpleToast {
       Overlay.of(context),
       CustomSnackBar.error(
         backgroundColor: AppTheme.error,
-        icon: Icon(Icons.close, size: Responsive.resize(size: Responsive.isHorizontalTablet(context) ? 100 : iconSize.sp, reduction: .8), color: Colors.white,),
+        icon: Icon(Icons.close, size: Responsive.resize(size: context.isTabletLandscape ? 100 : iconSize.sp, reduction: .8), color: Colors.white,),
         message: message,
-        textStyle: TextStyle(fontSize: Responsive.isHorizontalTablet(context) ? 30 : size.sp, color: Colors.white, fontWeight: FontWeight.bold),
+        textStyle: TextStyle(fontSize: context.isTabletLandscape ? 30 : size.sp, color: Colors.white, fontWeight: FontWeight.bold),
         textAlign: TextAlign.center,
-        messagePadding: EdgeInsetsGeometry.symmetric(horizontal: Responsive.isTablet(context) ? 100 : 20, vertical: 0),
+        messagePadding: EdgeInsetsGeometry.symmetric(horizontal: context.isTablet ? 100 : 30, vertical: 0),
       ),
   );
 }
