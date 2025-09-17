@@ -4,13 +4,14 @@ import 'package:equatable/equatable.dart';
 
 enum NewVahulStatus {initial, loading, success, fail}
 class NewVahulState extends Equatable{
+  //* Info para creación de un vahul
   final String name;
   final String description;
   final String color;
   final File? image;
   final int userId;
-  final NewVahulStatus status;
-  final String messageError;
+  final NewVahulStatus status; //* Status de este State
+  final String messageError; //* Mensaje de error para toast
 
   const NewVahulState({
     this.name = '',

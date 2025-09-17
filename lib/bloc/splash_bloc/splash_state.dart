@@ -1,11 +1,13 @@
 import 'package:equatable/equatable.dart';
 
 class SplashState extends Equatable{
+  //* Bandera para controlar aparición de la SplashScreen
+  final bool displayedSplash;
+
   const SplashState({
     this.displayedSplash = false
   });
 
-  final bool displayedSplash;
 
   SplashState copyWith({
     bool? displayedSplash,

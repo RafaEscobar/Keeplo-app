@@ -10,6 +10,7 @@ class TokenBloc extends Bloc<TokenEvent, TokenState>{
     on<VerifyTokenRequest>(_onVerifyTokenRequested);
   }
 
+  //* Método que valida el token que tenemos actualmente almacenado
   Future<void> _onVerifyTokenRequested(VerifyTokenRequest event, Emitter<TokenState> emit) async {
     try {
       emit(state.copyWith(status: TokenStatus.verifying));

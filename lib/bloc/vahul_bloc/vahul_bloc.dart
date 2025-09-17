@@ -9,12 +9,12 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
   VahulBloc() : super(VahulState()){
     on<GetVahulesEvent>(_getVahules);
     on<SearchVahulEvent>(_onSearchVahulEvent);
-    on<OrderListEvent>(_onOrderListEvent);
     on<LoadMoreVahulesEvent>(_loadMoreVahules);
     on<VahulNewPageEvent>(_onVahulNewPageEvent);
     on<VahulOrderChange>(_onVahulOrderChange);
   }
 
+  //* Método para obtener el listado de vahules
   Future<void> _getVahules(GetVahulesEvent event, Emitter<VahulState> emit) async {
     try {
       emit(state.copyWith(status: VahulStatus.loading));
@@ -37,6 +37,7 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
     }
   }
 
+  //* Método para obtener la siguiente page de vahules y fucionarla con la lista actual
   Future<void> _loadMoreVahules(LoadMoreVahulesEvent event, Emitter<VahulState> emit) async {
     try {
       if (state.loadingMore) return;
@@ -63,6 +64,7 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
     }
   }
 
+  //* Método para buscar vahules por nombre (funcionamiento local)
   void _onSearchVahulEvent(SearchVahulEvent event, Emitter<VahulState> emit){
     try {
       emit(state.copyWith(
@@ -77,19 +79,7 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
     }
   }
 
-  void _onOrderListEvent(OrderListEvent event, Emitter<VahulState> emit) {
-    try {
-      emit(state.copyWith(
-        vahules: state.vahules.reversed.toList(),
-        initialVahules: state.initialVahules.reversed.toList(),
-        hasOrder: !state.hasOrder
-      ));
-    } catch (e) {
-      emit(state.copyWith(status: VahulStatus.failure));
-      throw e.toString();
-    }
-  }
-
+  //* Método para cambiar de page
   void _onVahulNewPageEvent(VahulNewPageEvent event, Emitter<VahulState> emit) {
     try {
       emit(state.copyWith(page: event.newPage));
@@ -98,6 +88,7 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
     }
   }
 
+  //* Método para cambiar dínamicamente el tipo de ordenamiento
   void _onVahulOrderChange(VahulOrderChange event, Emitter<VahulState> emit){
     try {
       emit(state.copyWith(isAscOrder: !state.isAscOrder));

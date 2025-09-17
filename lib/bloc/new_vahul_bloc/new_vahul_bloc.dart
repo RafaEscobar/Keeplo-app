@@ -23,6 +23,7 @@ class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
     on<NewVahulClean>(_onNewVahulClean);
   }
 
+  //* Método para cambiar valor de la variable -name- del state
   void _onVahulNameChange(VahulNameChange event, Emitter<NewVahulState> emit) {
     try {
       emit(state.copyWith(name: event.name));
@@ -31,6 +32,7 @@ class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
     }
   }
 
+  //* Método para cambiar valor de la variable -description- del state
   void _onVahulDescriptionChange(VahulDescriptionChange event, Emitter<NewVahulState> emit) {
     try {
       emit(state.copyWith(description: event.description));
@@ -39,6 +41,7 @@ class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
     }
   }
 
+  //* Método para cambiar valor de la variable -color- del state
   void _onVahulColorChange(VahulColorChange event, Emitter<NewVahulState> emit) {
     try {
       emit(state.copyWith(color: event.color));
@@ -47,6 +50,7 @@ class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
     }
   }
 
+  //* Método para cambiar valor de la variable -userId- del state
   void _onVahulUserIdChange(VahulUserIdChange event, Emitter<NewVahulState> emit) {
     try {
       emit(state.copyWith(userId: event.userId));
@@ -55,6 +59,7 @@ class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
     }
   }
 
+  //* Método para cambiar valor de la variable -image- del state
   void _onVahulImageChange(VahulImageChange event, Emitter<NewVahulState> emit) {
     try {
       emit(state.copyWith(image: event.image));
@@ -63,6 +68,7 @@ class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
     }
   }
 
+  //* Método para cambiar valor de la variable -messageError- del state
   void _onVahulMessageErrorChange(VahulMessageErrorChange event, Emitter<NewVahulState> emit) {
     try {
       emit(state.copyWith(messageError: event.message));
@@ -71,6 +77,7 @@ class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
     }
   }
 
+  //* Método para cambiar el -status- del state
   void _onVahulStatusChange(VahulStatusChange event, Emitter<NewVahulState> emit){
     try {
       emit(state.copyWith(status: event.status));
@@ -79,6 +86,7 @@ class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
     }
   }
 
+  //* Método para limpiar nuestro state
   void _onNewVahulClean(NewVahulClean event, Emitter<NewVahulState> emit) {
     emit(state.copyWith(
       name: '',
@@ -91,6 +99,7 @@ class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
     ));
   }
 
+  //* Método que realiza la petición para crear un nuevo vahul
   Future<void> _onSubmitVahulForm(SubmitVahulForm event, Emitter<NewVahulState> emit) async {
     emit(state.copyWith(status: NewVahulStatus.loading));
 
@@ -125,19 +134,21 @@ class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
     }
   }
 
+  //* Método que tratar la imagen y asignar un nombre limpio
   Future<MultipartFile> _getMultipartFile(String color, String name, File image) async {
-    final safeColor = color.replaceAll('#', '');
-    final safeName = name.replaceAll(RegExp(r'[^A-Za-z0-9_\-]'), '_');
+    final safeColor = color.replaceAll('#', ''); //? Obtenemos el valor númerico del color
+    final safeName = name.replaceAll(RegExp(r'[^A-Za-z0-9_\-]'), '_'); //? Limpiamos el nombre de nuestro vahul
 
-    final ext = p.extension(image.path);
-    final filename = '${safeName}_${safeColor}_image$ext';
+    final ext = p.extension(image.path); //? Obtenemos la extensión de nuestra imagen cargada
+    final filename = '${safeName}_${safeColor}_image$ext'; //? Generamos el nombre con: nombreLimpio_colorNúmerico_image_extension
 
+    // Generamos el MultipartFile a partir de la imagen y el nombre construido
     final file = await MultipartFile.fromFile(
       state.image!.path,
       filename: filename,
     );
 
-    return file;
+    return file; // Retornamos la -construcción segura- de la imagen
   }
 
 }

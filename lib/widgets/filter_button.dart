@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:keeplo/bloc/vahul_bloc/vahul_bloc.dart';
+import 'package:keeplo/bloc/vahul_bloc/vahul_state.dart';
 
 class FilterButton extends StatelessWidget {
   const FilterButton({
@@ -14,7 +15,6 @@ class FilterButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isOrder = context.watch<VahulBloc>().state.hasOrder;
     return Material(
       color: Colors.transparent,
       borderRadius: BorderRadius.circular(20),
@@ -30,19 +30,24 @@ class FilterButton extends StatelessWidget {
             border: Border.all(color: Colors.white, width: 1),
             borderRadius: BorderRadius.circular(20),
           ),
-          child: isOrder ?
-            SvgPicture.asset(
-              "assets/icons/up.svg",
-              height: 20,
-              width: 20,
-              colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
-            ) :
-            SvgPicture.asset(
-              "assets/icons/down.svg",
-              height: 20,
-              width: 20,
-              colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
-            )
+          child: BlocSelector<VahulBloc, VahulState, bool>(
+            selector: (state) => state.isAscOrder,
+            builder: (context, isAscOrder) {
+              return isAscOrder ?
+                SvgPicture.asset(
+                  "assets/icons/up.svg",
+                  height: 20,
+                  width: 20,
+                  colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                ) :
+                SvgPicture.asset(
+                  "assets/icons/down.svg",
+                  height: 20,
+                  width: 20,
+                  colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                );
+            },
+          )
         ),
       ),
     );

@@ -7,7 +7,7 @@ import 'package:keeplo/services/preferences.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState>{
   AuthBloc() : super(AuthState()){
-    on<LoginSubmitted>(_onSubmitted);
+    on<LoginSubmitted>(_onLoginSubmitted);
     on<RegisterSubmitted>(_onRegisterSubmitted);
     on<NameChange>(_onNameChange);
     on<LastNameChange>(_onLastNameChange);
@@ -17,7 +17,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>{
     on<UserChangeAuth>(_onUserChange);
   }
 
-  Future<void> _onSubmitted(LoginSubmitted event, Emitter<AuthState> emit) async {
+  //* Método para realizar carga de inicio de sesión
+  Future<void> _onLoginSubmitted(LoginSubmitted event, Emitter<AuthState> emit) async {
     final email = state.email;
     final password = state.password;
 
@@ -39,6 +40,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>{
     }
   }
 
+  //* Método para realizar carga de registro de cuenta
   Future<void> _onRegisterSubmitted(RegisterSubmitted event, Emitter<AuthState> emit) async {
     final String name = state.name;
     final String lastName = state.lastName;
@@ -68,36 +70,34 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>{
     }
   }
 
+  //* Método para cambiar valor de la variable -name- del state
   void _onNameChange(NameChange event, Emitter<AuthState> emit) {
-    emit(state.copyWith(
-      name: event.name
-    ));
+    emit(state.copyWith(name: event.name));
   }
 
+  //* Método para cambiar valor de la variable -lastName- del state
   void _onLastNameChange(LastNameChange event, Emitter<AuthState> emit) {
-    emit(state.copyWith(
-      lastName: event.lastName
-    ));
+    emit(state.copyWith(lastName: event.lastName));
   }
 
+  //* Método para cambiar valor de la variable -email- del state
   void _onEmailChange(EmailChange event, Emitter<AuthState> emit){
-    emit(state.copyWith(
-      email: event.email
-    ));
+    emit(state.copyWith(email: event.email));
   }
 
+  //* Método para cambiar valor de la variable -password- del state
   void _onPasswordChange(PasswordChange event, Emitter<AuthState> emit){
-    emit(state.copyWith(
-      password: event.password
-    ));
+    emit(state.copyWith(password: event.password));
   }
 
+  //* Método para cambiar el -status- del state
   void _onAuthStatusChange(AuthStatusChange event, Emitter<AuthState> emit) {
     emit(state.copyWith(
       status: event.staus
     ));
   }
 
+  //* Método para cambiar valor de la variable -user- del state
   void _onUserChange(UserChangeAuth event, Emitter<AuthState> emit) {
     emit(state.copyWith(
       user: event.user

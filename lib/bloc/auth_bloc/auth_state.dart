@@ -4,13 +4,14 @@ import 'package:keeplo/models/user.dart';
 enum AuthStatus { initial, loading, success, failure }
 
 class AuthState extends Equatable {
+  //* Información del usuario (login/register)
   final String name;
   final String lastName;
   final String email;
   final String password;
-  final AuthStatus status;
-  final User? user;
-  final String errorMessage;
+  final AuthStatus status; //* Status del State
+  final User? user; //* Información del usuario logeado
+  final String errorMessage; //* Mensaje de error para toast
 
   const AuthState({
     this.name = '',

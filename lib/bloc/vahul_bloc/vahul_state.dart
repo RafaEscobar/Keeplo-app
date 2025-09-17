@@ -3,22 +3,20 @@ import 'package:keeplo/models/vahul.dart';
 
 enum VahulStatus { initial, loading, success, failure, searching }
 class VahulState extends Equatable{
-  final List<Vahul> vahules;
-  final List<Vahul> initialVahules;
-  final VahulStatus status;
-  final String errorMessage;
-  final bool hasOrder;
-  final bool hasMore;
-  final int page;
-  final bool loadingMore;
-  final bool isAscOrder;
+  final List<Vahul> vahules; //* Listado de vahules
+  final List<Vahul> initialVahules; //* Listado inicial (auxiliar) de vahules
+  final VahulStatus status; //* Status actual del state
+  final String errorMessage; //* Mensaje de error para los toast
+  final bool hasMore; //* Bandera para determinar si tenemos más (más paginas) datos que cargar a futuro
+  final int page; //* Page actual para el paginado
+  final bool loadingMore; //* Bandera para mostrar CircularProgressIndicator si estamos cargando la siguiente page
+  final bool isAscOrder; //* Bandera para controlar ordenamiento; true = ordenamiento ascendente | false = ordenamiento descendente (por defecto)
 
   const VahulState({
     this.vahules = const [],
     this.initialVahules = const [],
     this.status = VahulStatus.initial,
     this.errorMessage = '',
-    this.hasOrder = false,
     this.hasMore = false,
     this.page = 1,
     this.loadingMore = false,
@@ -40,7 +38,6 @@ class VahulState extends Equatable{
     initialVahules: initialVahules ?? this.initialVahules,
     status: status ?? this.status,
     errorMessage: errorMessage ?? this.errorMessage,
-    hasOrder: hasOrder ?? this.hasOrder,
     hasMore: hasMore ?? this.hasMore,
     page: page ?? this.page,
     loadingMore: loadingMore ?? this.loadingMore,
@@ -48,5 +45,5 @@ class VahulState extends Equatable{
   );
 
   @override
-  List<Object?> get props => [vahules, status, errorMessage, initialVahules, hasOrder, hasMore, page, loadingMore, isAscOrder];
+  List<Object?> get props => [vahules, status, errorMessage, initialVahules, hasMore, page, loadingMore, isAscOrder];
 }
