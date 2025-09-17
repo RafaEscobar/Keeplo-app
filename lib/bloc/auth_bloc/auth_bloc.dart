@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keeplo/bloc/auth_bloc/auth_event.dart';
 import 'package:keeplo/bloc/auth_bloc/auth_state.dart';
@@ -15,6 +16,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>{
     on<PasswordChange>(_onPasswordChange);
     on<AuthStatusChange>(_onAuthStatusChange);
     on<UserChangeAuth>(_onUserChange);
+    on<LogoutSubmitted>(_onLogoutSubmitted);
+    on<AuthStateClean>(_onAuthStateClean);
   }
 
   //* Método para realizar carga de inicio de sesión
@@ -70,6 +73,33 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>{
     }
   }
 
+  Future<void> _onLogoutSubmitted(LogoutSubmitted event, Emitter<AuthState> emit) async {
+    try {
+      emit(state.copyWith(status: AuthStatus.loading));
+      Response response = await ApiService.request("/logout", isPostWithoutBody: true, auth: Preferences.token);
+      await Future.delayed(Duration(seconds: 2));
+      if (response.statusCode == 200) {
+        emit(state.copyWith(status: AuthStatus.closedSession));
+      } else {
+        emit(state.copyWith(status: AuthStatus.failure, errorMessage: "Error desconocido. Inténtalo más tarde."));
+      }
+    } catch (e) {
+      emit(state.copyWith(status: AuthStatus.failure, errorMessage: e.toString())); // Lanzamos un status -failure-
+      throw e.toString();
+    }
+  }
+
+  void _onAuthStateClean(AuthStateClean event, Emitter<AuthState> emit) {
+    emit(state.copyWith(
+      name: '',
+      lastName: '',
+      email: '',
+      password: '',
+      status: AuthStatus.initial,
+       errorMessage: ''
+    ));
+  }
+
   //* Método para cambiar valor de la variable -name- del state
   void _onNameChange(NameChange event, Emitter<AuthState> emit) {
     emit(state.copyWith(name: event.name));
@@ -92,15 +122,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>{
 
   //* Método para cambiar el -status- del state
   void _onAuthStatusChange(AuthStatusChange event, Emitter<AuthState> emit) {
-    emit(state.copyWith(
-      status: event.staus
-    ));
+    emit(state.copyWith(status: event.staus));
   }
 
   //* Método para cambiar valor de la variable -user- del state
   void _onUserChange(UserChangeAuth event, Emitter<AuthState> emit) {
-    emit(state.copyWith(
-      user: event.user
-    ));
+    emit(state.copyWith(user: event.user));
   }
 }
