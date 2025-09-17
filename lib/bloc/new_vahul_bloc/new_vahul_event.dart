@@ -46,6 +46,12 @@ class VahulStatusChange extends NewVahulEvent {
   VahulStatusChange(this.status);
 }
 
+//* Evento para controlar valor de la variable -formError- en el state
+class VahulFormErrorChange extends NewVahulEvent {
+  final bool formError;
+  VahulFormErrorChange(this.formError);
+}
+
 //* Evento para lanzar petición para crear un nuevo vahul
 class SubmitVahulForm extends NewVahulEvent {}
 
