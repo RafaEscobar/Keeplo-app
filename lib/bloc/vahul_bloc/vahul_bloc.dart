@@ -12,12 +12,14 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
     on<OrderListEvent>(_onOrderListEvent);
     on<LoadMoreVahulesEvent>(_loadMoreVahules);
     on<VahulNewPageEvent>(_onVahulNewPageEvent);
+    on<VahulOrderChange>(_onVahulOrderChange);
   }
 
   Future<void> _getVahules(GetVahulesEvent event, Emitter<VahulState> emit) async {
     try {
       emit(state.copyWith(status: VahulStatus.loading));
-      final respose = await ApiService.request("/vahuls?limit=12&", auth: Preferences.token);
+      String order = state.isAscOrder ? 'asc' : 'desc';
+      final respose = await ApiService.request("/vahuls?limit=12&order=$order", auth: Preferences.token);
       if (respose.statusCode == 200) {
         List<Vahul> list = (respose.data['data'] as List).map((vahul) => Vahul.fromJson(vahul)).toList();
         emit(state.copyWith(
@@ -40,7 +42,8 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
       if (state.loadingMore) return;
       if (event.newPage <= state.page) return;
       emit(state.copyWith(loadingMore: true));
-      final respose = await ApiService.request("/vahuls?limit=12&page=${event.newPage}", auth: Preferences.token);
+      String order = state.isAscOrder ? 'asc' : 'desc';
+      final respose = await ApiService.request("/vahuls?limit=12&&order=$order&page=${event.newPage}", auth: Preferences.token);
       if (respose.statusCode == 200) {
         List<Vahul> list = state.vahules;
         list.addAll((respose.data['data'] as List).map((vahul) => Vahul.fromJson(vahul)).toList());
@@ -90,6 +93,14 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
   void _onVahulNewPageEvent(VahulNewPageEvent event, Emitter<VahulState> emit) {
     try {
       emit(state.copyWith(page: event.newPage));
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  void _onVahulOrderChange(VahulOrderChange event, Emitter<VahulState> emit){
+    try {
+      emit(state.copyWith(isAscOrder: !state.isAscOrder));
     } catch (e) {
       throw e.toString();
     }

@@ -16,7 +16,9 @@ class DashSearchBar extends StatelessWidget {
         FilterButton(
           icon: Icons.sort,
           callback: () {
-            context.read<VahulBloc>().add(OrderListEvent());
+            context.read<VahulBloc>().add(VahulOrderChange());
+            context.read<VahulBloc>().add(VahulNewPageEvent(1));
+            context.read<VahulBloc>().add(GetVahulesEvent());
           },
         ),
         Expanded(

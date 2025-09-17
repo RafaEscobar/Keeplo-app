@@ -18,3 +18,5 @@ class LoadMoreVahulesEvent extends VahulEvent {
   LoadMoreVahulesEvent(this.newPage);
 }
 class VahulCleanBloc extends VahulEvent {}
+
+class VahulOrderChange extends VahulEvent {}
