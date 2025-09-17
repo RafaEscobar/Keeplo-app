@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,6 +20,7 @@ class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
     on<VahulStatusChange>(_onVahulStatusChange);
     on<VahulMessageErrorChange>(_onVahulMessageErrorChange);
     on<NewVahulClean>(_onNewVahulClean);
+    on<VahulFormErrorChange>(_onVahulFormErrorChange);
   }
 
   //* Método para cambiar valor de la variable -name- del state
@@ -77,6 +77,15 @@ class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
     }
   }
 
+  //* Método para cambiar el valor de la variable -formError- del state
+  void _onVahulFormErrorChange(VahulFormErrorChange event, Emitter<NewVahulState> emit) {
+    try {
+      emit(state.copyWith(formError: event.formError));
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
   //* Método para cambiar el -status- del state
   void _onVahulStatusChange(VahulStatusChange event, Emitter<NewVahulState> emit){
     try {
@@ -95,7 +104,8 @@ class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
       image: File(''),
       userId: 0,
       status: NewVahulStatus.initial,
-      messageError: ''
+      messageError: '',
+      formError: false
     ));
   }
 

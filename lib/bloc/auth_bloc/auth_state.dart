@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:keeplo/models/user.dart';
 
-enum AuthStatus { initial, loading, success, failure }
+enum AuthStatus { initial, loading, success, failure, closedSession }
 
 class AuthState extends Equatable {
   //* Información del usuario (login/register)

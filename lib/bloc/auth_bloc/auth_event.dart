@@ -44,3 +44,9 @@ class LoginSubmitted extends AuthEvent{}
 
 //* Evento para lanzar petición register
 class RegisterSubmitted extends AuthEvent{}
+
+//* Evento para lanzar petición logout
+class LogoutSubmitted extends AuthEvent{}
+
+//* Evento para limpiar state
+class AuthStateClean extends AuthEvent {}
