@@ -26,6 +26,7 @@ class AuthTemplateScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     bool isHorizontal = context.isTabletLandscape;
     final isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
 
@@ -41,15 +42,23 @@ class AuthTemplateScreen extends StatelessWidget {
     );
 
     Widget horizontalTabletBody = Row(
+      spacing: 40,
       children: [
-        Expanded(child: headerMain),
-        const SizedBox(width: 60),
+        //Expanded(child: headerMain),
+        SizedBox(
+          width: size.width * .54,
+          height: size.height * .86,
+          child: Image.asset(
+            "assets/pictures/a.jpg",
+            fit: BoxFit.cover,
+          ),
+        ),
         Expanded(
           child: Column(
+            spacing: 50,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               form,
-              const SizedBox(height: 20),
-              Spacer(),
               footerMain
             ],
           ),

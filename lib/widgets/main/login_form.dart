@@ -38,11 +38,11 @@ class _LoginFormState extends State<LoginForm> {
           if(isHorizontal) SizedBox(height: 20,),
           SimpleInput(
             onChange: (value) => context.read<AuthBloc>().add(EmailChange(value!)),
-            textStyle: TextStyle(fontSize: isHorizontal ? 38 : 16.sp),
+            textStyle: TextStyle(fontSize: Responsive.resize(size: 16, reduction: .66).sp),
             name: 'email',
             hintText: 'Correo electrónico',
             keyboardType: TextInputType.emailAddress,
-            contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 14),
             focusNode: widget.emailFocusNode,
             maxLength: 60,
             validator: FormBuilderValidators.compose([
@@ -54,15 +54,15 @@ class _LoginFormState extends State<LoginForm> {
               FocusScope.of(context).requestFocus(widget.passwordFocuesNode);
             },
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
           SimpleInput(
             onChange: (value) => context.read<AuthBloc>().add(PasswordChange(value!)),
-            textStyle: TextStyle(fontSize: isHorizontal ? 38 : 16.sp),
+            textStyle: TextStyle(fontSize: Responsive.resize(size: 16, reduction: .66).sp),
             name: 'password',
             focusNode: widget.passwordFocuesNode,
             obscureText: true,
             hintText: 'Contraseña',
-            contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 14),
             maxLength: 16,
             validator: FormBuilderValidators.compose([
               FormBuilderValidators.required(errorText: 'Proporciona una contraseña'),

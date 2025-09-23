@@ -18,13 +18,13 @@ class FooterMain extends StatelessWidget {
     return Column(
       children: [
         SimpleButton(text: btnText, callback: callback),
-        SizedBox(height: 16.h),
+        SizedBox(height: 18.h),
         Visibility(
           visible: isLogin,
           child: Column(
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     "¿Aún no tienes una cuenta?",
