@@ -28,7 +28,7 @@ class SimpleButton extends StatelessWidget{
         onTap: callback,
         child: Text(
           text,
-          style: TextStyle(color: AppTheme.primary, fontSize: isHorizontal ? 34 : Responsive.resize(size:22.sp, reduction: .8), fontWeight: FontWeight.bold),
+          style: TextStyle(color: AppTheme.primary, fontSize: isHorizontal ? 28 : Responsive.resize(size:22.sp, reduction: .8), fontWeight: FontWeight.bold),
           textAlign: TextAlign.center,
         ),
       ),

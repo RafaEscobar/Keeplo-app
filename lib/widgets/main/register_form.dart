@@ -42,7 +42,7 @@ class _RegisterFormState extends State<RegisterForm> {
           if(isHorizontal) SizedBox(height: 20,),
           SimpleInput(
             onChange: (name) => context.read<AuthBloc>().add(NameChange(name!)),
-            textStyle: TextStyle(fontSize: isHorizontal ? 38 : 16.sp),
+            textStyle: TextStyle(fontSize: Responsive.resize(size: 16, reduction: .66).sp),
             name: 'name',
             hintText: 'Nombre',
             keyboardType: TextInputType.text,
@@ -61,7 +61,7 @@ class _RegisterFormState extends State<RegisterForm> {
           const SizedBox(height: 20),
           SimpleInput(
             onChange: (lastName) => context.read<AuthBloc>().add(LastNameChange(lastName!)),
-            textStyle: TextStyle(fontSize: isHorizontal ? 38 : 16.sp),
+            textStyle: TextStyle(fontSize: Responsive.resize(size: 16, reduction: .66).sp),
             name: 'last_name',
             hintText: 'Apellido',
             keyboardType: TextInputType.text,
@@ -80,7 +80,7 @@ class _RegisterFormState extends State<RegisterForm> {
           const SizedBox(height: 20),
           SimpleInput(
             onChange: (email) => context.read<AuthBloc>().add(EmailChange(email!)),
-            textStyle: TextStyle(fontSize: isHorizontal ? 38 : 16.sp),
+            textStyle: TextStyle(fontSize: Responsive.resize(size: 16, reduction: .66).sp),
             name: 'email',
             hintText: 'Correo electrónico',
             keyboardType: TextInputType.emailAddress,
@@ -99,7 +99,7 @@ class _RegisterFormState extends State<RegisterForm> {
           const SizedBox(height: 20),
           SimpleInput(
             onChange: (password) => context.read<AuthBloc>().add(PasswordChange(password!)),
-            textStyle: TextStyle(fontSize: isHorizontal ? 38 : 16.sp),
+            textStyle: TextStyle(fontSize: Responsive.resize(size: 16, reduction: .66).sp),
             name: 'password',
             focusNode: widget.passwordFocuesNode,
             obscureText: true,

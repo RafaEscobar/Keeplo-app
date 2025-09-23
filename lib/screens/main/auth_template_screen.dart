@@ -45,11 +45,12 @@ class AuthTemplateScreen extends StatelessWidget {
       spacing: 40,
       children: [
         //Expanded(child: headerMain),
-        SizedBox(
-          width: size.width * .54,
-          height: size.height * .86,
+        ClipRRect(
+          borderRadius: BorderRadius.circular(30),
           child: Image.asset(
-            "assets/pictures/a.jpg",
+            "assets/pictures/cover.png",
+            width: size.width * .54,
+            height: size.height * .9,
             fit: BoxFit.cover,
           ),
         ),
@@ -107,9 +108,9 @@ class AuthTemplateScreen extends StatelessWidget {
                           constraints: BoxConstraints(minHeight: constraints.maxHeight),
                           child: IntrinsicHeight(
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                              padding: EdgeInsetsGeometry.symmetric(horizontal: 20),
                               child: isHorizontal ? horizontalTabletBody : regularBody,
-                            ),
+                            )
                           ),
                         ),
                       );
