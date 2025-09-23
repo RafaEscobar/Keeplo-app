@@ -6,6 +6,7 @@ import 'package:keeplo/bloc/vahul_bloc/vahul_state.dart';
 import 'package:keeplo/enums/empty_state_type.dart';
 import 'package:keeplo/models/vahul.dart';
 import 'package:keeplo/theme/app_theme.dart';
+import 'package:keeplo/utils/responsive.dart';
 import 'package:keeplo/widgets/dashboard/dash_header.dart';
 import 'package:keeplo/widgets/dashboard/dash_new_vahul.dart';
 import 'package:keeplo/widgets/dashboard/dash_search_bar.dart';
@@ -96,10 +97,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             physics: const AlwaysScrollableScrollPhysics(),
                             itemCount: list.length,
                             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                              crossAxisSpacing: 40,
+                              crossAxisCount: context.isTabletLandscape ? 6 : 3,
+                              crossAxisSpacing: context.isTabletLandscape ? 20 : 40,
                               mainAxisSpacing: 0,
-                              childAspectRatio: 0.6,
+                              childAspectRatio: context.isTabletLandscape ? 1 : 0.6,
                             ),
                             itemBuilder: (context, index) {
                               return VahulCard(vahul: list[index]);

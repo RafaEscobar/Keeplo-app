@@ -19,7 +19,7 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
     try {
       emit(state.copyWith(status: VahulStatus.loading));
       String order = state.isAscOrder ? 'asc' : 'desc';
-      final respose = await ApiService.request("/vahuls?limit=12&order=$order", auth: Preferences.token);
+      final respose = await ApiService.request("/vahuls?limit=24&order=$order", auth: Preferences.token);
       if (respose.statusCode == 200) {
         List<Vahul> list = (respose.data['data'] as List).map((vahul) => Vahul.fromJson(vahul)).toList();
         emit(state.copyWith(
@@ -44,7 +44,7 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
       if (event.newPage <= state.page) return;
       emit(state.copyWith(loadingMore: true));
       String order = state.isAscOrder ? 'asc' : 'desc';
-      final respose = await ApiService.request("/vahuls?limit=12&&order=$order&page=${event.newPage}", auth: Preferences.token);
+      final respose = await ApiService.request("/vahuls?limit=24&&order=$order&page=${event.newPage}", auth: Preferences.token);
       if (respose.statusCode == 200) {
         List<Vahul> list = state.vahules;
         list.addAll((respose.data['data'] as List).map((vahul) => Vahul.fromJson(vahul)).toList());
