@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:keeplo/bloc/auth_bloc/auth_bloc.dart';
 import 'package:keeplo/bloc/auth_bloc/auth_event.dart';
@@ -7,6 +8,7 @@ import 'package:keeplo/bloc/auth_bloc/auth_state.dart';
 import 'package:keeplo/screens/main/login_screen.dart';
 import 'package:keeplo/services/preferences.dart';
 import 'package:keeplo/theme/app_theme.dart';
+import 'package:keeplo/utils/responsive.dart';
 import 'package:keeplo/widgets/simple_modal.dart';
 
 class DashHeader extends StatelessWidget implements PreferredSize{
@@ -83,13 +85,13 @@ class DashHeader extends StatelessWidget implements PreferredSize{
       backgroundColor: AppTheme.primaryTwo,
       leading: null,
       automaticallyImplyLeading: false,
-      title: Text("Mis baúles"),
+      title: Text("Mis baúles", style: TextStyle(fontSize: Responsive.resize(size: 14, reduction: .7).sp),),
       actions: [
         Container(
           margin: EdgeInsets.only(right: 14),
           child: GestureDetector(
             onTap: () => _openProfile(context: context, name: bloc.state.user!.fullName, email: bloc.state.user!.email),
-            child: Icon(Icons.person),
+            child: Icon(Icons.person, size: Responsive.resize(size: 14, reduction: .9).sp,),
           ),
         )
       ],
