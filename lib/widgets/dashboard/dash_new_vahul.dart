@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:keeplo/bloc/bloc_barrel.dart';
 import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_event.dart';
-import 'package:keeplo/screens/forms/new_vahul_screen.dart';
+import 'package:keeplo/screens/vauls/new_vahul_screen.dart';
 import 'package:keeplo/theme/app_theme.dart';
 import 'package:keeplo/utils/responsive.dart';
 

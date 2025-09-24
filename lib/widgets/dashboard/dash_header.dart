@@ -23,6 +23,7 @@ class DashHeader extends StatelessWidget implements PreferredSize{
   }
 
   void _openProfile({required BuildContext context, required String name, required String email}){
+    print("TOKEN: ${Preferences.token}");
     SimpleModal.openModal(
       context: context,
       body: BlocListener<AuthBloc, AuthState>(
