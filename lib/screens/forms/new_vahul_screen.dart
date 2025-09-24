@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
@@ -65,7 +64,7 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Nuevo baúl", style: TextStyle(fontSize: context.isTabletLandscape ? 28 : 18, color: Colors.white, fontWeight: FontWeight.w600),),
+        title: Text("Nuevo baúl", style: TextStyle(fontSize: Responsive.regularTextSize(context), color: Colors.white, fontWeight: FontWeight.w600),),
       ),
       backgroundColor: AppTheme.primary,
       body: SafeArea(
@@ -104,7 +103,7 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
                                 SimpleInput(
                                   controller: _nameController,
                                   onChange: (value) => context.read<NewVahulBloc>().add(VahulNameChange(value!)),
-                                  textStyle: TextStyle(fontSize: context.isTabletLandscape ? 28 : 18),
+                                  textStyle: TextStyle(fontSize: Responsive.regularTextSize(context)),
                                   name: 'name',
                                   hintText: 'Nombre*',
                                   keyboardType: TextInputType.emailAddress,
@@ -128,7 +127,7 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
                                 SizedBox(height: 20,),
                                 SimpleInput(
                                   onChange: (value) => context.read<NewVahulBloc>().add(VahulDescriptionChange(value!)),
-                                  textStyle: TextStyle(fontSize: context.isTabletLandscape ? 28 : 18),
+                                  textStyle: TextStyle(fontSize: Responsive.regularTextSize(context)),
                                   name: 'description',
                                   hintText: 'Descripición',
                                   keyboardType: TextInputType.emailAddress,

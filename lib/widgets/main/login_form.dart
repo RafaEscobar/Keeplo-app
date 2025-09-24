@@ -37,7 +37,7 @@ class _LoginFormState extends State<LoginForm> {
           if(isHorizontal) SizedBox(height: 20,),
           SimpleInput(
             onChange: (value) => context.read<AuthBloc>().add(EmailChange(value!)),
-            textStyle: TextStyle(fontSize: context.isTabletLandscape ? 28 : 18),
+            textStyle: TextStyle(fontSize: Responsive.regularTextSize(context)),
             name: 'email',
             hintText: 'Correo electrónico',
             keyboardType: TextInputType.emailAddress,
@@ -56,7 +56,7 @@ class _LoginFormState extends State<LoginForm> {
           SizedBox(height: context.isTabletLandscape ? 10 : 20),
           SimpleInput(
             onChange: (value) => context.read<AuthBloc>().add(PasswordChange(value!)),
-            textStyle: TextStyle(fontSize: context.isTabletLandscape ? 28 : 18),
+            textStyle: TextStyle(fontSize: Responsive.regularTextSize(context)),
             name: 'password',
             focusNode: widget.passwordFocuesNode,
             obscureText: true,
