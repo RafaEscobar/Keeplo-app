@@ -97,10 +97,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             physics: const AlwaysScrollableScrollPhysics(),
                             itemCount: list.length,
                             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: context.isTabletLandscape ? 6 : 3,
-                              crossAxisSpacing: context.isTabletLandscape ? 20 : 40,
+                              crossAxisCount: context.isTabletLandscape ? 6 : context.isTabletPortrait ? 4 : 3,
+                              crossAxisSpacing: context.isTabletLandscape ? 20 : context.isTabletPortrait ? 10 : 40,
                               mainAxisSpacing: 0,
-                              childAspectRatio: context.isTabletLandscape ? 1 : 0.6,
+                              childAspectRatio: context.isTabletLandscape ? 1 : context.isTabletPortrait ? 0.9 : 0.6,
                             ),
                             itemBuilder: (context, index) {
                               return VahulCard(vahul: list[index]);

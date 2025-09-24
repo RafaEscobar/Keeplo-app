@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:keeplo/theme/app_theme.dart';
 import 'package:keeplo/utils/responsive.dart';
 
@@ -16,7 +15,6 @@ class SimpleButton extends StatelessWidget{
 
   @override
   Widget build(BuildContext context){
-    bool isHorizontal = context.isTabletLandscape;
     return Container(
       padding: padding,
       width: double.infinity,
@@ -28,7 +26,7 @@ class SimpleButton extends StatelessWidget{
         onTap: callback,
         child: Text(
           text,
-          style: TextStyle(color: AppTheme.primary, fontSize: isHorizontal ? 28 : Responsive.resize(size:22.sp, reduction: .8), fontWeight: FontWeight.bold),
+          style: TextStyle(color: AppTheme.primary, fontSize: context.isTabletLandscape ? 28 : context.isTabletPortrait ? 22 : 16, fontWeight: FontWeight.bold),
           textAlign: TextAlign.center,
         ),
       ),
