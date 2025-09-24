@@ -3,6 +3,7 @@ import 'package:keeplo/bloc/bloc_barrel.dart';
 import 'package:keeplo/bloc/item_bloc/item_bloc.dart';
 import 'package:keeplo/bloc/item_bloc/item_event.dart';
 import 'package:keeplo/theme/app_theme.dart';
+import 'package:keeplo/widgets/dashboard/simple_search_bar.dart';
 import 'package:keeplo/widgets/vahul/vahuls_header.dart';
 
 class VahulDetails extends StatefulWidget {
@@ -60,9 +61,8 @@ class _VahulDetailsState extends State<VahulDetails> {
             child: Column(
               spacing: 26,
               children: [
-                Text("data")
+                SimpleSearchBar(focusNode: _searchFocusNode, ),
                 /*
-                DashSearchBar(focusNode: _searchFocusNode,),
                 BlocBuilder<VahulBloc, VahulState>(
                   builder: (context, state) {
                     if (state.status == VahulStatus.loading) {

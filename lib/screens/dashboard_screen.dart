@@ -9,7 +9,7 @@ import 'package:keeplo/theme/app_theme.dart';
 import 'package:keeplo/utils/responsive.dart';
 import 'package:keeplo/widgets/dashboard/dash_header.dart';
 import 'package:keeplo/widgets/dashboard/dash_new_vahul.dart';
-import 'package:keeplo/widgets/dashboard/dash_search_bar.dart';
+import 'package:keeplo/widgets/dashboard/simple_search_bar.dart';
 import 'package:keeplo/widgets/dashboard/vahul_card.dart';
 
 class DashboardScreen extends StatefulWidget{
@@ -72,7 +72,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               child: Column(
                 spacing: 26,
                 children: [
-                  DashSearchBar(focusNode: _searchFocusNode,),
+                  SimpleSearchBar(focusNode: _searchFocusNode, forVahul: false,),
                   BlocBuilder<VahulBloc, VahulState>(
                     builder: (context, state) {
                       if (state.status == VahulStatus.loading) {
