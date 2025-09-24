@@ -12,6 +12,7 @@ class ItemBloc extends Bloc<ItemEvent, ItemState>{
     on<LoadMoreItemsEvent>(_loadMoreVahules);
     on<ItemNewPageEvent>(_onVahulNewPageEvent);
     on<ItemOrderChange>(_onVahulOrderChange);
+    on<SetItemEvent>(_onSetItemEvent);
   }
 
     //* Método para obtener el listado de vahules
@@ -19,7 +20,7 @@ class ItemBloc extends Bloc<ItemEvent, ItemState>{
     try {
       emit(state.copyWith(status: ItemStatus.initial));
       String order = state.isAscOrder ? 'asc' : 'desc';
-      final respose = await ApiService.request("/items?limit=24&order=$order&vahul_id=${state.vahulId}", auth: Preferences.token);
+      final respose = await ApiService.request("/items?limit=24&order=$order&vahul_id=${state.currentVahul!.id}", auth: Preferences.token);
       if (respose.statusCode == 200) {
         List<Item> list = (respose.data['data'] as List).map((vahul) => Item.fromJson(vahul)).toList();
         emit(state.copyWith(
@@ -44,7 +45,7 @@ class ItemBloc extends Bloc<ItemEvent, ItemState>{
       if (event.newPage <= state.page) return;
       emit(state.copyWith(loadingMore: true));
       String order = state.isAscOrder ? 'asc' : 'desc';
-      final respose = await ApiService.request("/items?limit=24&&order=$order&page=${event.newPage}&vahul_id=${state.vahulId}", auth: Preferences.token);
+      final respose = await ApiService.request("/items?limit=24&&order=$order&page=${event.newPage}&vahul_id=${state.currentVahul!.id}", auth: Preferences.token);
       if (respose.statusCode == 200) {
         List<Item> list = state.items;
         list.addAll((respose.data['data'] as List).map((vahul) => Item.fromJson(vahul)).toList());
@@ -92,6 +93,14 @@ class ItemBloc extends Bloc<ItemEvent, ItemState>{
   void _onVahulOrderChange(ItemOrderChange event, Emitter<ItemState> emit){
     try {
       emit(state.copyWith(isAscOrder: !state.isAscOrder));
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  void _onSetItemEvent(SetItemEvent event, Emitter<ItemState> emit) {
+    try {
+      emit(state.copyWith(currentVahul: event.vahul));
     } catch (e) {
       throw e.toString();
     }

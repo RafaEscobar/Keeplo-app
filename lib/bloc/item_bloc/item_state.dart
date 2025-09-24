@@ -1,12 +1,13 @@
 import 'package:equatable/equatable.dart';
 import 'package:keeplo/models/item.dart';
+import 'package:keeplo/models/vahul.dart';
 
 enum ItemStatus {initial, loading, success, failure, searching}
 
 class ItemState extends Equatable{
   final List<Item> items; //* Listado de items
   final List<Item> initialItems; //* Listado inicial (auxiliar) de items
-  final int vahulId;
+  final Vahul? currentVahul;
   final ItemStatus status; //* Status actual del state
   final String errorMessage; //* Mensaje de error para los toast
   final bool hasMore; //* Bandera para determinar si tenemos más (más paginas) datos que cargar a futuro
@@ -17,7 +18,7 @@ class ItemState extends Equatable{
   const ItemState({
     this.items = const [],
     this.initialItems = const [],
-    this.vahulId = -1,
+    this.currentVahul,
     this.status = ItemStatus.initial,
     this.errorMessage = '',
     this.hasMore = false,
@@ -29,7 +30,7 @@ class ItemState extends Equatable{
   ItemState copyWith({
     List<Item>? items,
     List<Item>? initialItems,
-    int? vahulId,
+    Vahul? currentVahul,
     ItemStatus? status,
     String? errorMessage,
     bool? hasMore,
@@ -39,7 +40,7 @@ class ItemState extends Equatable{
   }) => ItemState(
     items: items ?? this.items,
     initialItems: initialItems ?? this.initialItems,
-    vahulId: vahulId ?? this.vahulId,
+    currentVahul: currentVahul ?? this.currentVahul,
     status: status ?? this.status,
     errorMessage: errorMessage ?? this.errorMessage,
     hasMore: hasMore ?? this.hasMore,
@@ -52,7 +53,7 @@ class ItemState extends Equatable{
   List<Object?> get props => [
     items,
     initialItems,
-    vahulId,
+    currentVahul,
     status,
     errorMessage,
     hasMore,

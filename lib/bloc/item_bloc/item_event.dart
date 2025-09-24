@@ -1,4 +1,6 @@
 // Clase abstracta base
+import 'package:keeplo/models/vahul.dart';
+
 abstract class ItemEvent {}
 
 class GetItemEvent extends ItemEvent{}
@@ -18,4 +20,10 @@ class ItemNewPageEvent extends ItemEvent{
   ItemNewPageEvent(this.newPage);
 }
 
+class SetItemEvent extends ItemEvent {
+  final Vahul vahul;
+  SetItemEvent(this.vahul);
+}
+
 class ItemOrderChange extends ItemEvent {}
+

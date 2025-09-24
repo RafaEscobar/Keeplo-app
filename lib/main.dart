@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:keeplo/bloc/bloc_barrel.dart';
+import 'package:keeplo/bloc/item_bloc/item_bloc.dart';
 import 'package:keeplo/routes/app_route.dart';
 import 'package:keeplo/services/preferences.dart';
 import 'package:keeplo/theme/app_theme.dart';
@@ -29,7 +30,8 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (_) => TokenBloc(),),
           BlocProvider(create: (_) => AuthBloc(),),
           BlocProvider(create: (_) => VahulBloc()),
-          BlocProvider(create: (_) => NewVahulBloc(),)
+          BlocProvider(create: (_) => NewVahulBloc(),),
+          BlocProvider(create: (_) => ItemBloc(),)
         ],
         child: MaterialApp.router(
           theme: AppTheme.lightTheme,
