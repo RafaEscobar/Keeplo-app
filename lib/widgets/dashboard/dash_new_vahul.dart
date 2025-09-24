@@ -35,7 +35,7 @@ class DashNewVahul extends StatelessWidget {
             spacing: 6,
             children: [
               Icon(Icons.add, color: Colors.white, size: context.isTabletLandscape ? 36 : 24,),
-              Text("Nuevo baúl", style: TextStyle(color: Colors.white, fontSize: context.isTabletLandscape ? 28 : 16),),
+              Text("Nuevo baúl", style: TextStyle(color: Colors.white, fontSize: Responsive.minTextSize(context)),),
             ],
           )
         ),

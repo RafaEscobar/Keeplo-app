@@ -84,7 +84,7 @@ class DashHeader extends StatelessWidget implements PreferredSize{
       backgroundColor: AppTheme.primaryTwo,
       leading: null,
       automaticallyImplyLeading: false,
-      title: Text("Mis baúles", style: TextStyle(fontSize: context.isTabletLandscape ? 28 : 20)),
+      title: Text("Mis baúles", style: TextStyle(fontSize: Responsive.regularTextSize(context))),
       actions: [
         Container(
           margin: EdgeInsets.only(right: 14),

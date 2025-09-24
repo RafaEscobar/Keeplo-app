@@ -198,7 +198,7 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
                                   callback: () {
                                     runValidation();
                                   },
-                                  padding: const EdgeInsets.symmetric(vertical: 8),
+                                  padding: EdgeInsets.symmetric(vertical: context.isTabletLandscape ? 6 : 8),
                                 ),
                                 SizedBox(height: 16,)
                               ],
