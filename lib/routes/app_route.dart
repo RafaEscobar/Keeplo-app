@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:keeplo/bloc/splash_bloc/splash_bloc.dart';
 import 'package:keeplo/bloc/splash_bloc/splash_state.dart';
 import 'package:keeplo/screens/dashboard_screen.dart';
-import 'package:keeplo/screens/forms/new_vahul_screen.dart';
+import 'package:keeplo/screens/vauls/new_vahul_screen.dart';
 import 'package:keeplo/screens/main/login_screen.dart';
 import 'package:keeplo/screens/main/register_screen.dart';
 import 'package:keeplo/screens/main/splash_screen.dart';

@@ -1,26 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:keeplo/bloc/vahul_bloc/vahul_bloc.dart';
-import 'package:keeplo/bloc/vahul_bloc/vahul_event.dart';
-import 'package:keeplo/bloc/vahul_bloc/vahul_state.dart';
-import 'package:keeplo/enums/empty_state_type.dart';
-import 'package:keeplo/models/vahul.dart';
 import 'package:keeplo/theme/app_theme.dart';
-import 'package:keeplo/utils/responsive.dart';
-import 'package:keeplo/widgets/dashboard/dash_header.dart';
-import 'package:keeplo/widgets/dashboard/dash_new_vahul.dart';
-import 'package:keeplo/widgets/dashboard/dash_search_bar.dart';
-import 'package:keeplo/widgets/dashboard/vahul_card.dart';
 
-class DashboardScreen extends StatefulWidget{
-  const DashboardScreen({super.key});
-  static const String routeName = 'dashboard-screen';
+class VahulDetails extends StatefulWidget {
+  const VahulDetails({super.key});
 
   @override
-  State<DashboardScreen> createState() => _DashboardScreenState();
+  State<VahulDetails> createState() => _VahulDetailsState();
 }
 
-class _DashboardScreenState extends State<DashboardScreen> {
+class _VahulDetailsState extends State<VahulDetails> {
   final FocusNode _searchFocusNode = FocusNode();
   final ScrollController _scrollController = ScrollController();
   final double _threshold = 200.0;
@@ -30,7 +18,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
     super.initState();
     _scrollController.addListener(_onScroll);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<VahulBloc>().add(GetVahulesEvent());
+      //context.read<VahulBloc>().add(GetVahulesEvent());
+      // Generar petición para traer listado de items del vahul actual
     },);
   }
 
@@ -44,6 +33,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   void _onScroll() {
     if (!_scrollController.hasClients) return;
+    /*
     VahulBloc bloc = context.read<VahulBloc>();
 
     final position = _scrollController.position;
@@ -52,6 +42,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         bloc.add(LoadMoreVahulesEvent(bloc.state.page + 1));
       }
     }
+    */
   }
 
   @override
@@ -65,13 +56,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
         onTap: () => _searchFocusNode.unfocus(),
         child: Scaffold(
           backgroundColor: AppTheme.primary,
-          appBar: DashHeader(),
           body: SafeArea(
             child: Padding(
               padding: EdgeInsetsGeometry.symmetric(horizontal: 14, vertical: 10),
               child: Column(
                 spacing: 26,
                 children: [
+                  /*
                   DashSearchBar(focusNode: _searchFocusNode,),
                   BlocBuilder<VahulBloc, VahulState>(
                     builder: (context, state) {
@@ -116,11 +107,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       return (loadingMore) ? CircularProgressIndicator(color: Colors.white,) : Container();
                     },
                   ),
+                  */
                 ],
               ),
             ),
           ),
-          floatingActionButton: DashNewVahul()
+          //floatingActionButton: DashNewVahul()
         ),
       ),
     );

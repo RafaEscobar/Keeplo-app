@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_bloc.dart';
 import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_event.dart';
+import 'package:keeplo/utils/responsive.dart';
 import 'package:keeplo/widgets/simple_modal.dart';
 
 class VahulActions {
@@ -56,7 +57,7 @@ class VahulActions {
         padding: EdgeInsetsGeometry.symmetric(horizontal: 20, vertical: 20),
         child: Column(
           children: [
-            Text("¿Dónde buscamos la imagen?", style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.w600), textAlign: TextAlign.center,),
+            Text("¿Dónde buscamos la imagen?", style: TextStyle(fontSize: context.isTabletLandscape ? 28 : 22, color: Colors.white, fontWeight: FontWeight.w600), textAlign: TextAlign.center,),
             SizedBox(height: 30,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,

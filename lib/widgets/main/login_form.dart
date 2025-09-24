@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:keeplo/bloc/auth_bloc/auth_bloc.dart';
 import 'package:keeplo/bloc/auth_bloc/auth_event.dart';
@@ -38,11 +37,11 @@ class _LoginFormState extends State<LoginForm> {
           if(isHorizontal) SizedBox(height: 20,),
           SimpleInput(
             onChange: (value) => context.read<AuthBloc>().add(EmailChange(value!)),
-            textStyle: TextStyle(fontSize: isHorizontal ? 38 : 16.sp),
+            textStyle: TextStyle(fontSize: Responsive.regularTextSize(context)),
             name: 'email',
             hintText: 'Correo electrónico',
             keyboardType: TextInputType.emailAddress,
-            contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 14),
             focusNode: widget.emailFocusNode,
             maxLength: 60,
             validator: FormBuilderValidators.compose([
@@ -54,15 +53,15 @@ class _LoginFormState extends State<LoginForm> {
               FocusScope.of(context).requestFocus(widget.passwordFocuesNode);
             },
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: context.isTabletLandscape ? 10 : 20),
           SimpleInput(
             onChange: (value) => context.read<AuthBloc>().add(PasswordChange(value!)),
-            textStyle: TextStyle(fontSize: isHorizontal ? 38 : 16.sp),
+            textStyle: TextStyle(fontSize: Responsive.regularTextSize(context)),
             name: 'password',
             focusNode: widget.passwordFocuesNode,
             obscureText: true,
             hintText: 'Contraseña',
-            contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 14),
             maxLength: 16,
             validator: FormBuilderValidators.compose([
               FormBuilderValidators.required(errorText: 'Proporciona una contraseña'),

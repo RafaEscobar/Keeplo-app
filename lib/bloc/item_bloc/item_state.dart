@@ -1,21 +1,24 @@
 import 'package:equatable/equatable.dart';
-import 'package:keeplo/models/vahul.dart';
+import 'package:keeplo/models/item.dart';
 
-enum VahulStatus { initial, loading, success, failure, searching }
-class VahulState extends Equatable{
-  final List<Vahul> vahules; //* Listado de vahules
-  final List<Vahul> initialVahules; //* Listado inicial (auxiliar) de vahules
-  final VahulStatus status; //* Status actual del state
+enum ItemStatus {initial, loading, success, failure, searching}
+
+class ItemState extends Equatable{
+  final List<Item> items; //* Listado de items
+  final List<Item> initialItems; //* Listado inicial (auxiliar) de items
+  final int vahulId;
+  final ItemStatus status; //* Status actual del state
   final String errorMessage; //* Mensaje de error para los toast
   final bool hasMore; //* Bandera para determinar si tenemos más (más paginas) datos que cargar a futuro
   final int page; //* Page actual para el paginado
   final bool loadingMore; //* Bandera para mostrar CircularProgressIndicator si estamos cargando la siguiente page
   final bool isAscOrder; //* Bandera para controlar ordenamiento; true = ordenamiento ascendente | false = ordenamiento descendente (por defecto)
 
-  const VahulState({
-    this.vahules = const [],
-    this.initialVahules = const [],
-    this.status = VahulStatus.initial,
+  const ItemState({
+    this.items = const [],
+    this.initialItems = const [],
+    this.vahulId = -1,
+    this.status = ItemStatus.initial,
     this.errorMessage = '',
     this.hasMore = false,
     this.page = 1,
@@ -23,25 +26,38 @@ class VahulState extends Equatable{
     this.isAscOrder = false
   });
 
-  VahulState copyWith({
-    List<Vahul>? vahules,
-    List<Vahul>? initialVahules,
-    VahulStatus? status,
+  ItemState copyWith({
+    List<Item>? items,
+    List<Item>? initialItems,
+    int? vahulId,
+    ItemStatus? status,
     String? errorMessage,
     bool? hasMore,
     int? page,
     bool? loadingMore,
     bool? isAscOrder
-  }) => VahulState(
-    vahules: vahules ?? this.vahules,
-    initialVahules: initialVahules ?? this.initialVahules,
+  }) => ItemState(
+    items: items ?? this.items,
+    initialItems: initialItems ?? this.initialItems,
+    vahulId: vahulId ?? this.vahulId,
     status: status ?? this.status,
     errorMessage: errorMessage ?? this.errorMessage,
+    hasMore: hasMore ?? this.hasMore,
     page: page ?? this.page,
     loadingMore: loadingMore ?? this.loadingMore,
     isAscOrder: isAscOrder ?? this.isAscOrder
   );
 
   @override
-  List<Object?> get props => [vahules, status, errorMessage, initialVahules, hasMore, page, loadingMore, isAscOrder];
+  List<Object?> get props => [
+    items,
+    initialItems,
+    vahulId,
+    status,
+    errorMessage,
+    hasMore,
+    page,
+    loadingMore,
+    isAscOrder
+  ];
 }

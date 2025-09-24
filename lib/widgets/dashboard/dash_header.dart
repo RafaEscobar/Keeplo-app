@@ -7,6 +7,7 @@ import 'package:keeplo/bloc/auth_bloc/auth_state.dart';
 import 'package:keeplo/screens/main/login_screen.dart';
 import 'package:keeplo/services/preferences.dart';
 import 'package:keeplo/theme/app_theme.dart';
+import 'package:keeplo/utils/responsive.dart';
 import 'package:keeplo/widgets/simple_modal.dart';
 
 class DashHeader extends StatelessWidget implements PreferredSize{
@@ -22,6 +23,7 @@ class DashHeader extends StatelessWidget implements PreferredSize{
   }
 
   void _openProfile({required BuildContext context, required String name, required String email}){
+    print("TOKEN: ${Preferences.token}");
     SimpleModal.openModal(
       context: context,
       body: BlocListener<AuthBloc, AuthState>(
@@ -83,13 +85,13 @@ class DashHeader extends StatelessWidget implements PreferredSize{
       backgroundColor: AppTheme.primaryTwo,
       leading: null,
       automaticallyImplyLeading: false,
-      title: Text("Mis baúles"),
+      title: Text("Mis baúles", style: TextStyle(fontSize: Responsive.regularTextSize(context))),
       actions: [
         Container(
           margin: EdgeInsets.only(right: 14),
           child: GestureDetector(
             onTap: () => _openProfile(context: context, name: bloc.state.user!.fullName, email: bloc.state.user!.email),
-            child: Icon(Icons.person),
+            child: Icon(Icons.person, size: context.isTabletLandscape ? 38 : 27),
           ),
         )
       ],

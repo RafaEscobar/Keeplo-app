@@ -18,19 +18,19 @@ class FooterMain extends StatelessWidget {
     return Column(
       children: [
         SimpleButton(text: btnText, callback: callback),
-        SizedBox(height: 16.h),
+        SizedBox(height: 16),
         Visibility(
           visible: isLogin,
           child: Column(
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: context.isTabletLandscape ? MainAxisAlignment.spaceBetween : MainAxisAlignment.center,
+                spacing: 10,
                 children: [
                   Text(
                     "¿Aún no tienes una cuenta?",
                     style: TextStyle(color: Colors.white, fontSize: isHorizontal ? 22 : Responsive.resize(size: 18.sp, reduction: .9)),
                   ),
-                  const SizedBox(width: 6),
                   GestureDetector(
                     onTap: () => context.goNamed(RegisterScreen.routeName),
                     child: Text(
@@ -40,7 +40,7 @@ class FooterMain extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 4),
+              SizedBox(height: context.isTabletLandscape ? 4: 16),
             ],
           )
         )
