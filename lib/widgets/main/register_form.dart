@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:keeplo/bloc/auth_bloc/auth_bloc.dart';
 import 'package:keeplo/bloc/auth_bloc/auth_event.dart';
@@ -42,7 +41,7 @@ class _RegisterFormState extends State<RegisterForm> {
           if(isHorizontal) SizedBox(height: 20,),
           SimpleInput(
             onChange: (name) => context.read<AuthBloc>().add(NameChange(name!)),
-            textStyle: TextStyle(fontSize: Responsive.resize(size: 16, reduction: .66).sp),
+            textStyle: TextStyle(fontSize: context.isTabletLandscape ? 28 : 18),
             name: 'name',
             hintText: 'Nombre',
             keyboardType: TextInputType.text,
@@ -61,7 +60,7 @@ class _RegisterFormState extends State<RegisterForm> {
           const SizedBox(height: 20),
           SimpleInput(
             onChange: (lastName) => context.read<AuthBloc>().add(LastNameChange(lastName!)),
-            textStyle: TextStyle(fontSize: Responsive.resize(size: 16, reduction: .66).sp),
+            textStyle: TextStyle(fontSize: context.isTabletLandscape ? 28 : 18),
             name: 'last_name',
             hintText: 'Apellido',
             keyboardType: TextInputType.text,
@@ -80,7 +79,7 @@ class _RegisterFormState extends State<RegisterForm> {
           const SizedBox(height: 20),
           SimpleInput(
             onChange: (email) => context.read<AuthBloc>().add(EmailChange(email!)),
-            textStyle: TextStyle(fontSize: Responsive.resize(size: 16, reduction: .66).sp),
+            textStyle: TextStyle(fontSize: context.isTabletLandscape ? 28 : 18),
             name: 'email',
             hintText: 'Correo electrónico',
             keyboardType: TextInputType.emailAddress,
@@ -99,7 +98,7 @@ class _RegisterFormState extends State<RegisterForm> {
           const SizedBox(height: 20),
           SimpleInput(
             onChange: (password) => context.read<AuthBloc>().add(PasswordChange(password!)),
-            textStyle: TextStyle(fontSize: Responsive.resize(size: 16, reduction: .66).sp),
+            textStyle: TextStyle(fontSize: context.isTabletLandscape ? 28 : 18),
             name: 'password',
             focusNode: widget.passwordFocuesNode,
             obscureText: true,
