@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:keeplo/bloc/auth_bloc/auth_bloc.dart';
 import 'package:keeplo/bloc/auth_bloc/auth_event.dart';
@@ -85,13 +84,13 @@ class DashHeader extends StatelessWidget implements PreferredSize{
       backgroundColor: AppTheme.primaryTwo,
       leading: null,
       automaticallyImplyLeading: false,
-      title: Text("Mis baúles", style: TextStyle(fontSize: Responsive.resize(size: 14, reduction: .7).sp),),
+      title: Text("Mis baúles", style: TextStyle(fontSize: context.isTabletLandscape ? 28 : 20)),
       actions: [
         Container(
           margin: EdgeInsets.only(right: 14),
           child: GestureDetector(
             onTap: () => _openProfile(context: context, name: bloc.state.user!.fullName, email: bloc.state.user!.email),
-            child: Icon(Icons.person, size: Responsive.resize(size: 14, reduction: .9).sp,),
+            child: Icon(Icons.person, size: context.isTabletLandscape ? 38 : 27),
           ),
         )
       ],

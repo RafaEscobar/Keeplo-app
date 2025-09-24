@@ -65,7 +65,7 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Nuevo baúl", style: TextStyle(fontSize: Responsive.resize(size: 14, reduction: .7).sp, color: Colors.white, fontWeight: FontWeight.w600),),
+        title: Text("Nuevo baúl", style: TextStyle(fontSize: context.isTabletLandscape ? 28 : 18, color: Colors.white, fontWeight: FontWeight.w600),),
       ),
       backgroundColor: AppTheme.primary,
       body: SafeArea(
@@ -104,7 +104,7 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
                                 SimpleInput(
                                   controller: _nameController,
                                   onChange: (value) => context.read<NewVahulBloc>().add(VahulNameChange(value!)),
-                                  textStyle: TextStyle(fontSize: Responsive.resize(size: 16, reduction: .66).sp),
+                                  textStyle: TextStyle(fontSize: context.isTabletLandscape ? 28 : 18),
                                   name: 'name',
                                   hintText: 'Nombre*',
                                   keyboardType: TextInputType.emailAddress,
@@ -128,7 +128,7 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
                                 SizedBox(height: 20,),
                                 SimpleInput(
                                   onChange: (value) => context.read<NewVahulBloc>().add(VahulDescriptionChange(value!)),
-                                  textStyle: TextStyle(fontSize: Responsive.resize(size: 16, reduction: .66).sp),
+                                  textStyle: TextStyle(fontSize: context.isTabletLandscape ? 28 : 18),
                                   name: 'description',
                                   hintText: 'Descripición',
                                   keyboardType: TextInputType.emailAddress,
