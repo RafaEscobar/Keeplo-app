@@ -64,6 +64,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       child: GestureDetector(
         onTap: () => _searchFocusNode.unfocus(),
         child: Scaffold(
+          resizeToAvoidBottomInset: false,
           backgroundColor: AppTheme.primary,
           appBar: DashHeader(),
           body: SafeArea(

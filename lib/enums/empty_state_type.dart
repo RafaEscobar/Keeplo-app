@@ -23,12 +23,12 @@ extension EmptyStateTypeExtension on EmptyStateType {
         );
       case EmptyStateType.noItems:
         return SimpleEmptyState(
-          label: "No tienes baúles que coincidan con la búsqueda.",
+          label: "Aún no tienes items en tu vahúl, agrega uno.",
           imageUrl: "assets/pictures/empty_list.png",
         );
       case EmptyStateType.noSearchItems:
         return SimpleEmptyState(
-          label: "No tienes baúles que coincidan con la búsqueda.",
+          label: "No tienes items que coincidan con la búsqueda.",
           imageUrl: "assets/pictures/not_found.png",
         );
     }
