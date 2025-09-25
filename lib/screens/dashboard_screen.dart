@@ -72,7 +72,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               child: Column(
                 spacing: 26,
                 children: [
-                  SimpleSearchBar(focusNode: _searchFocusNode, forVahul: false,),
+                  SimpleSearchBar(focusNode: _searchFocusNode,),
                   BlocBuilder<VahulBloc, VahulState>(
                     builder: (context, state) {
                       if (state.status == VahulStatus.loading) {

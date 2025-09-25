@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:keeplo/bloc/bloc_barrel.dart';
 import 'package:keeplo/bloc/item_bloc/item_bloc.dart';
 import 'package:keeplo/bloc/item_bloc/item_event.dart';
+import 'package:keeplo/bloc/item_bloc/item_state.dart';
+import 'package:keeplo/enums/empty_state_type.dart';
+import 'package:keeplo/models/item.dart';
 import 'package:keeplo/theme/app_theme.dart';
+import 'package:keeplo/utils/responsive.dart';
 import 'package:keeplo/widgets/dashboard/simple_search_bar.dart';
 import 'package:keeplo/widgets/vahul/vahuls_header.dart';
 
@@ -61,26 +65,25 @@ class _VahulDetailsState extends State<VahulDetails> {
             child: Column(
               spacing: 26,
               children: [
-                SimpleSearchBar(focusNode: _searchFocusNode, ),
-                /*
-                BlocBuilder<VahulBloc, VahulState>(
+                SimpleSearchBar(focusNode: _searchFocusNode, forVahul: false, ),
+                BlocBuilder<ItemBloc, ItemState>(
                   builder: (context, state) {
-                    if (state.status == VahulStatus.loading) {
+                    if (state.status == ItemStatus.loading) {
                       return Expanded(
                         child: Center(
                           child: CircularProgressIndicator(color: Colors.white,)
                         ,)
                       );
                     }
-                    List<Vahul> list = state.vahules;
-                    if (list.isEmpty && state.status == VahulStatus.searching) return EmptyStateType.noSearchVahuls.emptyState;
-                    if (list.isEmpty) return EmptyStateType.noVahuls.emptyState;
+                    List<Item> list = state.items;
+                    if (list.isEmpty && state.status == ItemStatus.searching) return EmptyStateType.noSearchItems.emptyState;
+                    if (list.isEmpty) return EmptyStateType.noItems.emptyState;
                     return  Expanded(
                       child: RefreshIndicator(
                         color: AppTheme.primary,
                         backgroundColor: Colors.white,
                         onRefresh: () async {
-                          context.read<VahulBloc>().add(GetVahulesEvent());
+                          context.read<ItemBloc>().add(GetItemEvent());
                         },
                         child: GridView.builder(
                           controller: _scrollController,
@@ -93,20 +96,19 @@ class _VahulDetailsState extends State<VahulDetails> {
                             childAspectRatio: context.isTabletLandscape ? 1 : context.isTabletPortrait ? 0.9 : 0.6,
                           ),
                           itemBuilder: (context, index) {
-                            return VahulCard(vahul: list[index]);
+                            return Text(list[index].name);
                           },
                         ),
                       )
                     );
                   },
                 ),
-                BlocSelector<VahulBloc, VahulState, bool>(
+                BlocSelector<ItemBloc, ItemState, bool>(
                   selector: (state) => state.loadingMore,
                   builder: (context, loadingMore) {
                     return (loadingMore) ? CircularProgressIndicator(color: Colors.white,) : Container();
                   },
                 ),
-                */
               ],
             ),
           ),
