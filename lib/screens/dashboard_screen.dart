@@ -104,7 +104,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               childAspectRatio: context.isTabletLandscape ? 1 : context.isTabletPortrait ? 0.9 : 0.6,
                             ),
                             itemBuilder: (context, index) {
-                              return VahulCard(vahul: list[index]);
+                              return VahulCard(vahul: list[index], callBack: () => _searchFocusNode.unfocus(),);
                             },
                           ),
                         )

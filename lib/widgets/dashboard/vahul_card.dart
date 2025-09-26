@@ -7,10 +7,12 @@ import 'package:keeplo/models/vahul.dart';
 import 'package:keeplo/screens/vauls/vahul_details.dart';
 
 class VahulCard extends StatelessWidget {
-  const VahulCard({super.key, required this.vahul});
+  const VahulCard({super.key, required this.vahul, required this.callBack});
   final Vahul vahul;
+  final Function() callBack;
 
   void _navigateToDetails(BuildContext context) {
+    callBack();
     context.read<ItemBloc>().add(SetItemEvent(vahul));
     context.goNamed(VahulDetails.routeName);
   }
