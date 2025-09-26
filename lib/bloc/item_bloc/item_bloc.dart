@@ -13,12 +13,13 @@ class ItemBloc extends Bloc<ItemEvent, ItemState>{
     on<ItemNewPageEvent>(_onVahulNewPageEvent);
     on<ItemOrderChange>(_onVahulOrderChange);
     on<SetItemEvent>(_onSetItemEvent);
+    on<ItemChangeStatus>(_onItemChangeStatus);
   }
 
     //* Método para obtener el listado de vahules
   Future<void> _getVahules(GetItemEvent event, Emitter<ItemState> emit) async {
     try {
-      emit(state.copyWith(status: ItemStatus.initial));
+      emit(state.copyWith(status: ItemStatus.loading));
       String order = state.isAscOrder ? 'asc' : 'desc';
       final respose = await ApiService.request("/items?limit=24&order=$order&vahul_id=${state.currentVahul!.id}", auth: Preferences.token);
       if (respose.statusCode == 200) {
@@ -101,6 +102,14 @@ class ItemBloc extends Bloc<ItemEvent, ItemState>{
   void _onSetItemEvent(SetItemEvent event, Emitter<ItemState> emit) {
     try {
       emit(state.copyWith(currentVahul: event.vahul));
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  void _onItemChangeStatus(ItemChangeStatus event, Emitter<ItemState> emit) {
+    try {
+      emit(state.copyWith(status: event.status));
     } catch (e) {
       throw e.toString();
     }

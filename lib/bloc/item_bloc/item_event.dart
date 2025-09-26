@@ -1,4 +1,5 @@
 // Clase abstracta base
+import 'package:keeplo/bloc/item_bloc/item_state.dart';
 import 'package:keeplo/models/vahul.dart';
 
 abstract class ItemEvent {}
@@ -23,6 +24,11 @@ class ItemNewPageEvent extends ItemEvent{
 class SetItemEvent extends ItemEvent {
   final Vahul vahul;
   SetItemEvent(this.vahul);
+}
+
+class ItemChangeStatus extends ItemEvent {
+  final ItemStatus status;
+  ItemChangeStatus(this.status);
 }
 
 class ItemOrderChange extends ItemEvent {}

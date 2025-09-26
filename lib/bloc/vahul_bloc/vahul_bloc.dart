@@ -12,6 +12,7 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
     on<LoadMoreVahulesEvent>(_loadMoreVahules);
     on<VahulNewPageEvent>(_onVahulNewPageEvent);
     on<VahulOrderChange>(_onVahulOrderChange);
+    on<VahulChangeStatus>(_onVahulChangeStatus);
   }
 
   //* Método para obtener el listado de vahules
@@ -96,4 +97,14 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
       throw e.toString();
     }
   }
+
+  //* Método para cambiar dínamicamente el tipo de ordenamiento
+  void _onVahulChangeStatus(VahulChangeStatus event, Emitter<VahulState> emit){
+    try {
+      emit(state.copyWith(status: event.status));
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
 }

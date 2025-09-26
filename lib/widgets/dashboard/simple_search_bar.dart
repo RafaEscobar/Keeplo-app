@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keeplo/bloc/item_bloc/item_bloc.dart';
 import 'package:keeplo/bloc/item_bloc/item_event.dart';
+import 'package:keeplo/bloc/item_bloc/item_state.dart';
 import 'package:keeplo/bloc/vahul_bloc/vahul_bloc.dart';
 import 'package:keeplo/bloc/vahul_bloc/vahul_event.dart';
+import 'package:keeplo/bloc/vahul_bloc/vahul_state.dart';
 import 'package:keeplo/widgets/filter_button.dart';
 
 class SimpleSearchBar extends StatelessWidget {
@@ -38,6 +40,11 @@ class SimpleSearchBar extends StatelessWidget {
                 forVahul ?
                   context.read<VahulBloc>().add(SearchVahulEvent(value)) :
                   context.read<ItemBloc>().add(SearchItemEvent(value));
+                if (value.isEmpty) {
+                  forVahul ?
+                    context.read<VahulBloc>().add(VahulChangeStatus(VahulStatus.initial)) :
+                    context.read<ItemBloc>().add(ItemChangeStatus(ItemStatus.initial));
+                }
               },
               cursorColor: Colors.white,
               focusNode: focusNode,

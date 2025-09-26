@@ -1,4 +1,6 @@
 //* Clase abstracta base
+import 'package:keeplo/bloc/vahul_bloc/vahul_state.dart';
+
 abstract class VahulEvent {}
 
 //* Evento para cambiar valor de la variable -page-
@@ -17,6 +19,11 @@ class SearchVahulEvent extends VahulEvent {
 class LoadMoreVahulesEvent extends VahulEvent {
   final int newPage;
   LoadMoreVahulesEvent(this.newPage);
+}
+
+class VahulChangeStatus extends VahulEvent {
+  final VahulStatus status;
+  VahulChangeStatus(this.status);
 }
 
 //* Evento para obtener listado de vahules

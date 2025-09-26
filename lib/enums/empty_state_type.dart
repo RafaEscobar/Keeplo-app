@@ -23,7 +23,7 @@ extension EmptyStateTypeExtension on EmptyStateType {
         );
       case EmptyStateType.noItems:
         return SimpleEmptyState(
-          label: "Aún no tienes items en tu vahúl, agrega uno.",
+          label: "Aún no tienes items en tu baúl, agrega uno.",
           imageUrl: "assets/pictures/empty_list.png",
         );
       case EmptyStateType.noSearchItems:

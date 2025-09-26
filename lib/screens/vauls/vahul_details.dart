@@ -76,7 +76,9 @@ class _VahulDetailsState extends State<VahulDetails> {
                       );
                     }
                     List<Item> list = state.items;
-                    if (list.isEmpty && state.status == ItemStatus.searching) return EmptyStateType.noSearchItems.emptyState;
+                    if (list.isEmpty && state.status == ItemStatus.searching) {
+                      return EmptyStateType.noSearchItems.emptyState;
+                    }
                     if (list.isEmpty) return EmptyStateType.noItems.emptyState;
                     return  Expanded(
                       child: RefreshIndicator(
