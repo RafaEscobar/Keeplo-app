@@ -1,5 +1,6 @@
 //* Clase abstracta base
 import 'package:keeplo/bloc/vahul_bloc/vahul_state.dart';
+import 'package:keeplo/models/vahul.dart';
 
 abstract class VahulEvent {}
 
@@ -21,9 +22,22 @@ class LoadMoreVahulesEvent extends VahulEvent {
   LoadMoreVahulesEvent(this.newPage);
 }
 
+//* Método para cambiar el status del state actual
 class VahulChangeStatus extends VahulEvent {
   final VahulStatus status;
   VahulChangeStatus(this.status);
+}
+
+//* Método para lanzar petición para eliminar un vahul
+class VahulDeleteEvent extends VahulEvent {
+  final int vahulId;
+  VahulDeleteEvent(this.vahulId);
+}
+
+//* Método para setear vahul actual
+class SetCurrentVahulEvent extends VahulEvent {
+  final Vahul currentVahul;
+  SetCurrentVahulEvent(this.currentVahul);
 }
 
 //* Evento para obtener listado de vahules

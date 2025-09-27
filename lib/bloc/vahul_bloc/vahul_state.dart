@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:keeplo/models/vahul.dart';
 
-enum VahulStatus { initial, loading, success, failure, searching }
+enum VahulStatus { initial, loading, success, failure, searching, vahulRemoved }
 class VahulState extends Equatable{
   final List<Vahul> vahules; //* Listado de vahules
   final List<Vahul> initialVahules; //* Listado inicial (auxiliar) de vahules
@@ -11,6 +11,7 @@ class VahulState extends Equatable{
   final int page; //* Page actual para el paginado
   final bool loadingMore; //* Bandera para mostrar CircularProgressIndicator si estamos cargando la siguiente page
   final bool isAscOrder; //* Bandera para controlar ordenamiento; true = ordenamiento ascendente | false = ordenamiento descendente (por defecto)
+  final Vahul? currentVahul; //* Vahul actual para la pantalla de detalle
 
   const VahulState({
     this.vahules = const [],
@@ -20,7 +21,8 @@ class VahulState extends Equatable{
     this.hasMore = false,
     this.page = 1,
     this.loadingMore = false,
-    this.isAscOrder = false
+    this.isAscOrder = false,
+    this.currentVahul
   });
 
   VahulState copyWith({
@@ -31,7 +33,8 @@ class VahulState extends Equatable{
     bool? hasMore,
     int? page,
     bool? loadingMore,
-    bool? isAscOrder
+    bool? isAscOrder,
+    Vahul? currentVahul
   }) => VahulState(
     vahules: vahules ?? this.vahules,
     initialVahules: initialVahules ?? this.initialVahules,
@@ -39,9 +42,20 @@ class VahulState extends Equatable{
     errorMessage: errorMessage ?? this.errorMessage,
     page: page ?? this.page,
     loadingMore: loadingMore ?? this.loadingMore,
-    isAscOrder: isAscOrder ?? this.isAscOrder
+    isAscOrder: isAscOrder ?? this.isAscOrder,
+    currentVahul: currentVahul ?? this.currentVahul
   );
 
   @override
-  List<Object?> get props => [vahules, status, errorMessage, initialVahules, hasMore, page, loadingMore, isAscOrder];
+  List<Object?> get props => [
+    vahules,
+    status,
+    errorMessage,
+    initialVahules,
+    hasMore,
+    page,
+    loadingMore,
+    isAscOrder,
+    currentVahul
+  ];
 }

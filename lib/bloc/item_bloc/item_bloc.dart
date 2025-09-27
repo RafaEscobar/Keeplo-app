@@ -7,21 +7,21 @@ import 'package:keeplo/services/preferences.dart';
 
 class ItemBloc extends Bloc<ItemEvent, ItemState>{
   ItemBloc() : super(ItemState()){
-    on<GetItemEvent>(_getVahules);
+    on<GetItemsEvent>(_getItems);
     on<SearchItemEvent>(_onSearchVahulEvent);
     on<LoadMoreItemsEvent>(_loadMoreVahules);
     on<ItemNewPageEvent>(_onVahulNewPageEvent);
     on<ItemOrderChange>(_onVahulOrderChange);
-    on<SetItemEvent>(_onSetItemEvent);
     on<ItemChangeStatus>(_onItemChangeStatus);
+    on<SetVahulIdEvent>(_onSetVahulIdEvent);
   }
 
     //* Método para obtener el listado de vahules
-  Future<void> _getVahules(GetItemEvent event, Emitter<ItemState> emit) async {
+  Future<void> _getItems(GetItemsEvent event, Emitter<ItemState> emit) async {
     try {
       emit(state.copyWith(status: ItemStatus.loading));
       String order = state.isAscOrder ? 'asc' : 'desc';
-      final respose = await ApiService.request("/items?limit=24&order=$order&vahul_id=${state.currentVahul!.id}", auth: Preferences.token);
+      final respose = await ApiService.request("/items?limit=24&order=$order&vahul_id=${state.vahulId}", auth: Preferences.token);
       if (respose.statusCode == 200) {
         List<Item> list = (respose.data['data'] as List).map((vahul) => Item.fromJson(vahul)).toList();
         emit(state.copyWith(
@@ -46,7 +46,7 @@ class ItemBloc extends Bloc<ItemEvent, ItemState>{
       if (event.newPage <= state.page) return;
       emit(state.copyWith(loadingMore: true));
       String order = state.isAscOrder ? 'asc' : 'desc';
-      final respose = await ApiService.request("/items?limit=24&&order=$order&page=${event.newPage}&vahul_id=${state.currentVahul!.id}", auth: Preferences.token);
+      final respose = await ApiService.request("/items?limit=24&&order=$order&page=${event.newPage}&vahul_id=${state.vahulId}", auth: Preferences.token);
       if (respose.statusCode == 200) {
         List<Item> list = state.items;
         list.addAll((respose.data['data'] as List).map((vahul) => Item.fromJson(vahul)).toList());
@@ -99,17 +99,17 @@ class ItemBloc extends Bloc<ItemEvent, ItemState>{
     }
   }
 
-  void _onSetItemEvent(SetItemEvent event, Emitter<ItemState> emit) {
+  void _onItemChangeStatus(ItemChangeStatus event, Emitter<ItemState> emit) {
     try {
-      emit(state.copyWith(currentVahul: event.vahul));
+      emit(state.copyWith(status: event.status));
     } catch (e) {
       throw e.toString();
     }
   }
 
-  void _onItemChangeStatus(ItemChangeStatus event, Emitter<ItemState> emit) {
+  void _onSetVahulIdEvent(SetVahulIdEvent event, Emitter<ItemState> emit) {
     try {
-      emit(state.copyWith(status: event.status));
+      emit(state.copyWith(vahulId: event.vahuldId));
     } catch (e) {
       throw e.toString();
     }

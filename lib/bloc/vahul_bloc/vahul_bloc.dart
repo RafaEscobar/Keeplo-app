@@ -13,6 +13,8 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
     on<VahulNewPageEvent>(_onVahulNewPageEvent);
     on<VahulOrderChange>(_onVahulOrderChange);
     on<VahulChangeStatus>(_onVahulChangeStatus);
+    on<VahulDeleteEvent>(_onVahulDeleteEvent);
+    on<SetCurrentVahulEvent>(_onSetCurrentVahulEvent);
   }
 
   //* Método para obtener el listado de vahules
@@ -80,6 +82,21 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
     }
   }
 
+  Future<void> _onVahulDeleteEvent(VahulDeleteEvent event, Emitter<VahulState> emit) async {
+    try {
+      emit(state.copyWith(status: VahulStatus.loading));
+      final response = await ApiService.request('vahuls/${event.vahulId}', auth: Preferences.token);
+      if (response.statusCode == 200) {
+        emit(state.copyWith(status: VahulStatus.vahulRemoved));
+      } else {
+        emit(state.copyWith(status: VahulStatus.failure, errorMessage: "${response.data["message"]}"));
+      }
+    } catch (e) {
+      emit(state.copyWith(status: VahulStatus.failure));
+      throw e.toString();
+    }
+  }
+
   //* Método para cambiar de page
   void _onVahulNewPageEvent(VahulNewPageEvent event, Emitter<VahulState> emit) {
     try {
@@ -102,6 +119,15 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
   void _onVahulChangeStatus(VahulChangeStatus event, Emitter<VahulState> emit){
     try {
       emit(state.copyWith(status: event.status));
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  //* Método para setear el vahul actual
+  void _onSetCurrentVahulEvent(SetCurrentVahulEvent event, Emitter<VahulState> emit){
+    try {
+      emit(state.copyWith(currentVahul: event.currentVahul));
     } catch (e) {
       throw e.toString();
     }

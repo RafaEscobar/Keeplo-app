@@ -28,7 +28,7 @@ class SimpleSearchBar extends StatelessWidget {
             } else {
               context.read<ItemBloc>().add(ItemOrderChange());
               context.read<ItemBloc>().add(ItemNewPageEvent(1));
-              context.read<ItemBloc>().add(GetItemEvent());
+              context.read<ItemBloc>().add(GetItemsEvent());
             }
           },
         ),

@@ -1,10 +1,9 @@
 // Clase abstracta base
 import 'package:keeplo/bloc/item_bloc/item_state.dart';
-import 'package:keeplo/models/vahul.dart';
 
 abstract class ItemEvent {}
 
-class GetItemEvent extends ItemEvent{}
+class GetItemsEvent extends ItemEvent{}
 
 class SearchItemEvent extends ItemEvent{
   final String word;
@@ -21,14 +20,15 @@ class ItemNewPageEvent extends ItemEvent{
   ItemNewPageEvent(this.newPage);
 }
 
-class SetItemEvent extends ItemEvent {
-  final Vahul vahul;
-  SetItemEvent(this.vahul);
-}
-
 class ItemChangeStatus extends ItemEvent {
   final ItemStatus status;
   ItemChangeStatus(this.status);
+}
+
+//* Método para setear el id del vahul
+class SetVahulIdEvent extends ItemEvent {
+  final int vahuldId;
+  SetVahulIdEvent(this.vahuldId);
 }
 
 class ItemOrderChange extends ItemEvent {}

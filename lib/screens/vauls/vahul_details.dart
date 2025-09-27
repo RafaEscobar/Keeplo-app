@@ -28,7 +28,9 @@ class _VahulDetailsState extends State<VahulDetails> {
     super.initState();
     _scrollController.addListener(_onScroll);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<ItemBloc>().add(GetItemEvent());
+      int vahulId = context.read<VahulBloc>().state.currentVahul!.id;
+      context.read<ItemBloc>().add(SetVahulIdEvent(vahulId));
+      context.read<ItemBloc>().add(GetItemsEvent());
     },);
   }
 
@@ -85,7 +87,7 @@ class _VahulDetailsState extends State<VahulDetails> {
                         color: AppTheme.primary,
                         backgroundColor: Colors.white,
                         onRefresh: () async {
-                          context.read<ItemBloc>().add(GetItemEvent());
+                          context.read<ItemBloc>().add(GetItemsEvent());
                         },
                         child: GridView.builder(
                           controller: _scrollController,
