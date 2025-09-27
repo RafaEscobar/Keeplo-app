@@ -5,9 +5,11 @@ import 'package:keeplo/bloc/item_bloc/item_event.dart';
 import 'package:keeplo/bloc/item_bloc/item_state.dart';
 import 'package:keeplo/enums/empty_state_type.dart';
 import 'package:keeplo/models/item.dart';
+import 'package:keeplo/models/vahul.dart';
 import 'package:keeplo/theme/app_theme.dart';
 import 'package:keeplo/utils/responsive.dart';
 import 'package:keeplo/widgets/dashboard/simple_search_bar.dart';
+import 'package:keeplo/widgets/vahul/vahul_info.dart';
 import 'package:keeplo/widgets/vahul/vahuls_header.dart';
 
 class VahulDetails extends StatefulWidget {
@@ -56,6 +58,7 @@ class _VahulDetailsState extends State<VahulDetails> {
 
   @override
   Widget build(BuildContext context) {
+    Vahul vahul = context.read<VahulBloc>().state.currentVahul!;
     return GestureDetector(
       onTap: () => _searchFocusNode.unfocus(),
       child: Scaffold(
@@ -67,6 +70,7 @@ class _VahulDetailsState extends State<VahulDetails> {
             child: Column(
               spacing: 26,
               children: [
+                VahulInfo(imagePath: 'imagePath', description: vahul.description),
                 SimpleSearchBar(focusNode: _searchFocusNode, forVahul: false, ),
                 BlocBuilder<ItemBloc, ItemState>(
                   builder: (context, state) {
