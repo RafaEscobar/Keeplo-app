@@ -84,9 +84,9 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
 
   Future<void> _onVahulDeleteEvent(VahulDeleteEvent event, Emitter<VahulState> emit) async {
     try {
-      emit(state.copyWith(status: VahulStatus.loading));
-      final response = await ApiService.request('vahuls/${event.vahulId}', auth: Preferences.token);
-      if (response.statusCode == 200) {
+      emit(state.copyWith(status: VahulStatus.removing));
+      final response = await ApiService.request('/vahuls/${event.vahulId}', deleteBody: {}, auth: Preferences.token);
+      if (response.statusCode == 204) {
         emit(state.copyWith(status: VahulStatus.vahulRemoved));
       } else {
         emit(state.copyWith(status: VahulStatus.failure, errorMessage: "${response.data["message"]}"));

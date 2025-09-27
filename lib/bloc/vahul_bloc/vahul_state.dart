@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:keeplo/models/vahul.dart';
 
-enum VahulStatus { initial, loading, success, failure, searching, vahulRemoved }
+enum VahulStatus { initial, loading, success, failure, searching, removing, vahulRemoved }
 class VahulState extends Equatable{
   final List<Vahul> vahules; //* Listado de vahules
   final List<Vahul> initialVahules; //* Listado inicial (auxiliar) de vahules
