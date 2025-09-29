@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:keeplo/models/item.dart';
 import 'package:keeplo/models/vahul.dart';
 
-enum ItemStatus {initial, loading, success, failure, searching}
+enum ItemStatus {initial, loading, success, failure, searching, removing, itemRemoved}
 
 class ItemState extends Equatable{
   final List<Item> items; //* Listado de items

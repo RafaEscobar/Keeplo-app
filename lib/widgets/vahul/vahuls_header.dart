@@ -107,7 +107,6 @@ class VahulsHeader extends StatelessWidget implements PreferredSize{
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     Vahul vahul = context.read<VahulBloc>().state.currentVahul!;

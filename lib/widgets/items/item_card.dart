@@ -1,10 +1,72 @@
 import 'package:flutter/material.dart';
+import 'package:keeplo/bloc/bloc_barrel.dart';
+import 'package:keeplo/bloc/item_bloc/item_bloc.dart';
+import 'package:keeplo/bloc/item_bloc/item_event.dart';
+import 'package:keeplo/bloc/item_bloc/item_state.dart';
 import 'package:keeplo/models/item.dart';
 import 'package:keeplo/theme/app_theme.dart';
+import 'package:keeplo/widgets/simple_button.dart';
 
 class ItemCard extends StatelessWidget {
   const ItemCard({super.key, required this.item});
   final Item item;
+
+  void _onDelete(BuildContext context, int itemId) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) {
+        return BlocListener<ItemBloc, ItemState>(
+          listener: (listenerContext, state) {
+            if (state.status == ItemStatus.removing) {
+              showDialog(
+                context: listenerContext,
+                barrierDismissible: false,
+                builder: (_) => const Center(
+                  child: CircularProgressIndicator(color: Colors.white),
+                ),
+              );
+            } else if (state.status == ItemStatus.itemRemoved) {
+              // primero cerrar el diálogo de progreso (si está abierto)
+              if (Navigator.of(listenerContext).canPop()) {
+                Navigator.of(listenerContext).pop(); // cierra el progress dialog
+              }
+              // luego cerrar el AlertDialog
+              Navigator.of(listenerContext).pop(); // cierra el alert dialog que contiene este BlocListener
+
+              // y finalmente refrescar la lista
+              // usa el contexto de la página principal para disparar GetItemsEvent,
+              // puedes usar listenerContext si el Bloc está provisto en un ancestor común
+              listenerContext.read<ItemBloc>().add(GetItemsEvent());
+            }
+          },
+          child: AlertDialog(
+            backgroundColor: AppTheme.primary,
+            title: const Text(
+              "¿Realmente deseas eliminar este baúl?",
+              style: TextStyle(fontSize: 18, color: Colors.white),
+              textAlign: TextAlign.center,
+            ),
+            actionsAlignment: MainAxisAlignment.spaceEvenly,
+            actions: [
+              SimpleButton(
+                text: "Eliminar",
+                callback: () {
+                  context.read<ItemBloc>().add(ItemDeleteEvent(itemId));
+                },
+                backgroundColor: AppTheme.error,
+                textColor: Colors.white,
+              ),
+              SizedBox(height: 15,),
+              SimpleButton(
+                text: "Cancelar",
+                callback: () => Navigator.of(context).pop(),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,18 +82,19 @@ class ItemCard extends StatelessWidget {
         color: AppTheme.info,
         child: Align(
           alignment: Alignment.centerRight,
-          child: Container(margin: EdgeInsets.only(right: 26), child: Icon(Icons.settings, size: 36, color: AppTheme.primary,))
+          child: Container(margin: EdgeInsets.only(right: 26), child: Icon(Icons.edit, size: 36, color: AppTheme.primary,))
         ),
       ),
       key: ValueKey<int>(item.id),
       onDismissed: (direction) {
-        if (direction == DismissDirection.startToEnd) {
-          //print("Deslizó a la derecha");
-        } else {
-          //print("Deslizó a la izquierda");
-        }
+
       },
       confirmDismiss: (direction) async {
+        if (direction == DismissDirection.startToEnd) {
+          _onDelete(context, item.id);
+        } else {
+          // Editar item [TODO]
+        }
         return false;
       },
       child: Container(

@@ -14,6 +14,7 @@ class ItemBloc extends Bloc<ItemEvent, ItemState>{
     on<ItemOrderChange>(_onVahulOrderChange);
     on<ItemChangeStatus>(_onItemChangeStatus);
     on<SetVahulIdEvent>(_onSetVahulIdEvent);
+    on<ItemDeleteEvent>(_onItemDeleteEvent);
   }
 
     //* Método para obtener el listado de vahules
@@ -110,6 +111,20 @@ class ItemBloc extends Bloc<ItemEvent, ItemState>{
   void _onSetVahulIdEvent(SetVahulIdEvent event, Emitter<ItemState> emit) {
     try {
       emit(state.copyWith(vahulId: event.vahuldId));
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  Future<void> _onItemDeleteEvent(ItemDeleteEvent event, Emitter<ItemState> emit) async {
+    try {
+      emit(state.copyWith(status: ItemStatus.removing));
+      final response = await ApiService.request("/items/${event.itemId}", auth: Preferences.token, deleteBody: {});
+      if (response.statusCode == 204) {
+        emit(state.copyWith(status: ItemStatus.itemRemoved));
+      } else {
+        emit(state.copyWith(status: ItemStatus.failure, errorMessage: "${response.data["message"]}"));
+      }
     } catch (e) {
       throw e.toString();
     }

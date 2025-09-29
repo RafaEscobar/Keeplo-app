@@ -31,5 +31,11 @@ class SetVahulIdEvent extends ItemEvent {
   SetVahulIdEvent(this.vahuldId);
 }
 
+//* Método para lanzar petición para eliminar item
+class ItemDeleteEvent extends ItemEvent {
+  final int itemId;
+  ItemDeleteEvent(this.itemId);
+}
+
 class ItemOrderChange extends ItemEvent {}
 
