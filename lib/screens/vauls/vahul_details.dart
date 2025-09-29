@@ -71,6 +71,10 @@ class _VahulDetailsState extends State<VahulDetails> {
               spacing: 26,
               children: [
                 VahulInfo(imagePath: 'imagePath', description: vahul.description),
+                Divider(
+                  height: .6,
+                  color: Colors.white30,
+                ),
                 SimpleSearchBar(focusNode: _searchFocusNode, forVahul: false, ),
                 BlocBuilder<ItemBloc, ItemState>(
                   builder: (context, state) {
