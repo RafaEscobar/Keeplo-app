@@ -7,8 +7,8 @@ import 'package:keeplo/enums/empty_state_type.dart';
 import 'package:keeplo/models/item.dart';
 import 'package:keeplo/models/vahul.dart';
 import 'package:keeplo/theme/app_theme.dart';
-import 'package:keeplo/utils/responsive.dart';
 import 'package:keeplo/widgets/dashboard/simple_search_bar.dart';
+import 'package:keeplo/widgets/items/item_card.dart';
 import 'package:keeplo/widgets/vahul/vahul_info.dart';
 import 'package:keeplo/widgets/vahul/vahuls_header.dart';
 
@@ -97,18 +97,12 @@ class _VahulDetailsState extends State<VahulDetails> {
                         onRefresh: () async {
                           context.read<ItemBloc>().add(GetItemsEvent());
                         },
-                        child: GridView.builder(
+                        child: ListView.builder(
                           controller: _scrollController,
                           physics: const AlwaysScrollableScrollPhysics(),
                           itemCount: list.length,
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: context.isTabletLandscape ? 6 : context.isTabletPortrait ? 4 : 3,
-                            crossAxisSpacing: context.isTabletLandscape ? 20 : context.isTabletPortrait ? 10 : 40,
-                            mainAxisSpacing: 0,
-                            childAspectRatio: context.isTabletLandscape ? 1 : context.isTabletPortrait ? 0.9 : 0.6,
-                          ),
                           itemBuilder: (context, index) {
-                            return Text(list[index].name);
+                            return ItemCard(item: list[index],);
                           },
                         ),
                       )

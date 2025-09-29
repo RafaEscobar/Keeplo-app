@@ -10,7 +10,7 @@ import 'package:keeplo/utils/responsive.dart';
 import 'package:keeplo/widgets/dashboard/dash_header.dart';
 import 'package:keeplo/widgets/dashboard/dash_new_vahul.dart';
 import 'package:keeplo/widgets/dashboard/simple_search_bar.dart';
-import 'package:keeplo/widgets/dashboard/vahul_card.dart';
+import 'package:keeplo/widgets/vahul/vahul_card.dart';
 
 class DashboardScreen extends StatefulWidget{
   const DashboardScreen({super.key});

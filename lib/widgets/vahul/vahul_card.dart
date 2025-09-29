@@ -29,7 +29,7 @@ class VahulCard extends StatelessWidget {
               height: 80,
               child: ClipOval(
                 child: Image.network(
-                  "https://i.postimg.cc/kGTvjRkW/1907903.png",
+                  "https://i.ibb.co/VcrM7rBV/a.png",
                   //vahul.img,
                   fit: BoxFit.cover,
                 ),
