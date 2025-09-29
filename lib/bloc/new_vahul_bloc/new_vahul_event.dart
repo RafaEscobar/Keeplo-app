@@ -16,12 +16,6 @@ class VahulDescriptionChange extends NewVahulEvent {
   VahulDescriptionChange(this.description);
 }
 
-//* Evento para controlar valor de la variable -color- en el state
-class VahulColorChange extends NewVahulEvent {
-  final String color;
-  VahulColorChange(this.color);
-}
-
 //* Evento para controlar valor de la variable -userId- en el state
 class VahulUserIdChange extends NewVahulEvent {
   final int userId;

@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -10,33 +9,6 @@ import 'package:keeplo/utils/responsive.dart';
 import 'package:keeplo/widgets/simple_modal.dart';
 
 class VahulActions {
-  static void openColorSelection({required BuildContext context, required Function(Color) onColorChanged}){
-    SimpleModal.openModal(
-      context: context,
-      body: Padding(
-        padding: EdgeInsetsGeometry.symmetric(horizontal: 20, vertical: 20),
-        child: Column(
-          children: [
-            Text("Selecciona el color de tu baúl", style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.w600),),
-            ColorPicker(
-              onColorChanged: (Color color) => onColorChanged(color),
-              width: 40,
-              height: 40,
-              borderRadius: 30,
-              pickersEnabled: const <ColorPickerType, bool>{
-                ColorPickerType.wheel: true,
-                ColorPickerType.accent: false,
-                ColorPickerType.primary: false,
-                ColorPickerType.both: false,
-                ColorPickerType.custom: false,
-              },
-            ),
-          ],
-        ),
-      )
-    );
-  }
-
   static Future<void> _pickImage({required BuildContext context, required ImageSource source}) async {
     try {
       Navigator.of(context).pop();

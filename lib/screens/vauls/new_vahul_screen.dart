@@ -9,7 +9,6 @@ import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_state.dart';
 import 'package:keeplo/bloc/vahul_bloc/vahul_event.dart';
 import 'package:keeplo/screens/dashboard_screen.dart';
 import 'package:keeplo/theme/app_theme.dart';
-import 'package:keeplo/utils/hexa_color.dart';
 import 'package:keeplo/utils/responsive.dart';
 import 'package:keeplo/utils/simple_toast.dart';
 import 'package:keeplo/utils/vahul_actions.dart';
@@ -26,19 +25,10 @@ class NewVahulScreen extends StatefulWidget {
 }
 
 class _NewVahulScreenState extends State<NewVahulScreen> {
-  Color _colorSelected = Colors.blue;
   FocusNode nameFocusNode = FocusNode();
   FocusNode descriptionFocusNode = FocusNode();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-
-  void _onColorSelected(Color color) {
-    String hexaColor = HexaColor.getCode(color);
-    context.read<NewVahulBloc>().add(VahulColorChange(hexaColor));
-    setState(() {
-      _colorSelected = color;
-    });
-  }
 
   void runValidation() {
     NewVahulBloc bloc = context.read<NewVahulBloc>();
@@ -141,28 +131,6 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
                                   onEditingComplete: () {
                                     FocusScope.of(context).unfocus();
                                   },
-                                ),
-                                SizedBox(height: 20,),
-                                Text("Color:", style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.w600),),
-                                SizedBox(height: 10,),
-                                GestureDetector(
-                                  onTap: () {
-                                    nameFocusNode.unfocus();
-                                    descriptionFocusNode.unfocus();
-                                    VahulActions.openColorSelection(context: context, onColorChanged: _onColorSelected);
-                                  },
-                                  child: Container(
-                                    width: 40,
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                      color: _colorSelected,
-                                      borderRadius: BorderRadius.circular(20),
-                                      border: Border.all(
-                                        width: 1,
-                                        color: Colors.white
-                                      )
-                                    ),
-                                  ),
                                 ),
                                 SizedBox(height: 20,),
                                 Text("Imagen:*", style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.w600),),

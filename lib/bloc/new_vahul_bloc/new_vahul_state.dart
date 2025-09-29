@@ -7,7 +7,6 @@ class NewVahulState extends Equatable{
   //* Info para creación de un vahul
   final String name;
   final String description;
-  final String color;
   final File? image;
   final int userId;
   final NewVahulStatus status; //* Status de este State
@@ -17,7 +16,6 @@ class NewVahulState extends Equatable{
   const NewVahulState({
     this.name = '',
     this.description = '',
-    this.color = '',
     this.userId = 0,
     this.status = NewVahulStatus.initial,
     this.messageError = '',
@@ -37,7 +35,6 @@ class NewVahulState extends Equatable{
   }) => NewVahulState(
     name: name ?? this.name,
     description: description ?? this.description,
-    color: color ?? this.color,
     userId: userId ?? this.userId,
     status: status ?? this.status,
     messageError: messageError ?? this.messageError,
@@ -46,5 +43,5 @@ class NewVahulState extends Equatable{
   );
 
   @override
-  List<Object?> get props => [name, description, color, userId, status, messageError, image, formError];
+  List<Object?> get props => [name, description, userId, status, messageError, image, formError];
 }
