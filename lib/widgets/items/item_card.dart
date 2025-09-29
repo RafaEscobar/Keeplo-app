@@ -34,7 +34,7 @@ class ItemCard extends StatelessWidget {
                     color: item.status == 1 ? AppTheme.info : AppTheme.error,
                     borderRadius: BorderRadius.circular(20)
                   ),
-                  child: Text("Activo", style: TextStyle(color: item.status == 1 ? AppTheme.primary : Colors.white),),
+                  child: Text(item.status == 1 ? "Disponible" : "No disponible" , style: TextStyle(color: item.status == 1 ? AppTheme.primary : Colors.white),),
                 )
               ],
             ),
