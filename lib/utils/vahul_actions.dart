@@ -3,26 +3,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:keeplo/bloc/new_item_bloc/new_item_bloc.dart';
+import 'package:keeplo/bloc/new_item_bloc/new_item_event.dart';
 import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_bloc.dart';
 import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_event.dart';
 import 'package:keeplo/utils/responsive.dart';
 import 'package:keeplo/widgets/simple_modal.dart';
 
 class VahulActions {
-  static Future<void> _pickImage({required BuildContext context, required ImageSource source}) async {
+  static Future<void> _pickImage({required BuildContext context, required ImageSource source, required bool forVahuls}) async {
     try {
       Navigator.of(context).pop();
       final picker = ImagePicker();
       final currentImage = await picker.pickImage(source: source);
       if (context.mounted) {
-        if (null != currentImage) context.read<NewVahulBloc>().add(VahulImageChange(File(currentImage.path)));
+        if (null != currentImage) {
+          if (forVahuls) {
+            context.read<NewVahulBloc>().add(VahulImageChange(File(currentImage.path)));
+          } else {
+            context.read<NewItemBloc>().add(ItemImageChange(File(currentImage.path)));
+          }
+        }
       }
     } catch (e) {
       throw Exception(e.toString());
     }
   }
 
-  static void openImageTypeSelection({required BuildContext context}){
+  static void openImageTypeSelection({required BuildContext context, bool forVahuls = true}){
     SimpleModal.openModal(
       context: context,
       body: Padding(
@@ -35,7 +43,7 @@ class VahulActions {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 GestureDetector(
-                  onTap: () => _pickImage(context: context, source: ImageSource.gallery),
+                  onTap: () => _pickImage(context: context, source: ImageSource.gallery, forVahuls: forVahuls),
                   child: Column(
                     spacing: 6,
                     children: [
@@ -51,7 +59,7 @@ class VahulActions {
                 ),
                 SizedBox(height: 10,),
                 GestureDetector(
-                  onTap: () => _pickImage(context: context, source: ImageSource.camera),
+                  onTap: () => _pickImage(context: context, source: ImageSource.camera, forVahuls: forVahuls),
                   child: Column(
                     spacing: 6,
                     children: [

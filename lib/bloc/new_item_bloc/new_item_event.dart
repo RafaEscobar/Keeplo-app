@@ -1,3 +1,64 @@
+import 'dart:io';
+
+import 'package:keeplo/bloc/new_item_bloc/new_item_state.dart';
+
 abstract class NewItemEvent {}
 
 class NewItemClean extends NewItemEvent {}
+
+//* Evento para controlar valor de la variable -name- en el state
+class ItemNameChange extends NewItemEvent {
+  final String name;
+  ItemNameChange(this.name);
+}
+
+//* Evento para controlar valor de la variable -observations- en el state
+class ItemObservationsChange extends NewItemEvent {
+  final String description;
+  ItemObservationsChange(this.description);
+}
+
+//* Evento para controlar valor de la variable -amount- en el state
+class ItemAmountChange extends NewItemEvent {
+  final double amount;
+  ItemAmountChange(this.amount);
+}
+
+//* Evento para controlar valor de la variable -vahulId- en el state
+class ItemVahulIdChange extends NewItemEvent {
+  final int userId;
+  ItemVahulIdChange(this.userId);
+}
+
+//* Evento para controlar valor de la variable -messageError- en el state
+class ItemMessageErrorChange extends NewItemEvent {
+  final String message;
+  ItemMessageErrorChange(this.message);
+}
+
+//* Evento para controlar valor de la variable -image- en el state
+class ItemImageChange extends NewItemEvent {
+  final File image;
+  ItemImageChange(this.image);
+}
+
+//* Evento para controlar valor del status de la entidad item
+class StatusEntityChange extends NewItemEvent {
+  final int newStatus;
+  StatusEntityChange(this.newStatus);
+}
+
+//* Evento para controlar valor del status del state
+class ItemStatusChange extends NewItemEvent {
+  final NewItemStatus status;
+  ItemStatusChange(this.status);
+}
+
+//* Evento para controlar valor de la variable -formError- en el state
+class ItemFormErrorChange extends NewItemEvent {
+  final bool formError;
+  ItemFormErrorChange(this.formError);
+}
+
+//* Evento para lanzar petición para crear un nuevo vahul
+class SubmitItemForm extends NewItemEvent {}

@@ -5,6 +5,7 @@ class Item {
     required this.name,
     required this.status,
     required this.observations,
+    required this.amount,
     required this.vahulId,
     required this.image
   });
@@ -13,6 +14,7 @@ class Item {
   final String name;
   final int status;
   final String observations;
+  final int amount;
   final int vahulId;
   final String image;
 
@@ -21,6 +23,7 @@ class Item {
     name: json['name'] ?? '',
     status: json['status'] ?? '',
     observations: json['observations'] ?? '',
+    amount: json['amount'] ?? 0,
     vahulId: json['vahul_id'] ?? 0,
     image: json['image'] ?? ''
   );
