@@ -6,6 +6,7 @@ import 'package:keeplo/bloc/vahul_bloc/vahul_event.dart';
 import 'package:keeplo/bloc/vahul_bloc/vahul_state.dart';
 import 'package:keeplo/models/vahul.dart';
 import 'package:keeplo/screens/dashboard_screen.dart';
+import 'package:keeplo/screens/vauls/new_vahul_screen.dart';
 import 'package:keeplo/theme/app_theme.dart';
 import 'package:keeplo/utils/responsive.dart';
 import 'package:keeplo/widgets/simple_button.dart';
@@ -30,7 +31,10 @@ class VahulsHeader extends StatelessWidget implements PreferredSize{
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 GestureDetector(
-                  onTap: () => {},
+                  onTap: () {
+                    
+                    context.goNamed(NewVahulScreen.routeName);
+                  },
                   child: Column(
                     children: [
                       Icon(Icons.edit, size: 32, color: Colors.white,),

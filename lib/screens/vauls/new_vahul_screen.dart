@@ -7,6 +7,7 @@ import 'package:keeplo/bloc/bloc_barrel.dart';
 import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_event.dart';
 import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_state.dart';
 import 'package:keeplo/bloc/vahul_bloc/vahul_event.dart';
+import 'package:keeplo/models/vahul.dart';
 import 'package:keeplo/screens/dashboard_screen.dart';
 import 'package:keeplo/theme/app_theme.dart';
 import 'package:keeplo/utils/responsive.dart';
@@ -27,8 +28,8 @@ class NewVahulScreen extends StatefulWidget {
 class _NewVahulScreenState extends State<NewVahulScreen> {
   FocusNode nameFocusNode = FocusNode();
   FocusNode descriptionFocusNode = FocusNode();
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
+  late TextEditingController _nameController;
+  late TextEditingController _descriptionController;
 
   void runValidation() {
     NewVahulBloc bloc = context.read<NewVahulBloc>();
@@ -39,6 +40,14 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
       context.read<NewVahulBloc>().add(VahulFormErrorChange(true));
       SimpleToast.info(context: context, message: "Por favor, proporcione los campos obligatorios.", size: 14, iconSize: 50);
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Vahul? vahul = context.read<VahulBloc>().state.currentVahul;
+    _nameController = TextEditingController(text: vahul?.name ?? '');
+    _descriptionController = TextEditingController(text: vahul?.description ?? '');
   }
 
   @override
