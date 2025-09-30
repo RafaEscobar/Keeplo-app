@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:keeplo/bloc/splash_bloc/splash_bloc.dart';
 import 'package:keeplo/bloc/splash_bloc/splash_state.dart';
 import 'package:keeplo/screens/dashboard_screen.dart';
+import 'package:keeplo/screens/items/new_item_screen.dart';
 import 'package:keeplo/screens/vauls/new_vahul_screen.dart';
 import 'package:keeplo/screens/main/login_screen.dart';
 import 'package:keeplo/screens/main/register_screen.dart';
@@ -46,6 +47,13 @@ class AppRoute {
                   path: VahulDetails.routeName,
                   name: VahulDetails.routeName,
                   builder: (BuildContext context, GoRouterState state) => VahulDetails(),
+                  routes: [
+                    GoRoute(
+                      path: NewItemScreen.routeName,
+                      name: NewItemScreen.routeName,
+                      builder: (BuildContext context, GoRouterState state) => NewItemScreen(),
+                    )
+                  ]
                 ),
               ]
             )

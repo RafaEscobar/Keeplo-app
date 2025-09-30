@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:keeplo/bloc/bloc_barrel.dart';
+import 'package:keeplo/bloc/new_item_bloc/new_item_bloc.dart';
+import 'package:keeplo/bloc/new_item_bloc/new_item_event.dart';
+import 'package:keeplo/screens/items/new_item_screen.dart';
 import 'package:keeplo/theme/app_theme.dart';
 import 'package:keeplo/utils/responsive.dart';
 
@@ -13,8 +18,8 @@ class NewItem extends StatelessWidget{
       child: InkWell(
         borderRadius: BorderRadius.circular(20),
         onTap: () {
-          //context.read<NewVahulBloc>().add(NewVahulClean());
-          //context.goNamed(NewVahulScreen.routeName);
+          context.read<NewItemBloc>().add(NewItemClean());
+          context.goNamed(NewItemScreen.routeName);
         },
         splashColor: Colors.white.withAlpha(20),
         highlightColor: Colors.white.withAlpha(60),
