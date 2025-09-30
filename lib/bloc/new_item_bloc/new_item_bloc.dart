@@ -15,6 +15,7 @@ class NewItemBloc extends Bloc<NewItemEvent, NewItemState>{
     on<ItemFormErrorChange>(_onItemFormErrorChange);
     on<ItemStatusChange>(_onItemStatusChange);
     on<StatusEntityChange>(_onStatusEntityChange);
+    on<ItemAmountChange>(_onItemAmountChange);
   }
 
   //* Método para cambiar valor de la variable -name- del state
@@ -39,6 +40,14 @@ class NewItemBloc extends Bloc<NewItemEvent, NewItemState>{
   void _onItemVahulIdChange(ItemVahulIdChange event, Emitter<NewItemState> emit) {
     try {
       emit(state.copyWith(vahulId: event.vahulId));
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  void _onItemAmountChange(ItemAmountChange event, Emitter<NewItemState> emit) {
+    try {
+      emit(state.copyWith(amount: event.amount.toInt()));
     } catch (e) {
       throw Exception(e.toString());
     }
@@ -97,6 +106,7 @@ class NewItemBloc extends Bloc<NewItemEvent, NewItemState>{
       observations: '',
       image: File(''),
       vahulId: 0,
+      amount: 1,
       status: NewItemStatus.initial,
       messageError: '',
       formError: false

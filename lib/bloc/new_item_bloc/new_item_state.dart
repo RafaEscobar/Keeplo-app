@@ -9,6 +9,7 @@ class NewItemState extends Equatable{
   final String observations;
   final File? image;
   final int vahulId;
+  final int amount;
   final NewItemStatus status; //* Status de este State
   final int entityStatus;
   final String messageError; //* Mensaje de error para toast
@@ -18,6 +19,7 @@ class NewItemState extends Equatable{
     this.name = '',
     this.observations = '',
     this.image,
+    this.amount = 1,
     this.vahulId = 0,
     this.status = NewItemStatus.initial,
     this.entityStatus = 1,
@@ -30,6 +32,7 @@ class NewItemState extends Equatable{
     String? observations,
     File? image,
     int? vahulId,
+    int? amount,
     NewItemStatus? status,
     int? entityStatus,
     String? messageError,
@@ -39,6 +42,7 @@ class NewItemState extends Equatable{
     observations: observations ?? this.observations,
     image: image ?? this.image,
     vahulId: vahulId ?? this.vahulId,
+    amount: amount ?? this.amount,
     status: status ?? this.status,
     messageError: messageError ?? this.messageError,
     formError: formError ?? this.formError,
@@ -50,6 +54,7 @@ class NewItemState extends Equatable{
     name,
     observations,
     image,
+    amount,
     vahulId,
     status,
     entityStatus,
