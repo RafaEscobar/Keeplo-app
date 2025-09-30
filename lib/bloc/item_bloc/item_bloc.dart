@@ -17,7 +17,7 @@ class ItemBloc extends Bloc<ItemEvent, ItemState>{
     on<ItemDeleteEvent>(_onItemDeleteEvent);
   }
 
-    //* Método para obtener el listado de vahules
+  //* Método para obtener el listado de vahules
   Future<void> _getItems(GetItemsEvent event, Emitter<ItemState> emit) async {
     try {
       emit(state.copyWith(status: ItemStatus.loading));
@@ -67,6 +67,21 @@ class ItemBloc extends Bloc<ItemEvent, ItemState>{
     }
   }
 
+  //* Método para realizar carga de eliminación de item
+  Future<void> _onItemDeleteEvent(ItemDeleteEvent event, Emitter<ItemState> emit) async {
+    try {
+      emit(state.copyWith(status: ItemStatus.removing));
+      final response = await ApiService.request("/items/${event.itemId}", auth: Preferences.token, deleteBody: {});
+      if (response.statusCode == 204) {
+        emit(state.copyWith(status: ItemStatus.itemRemoved));
+      } else {
+        emit(state.copyWith(status: ItemStatus.failure, errorMessage: "${response.data["message"]}"));
+      }
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
   //* Método para buscar vahules por nombre (funcionamiento local)
   void _onSearchVahulEvent(SearchItemEvent event, Emitter<ItemState> emit){
     try {
@@ -82,7 +97,7 @@ class ItemBloc extends Bloc<ItemEvent, ItemState>{
     }
   }
 
-  //* Método para cambiar de page
+  //* Método para cambiar de -page-
   void _onVahulNewPageEvent(ItemNewPageEvent event, Emitter<ItemState> emit) {
     try {
       emit(state.copyWith(page: event.newPage));
@@ -100,6 +115,7 @@ class ItemBloc extends Bloc<ItemEvent, ItemState>{
     }
   }
 
+  //* Método para cambiar valor del -status- del state
   void _onItemChangeStatus(ItemChangeStatus event, Emitter<ItemState> emit) {
     try {
       emit(state.copyWith(status: event.status));
@@ -108,6 +124,7 @@ class ItemBloc extends Bloc<ItemEvent, ItemState>{
     }
   }
 
+  //* Método para asignar un valor al -vahulId-
   void _onSetVahulIdEvent(SetVahulIdEvent event, Emitter<ItemState> emit) {
     try {
       emit(state.copyWith(vahulId: event.vahuldId));
@@ -115,19 +132,4 @@ class ItemBloc extends Bloc<ItemEvent, ItemState>{
       throw e.toString();
     }
   }
-
-  Future<void> _onItemDeleteEvent(ItemDeleteEvent event, Emitter<ItemState> emit) async {
-    try {
-      emit(state.copyWith(status: ItemStatus.removing));
-      final response = await ApiService.request("/items/${event.itemId}", auth: Preferences.token, deleteBody: {});
-      if (response.statusCode == 204) {
-        emit(state.copyWith(status: ItemStatus.itemRemoved));
-      } else {
-        emit(state.copyWith(status: ItemStatus.failure, errorMessage: "${response.data["message"]}"));
-      }
-    } catch (e) {
-      throw e.toString();
-    }
-  }
-
 }

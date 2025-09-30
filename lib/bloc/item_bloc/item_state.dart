@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:keeplo/models/item.dart';
-import 'package:keeplo/models/vahul.dart';
 
 enum ItemStatus {initial, loading, success, failure, searching, removing, itemRemoved}
 
@@ -30,7 +29,6 @@ class ItemState extends Equatable{
   ItemState copyWith({
     List<Item>? items,
     List<Item>? initialItems,
-    Vahul? currentVahul,
     ItemStatus? status,
     String? errorMessage,
     bool? hasMore,

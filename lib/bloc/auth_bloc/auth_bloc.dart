@@ -73,6 +73,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>{
     }
   }
 
+  //* Método para realizar carga de cerrar sesión
   Future<void> _onLogoutSubmitted(LogoutSubmitted event, Emitter<AuthState> emit) async {
     try {
       emit(state.copyWith(status: AuthStatus.loading));
@@ -87,17 +88,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>{
       emit(state.copyWith(status: AuthStatus.failure, errorMessage: e.toString())); // Lanzamos un status -failure-
       throw e.toString();
     }
-  }
-
-  void _onAuthStateClean(AuthStateClean event, Emitter<AuthState> emit) {
-    emit(state.copyWith(
-      name: '',
-      lastName: '',
-      email: '',
-      password: '',
-      status: AuthStatus.initial,
-       errorMessage: ''
-    ));
   }
 
   //* Método para cambiar valor de la variable -name- del state
@@ -128,5 +118,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>{
   //* Método para cambiar valor de la variable -user- del state
   void _onUserChange(UserChangeAuth event, Emitter<AuthState> emit) {
     emit(state.copyWith(user: event.user));
+  }
+
+  //* Método para limpiar el state
+  void _onAuthStateClean(AuthStateClean event, Emitter<AuthState> emit) {
+    emit(state.copyWith(
+      name: '',
+      lastName: '',
+      email: '',
+      password: '',
+      status: AuthStatus.initial,
+       errorMessage: ''
+    ));
   }
 }
