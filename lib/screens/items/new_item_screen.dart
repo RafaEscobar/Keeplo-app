@@ -30,6 +30,7 @@ class _NewItemScreenState extends State<NewItemScreen> {
   FocusNode observationsFocusNode = FocusNode();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _observationsController = TextEditingController();
+  bool localValue = true;
 
   void runValidation() {
     /*
@@ -157,11 +158,14 @@ class _NewItemScreenState extends State<NewItemScreen> {
                             SizedBox(height: 20,),
                             Text("Estatus del item:", style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.w600),),
                             Switch(
-                              value: true,
+                              value: localValue,
                               activeColor: Colors.red,
                               onChanged: (bool value) {
-                                context.read<NewItemBloc>().add(StatusEntityChange(value ? 1 : 0));
-                              },
+                                //context.read<NewItemBloc>().add(StatusEntityChange(value ? 1 : 0));
+                                setState(() {
+                                  localValue = value;
+                                });
+                              }
                             ),
                             SizedBox(height: 20,),
                             Text("Imagen:*", style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.w600),),
