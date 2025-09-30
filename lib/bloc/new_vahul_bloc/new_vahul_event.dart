@@ -49,5 +49,8 @@ class VahulFormErrorChange extends NewVahulEvent {
 //* Evento para lanzar petición para crear un nuevo vahul
 class SubmitVahulForm extends NewVahulEvent {}
 
+//* Evento para lanzar petición para actualizar un nuevo vahul
+class SubmitVahulUpdateForm extends NewVahulEvent {}
+
 //* Evento para limpiar state
 class NewVahulClean extends NewVahulEvent {}

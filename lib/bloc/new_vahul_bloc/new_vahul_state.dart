@@ -12,6 +12,7 @@ class NewVahulState extends Equatable{
   final NewVahulStatus status; //* Status de este State
   final String messageError; //* Mensaje de error para toast
   final bool formError; //* Bandera para lanzar error de validación
+  final bool isEdition;
 
   const NewVahulState({
     this.name = '',
@@ -20,7 +21,8 @@ class NewVahulState extends Equatable{
     this.status = NewVahulStatus.initial,
     this.messageError = '',
     this.image,
-    this.formError = false
+    this.formError = false,
+    this.isEdition = false,
   });
 
   NewVahulState copyWith({
@@ -32,6 +34,7 @@ class NewVahulState extends Equatable{
     String? messageError,
     File? image,
     bool? formError,
+    bool? isEdition
   }) => NewVahulState(
     name: name ?? this.name,
     description: description ?? this.description,
@@ -39,9 +42,10 @@ class NewVahulState extends Equatable{
     status: status ?? this.status,
     messageError: messageError ?? this.messageError,
     image: image ?? this.image,
-    formError: formError ?? this.formError
+    formError: formError ?? this.formError,
+    isEdition: isEdition ?? this.isEdition
   );
 
   @override
-  List<Object?> get props => [name, description, image, userId, status, messageError, formError];
+  List<Object?> get props => [name, description, image, userId, status, messageError, formError, isEdition];
 }

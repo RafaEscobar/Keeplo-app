@@ -32,7 +32,6 @@ class VahulsHeader extends StatelessWidget implements PreferredSize{
               children: [
                 GestureDetector(
                   onTap: () {
-                    
                     context.goNamed(NewVahulScreen.routeName);
                   },
                   child: Column(
@@ -77,6 +76,9 @@ class VahulsHeader extends StatelessWidget implements PreferredSize{
                 ),
               );
             } else if (state.status == VahulStatus.vahulRemoved) {
+              if (Navigator.of(context).canPop()) {
+                Navigator.of(context).pop();
+              }
               Navigator.of(context).pop();
               context.read<VahulBloc>().add(GetVahulesEvent());
               context.pushNamed(DashboardScreen.routeName);

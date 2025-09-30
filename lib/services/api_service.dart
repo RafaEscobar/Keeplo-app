@@ -6,7 +6,7 @@ class ApiService {
     String path, {
     Map<String, dynamic>? params,
     Object? body,
-    Object? putBody,
+    Object? patchBody,
     Object? deleteBody,
     void Function(int, int)? onReceiveProgress,
     String? auth,
@@ -33,10 +33,10 @@ class ApiService {
           data: deleteBody,
           queryParameters: params,
         );
-      } else if (putBody != null) {
-        response = await dio.put(
+      } else if (patchBody != null) {
+        response = await dio.patch(
           path,
-          data: putBody,
+          data: patchBody,
           queryParameters: params,
           onReceiveProgress: onReceiveProgress,
         );

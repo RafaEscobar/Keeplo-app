@@ -35,17 +35,26 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
     NewVahulBloc bloc = context.read<NewVahulBloc>();
     if (bloc.state.name.isNotEmpty && bloc.state.image != null && bloc.state.image!.path.isNotEmpty) {
       context.read<NewVahulBloc>().add(VahulUserIdChange(context.read<AuthBloc>().state.user!.id));
-      context.read<NewVahulBloc>().add(SubmitVahulForm());
+      (!bloc.state.isEdition) ?
+        context.read<NewVahulBloc>().add(SubmitVahulForm()) :
+        context.read<NewVahulBloc>().add(SubmitVahulUpdateForm()) ;
     } else {
       context.read<NewVahulBloc>().add(VahulFormErrorChange(true));
       SimpleToast.info(context: context, message: "Por favor, proporcione los campos obligatorios.", size: 14, iconSize: 50);
     }
   }
 
+  void _setData(Vahul vahul) {
+    context.read<NewVahulBloc>().add(VahulNameChange(vahul.name));
+    context.read<NewVahulBloc>().add(VahulDescriptionChange(vahul.description));
+    context.read<NewVahulBloc>().add(VahulUserIdChange(vahul.userId));
+  }
+
   @override
   void initState() {
     super.initState();
     Vahul? vahul = context.read<VahulBloc>().state.currentVahul;
+    if (vahul != null) _setData(vahul);
     _nameController = TextEditingController(text: vahul?.name ?? '');
     _descriptionController = TextEditingController(text: vahul?.description ?? '');
   }
@@ -201,3 +210,4 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
     );
   }
 }
+

@@ -18,6 +18,7 @@ class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
     on<VahulMessageErrorChange>(_onVahulMessageErrorChange);
     on<NewVahulClean>(_onNewVahulClean);
     on<VahulFormErrorChange>(_onVahulFormErrorChange);
+    on<SubmitVahulUpdateForm>(_onSubmitVahulUpdateForm);
   }
 
   //* Método que realiza la petición para crear un nuevo vahul
@@ -42,6 +43,40 @@ class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
         '/vahuls',
         auth: Preferences.token,
         body: formData,
+      );
+
+      if (response.statusCode == 201) {
+        emit(state.copyWith(status: NewVahulStatus.success));
+      } else {
+        emit(state.copyWith(status: NewVahulStatus.fail, messageError: response.data['message']));
+      }
+    } catch (e) {
+      emit(state.copyWith(status: NewVahulStatus.fail, messageError: e.toString()));
+    }
+  }
+
+  //* Método que realiza la petición para crear un nuevo vahul
+  Future<void> _onSubmitVahulUpdateForm(SubmitVahulUpdateForm event, Emitter<NewVahulState> emit) async {
+    emit(state.copyWith(status: NewVahulStatus.loading));
+
+    try {
+      if (state.image == null) {
+        emit(state.copyWith(status: NewVahulStatus.fail,));
+        return;
+      }
+      final multipartFile = await Images.getMultipartFile(state.name, state.image!, state.image!.path);
+
+      final formData = FormData.fromMap({
+        'name': state.name,
+        if(state.description.isNotEmpty) 'description': state.description,
+        'user_id': state.userId,
+        if (state.image != null && state.image!.path.isNotEmpty) 'image': multipartFile,
+      });
+
+      final Response response = await ApiService.request(
+        '/vahuls',
+        auth: Preferences.token,
+        patchBody: formData,
       );
 
       if (response.statusCode == 201) {
