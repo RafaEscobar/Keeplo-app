@@ -34,15 +34,26 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
 
   void runValidation() {
     NewVahulBloc bloc = context.read<NewVahulBloc>();
-    if (bloc.state.name.isNotEmpty && bloc.state.image != null && bloc.state.image!.path.isNotEmpty) {
-      context.read<NewVahulBloc>().add(VahulUserIdChange(context.read<AuthBloc>().state.user!.id));
-      (!bloc.state.isEdition) ?
-        context.read<NewVahulBloc>().add(SubmitVahulForm()) :
-        context.read<NewVahulBloc>().add(SubmitVahulUpdateForm()) ;
+    if (!bloc.state.isEdition) {
+      if (bloc.state.name.isNotEmpty && bloc.state.image != null && bloc.state.image!.path.isNotEmpty) {
+        context.read<NewVahulBloc>().add(VahulUserIdChange(context.read<AuthBloc>().state.user!.id));
+        context.read<NewVahulBloc>().add(SubmitVahulForm());
+      } else {
+        _onErroValidation();
+      }
     } else {
-      context.read<NewVahulBloc>().add(VahulFormErrorChange(true));
-      SimpleToast.info(context: context, message: "Por favor, proporcione los campos obligatorios.", size: 14, iconSize: 50);
+      if (bloc.state.name.isNotEmpty) {
+        context.read<NewVahulBloc>().add(VahulUserIdChange(context.read<AuthBloc>().state.user!.id));
+        context.read<NewVahulBloc>().add(SubmitVahulUpdateForm(context.read<VahulBloc>().state.currentVahul!.id)) ;
+      } else {
+        _onErroValidation();
+      }
     }
+  }
+
+  void _onErroValidation() {
+    context.read<NewVahulBloc>().add(VahulFormErrorChange(true));
+    SimpleToast.info(context: context, message: "Por favor, proporcione los campos obligatorios.", size: 14, iconSize: 50);
   }
 
   void _setData(Vahul vahul) {

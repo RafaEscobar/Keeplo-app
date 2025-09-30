@@ -56,7 +56,10 @@ class VahulIsEditionChange extends NewVahulEvent {
 class SubmitVahulForm extends NewVahulEvent {}
 
 //* Evento para lanzar petición para actualizar un nuevo vahul
-class SubmitVahulUpdateForm extends NewVahulEvent {}
+class SubmitVahulUpdateForm extends NewVahulEvent {
+  final int vahulId;
+  SubmitVahulUpdateForm(this.vahulId);
+}
 
 //* Evento para limpiar state
 class NewVahulClean extends NewVahulEvent {}
