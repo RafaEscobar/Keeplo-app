@@ -19,6 +19,7 @@ class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
     on<NewVahulClean>(_onNewVahulClean);
     on<VahulFormErrorChange>(_onVahulFormErrorChange);
     on<SubmitVahulUpdateForm>(_onSubmitVahulUpdateForm);
+    on<VahulIsEditionChange>(_onVahulIsEditionChange);
   }
 
   //* Método que realiza la petición para crear un nuevo vahul
@@ -152,6 +153,15 @@ class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
     }
   }
 
+  //* Método para cambiar el -status- del state
+  void _onVahulIsEditionChange(VahulIsEditionChange event, Emitter<NewVahulState> emit){
+    try {
+      emit(state.copyWith(isEdition: event.isEdition));
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
   //* Método para limpiar nuestro state
   void _onNewVahulClean(NewVahulClean event, Emitter<NewVahulState> emit) {
     emit(state.copyWith(
@@ -161,7 +171,8 @@ class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
       userId: 0,
       status: NewVahulStatus.initial,
       messageError: '',
-      formError: false
+      formError: false,
+      isEdition: false
     ));
   }
 }

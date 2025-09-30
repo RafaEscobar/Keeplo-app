@@ -46,6 +46,12 @@ class VahulFormErrorChange extends NewVahulEvent {
   VahulFormErrorChange(this.formError);
 }
 
+//* Evento para controlar valor de la variable -isEdition- en el state
+class VahulIsEditionChange extends NewVahulEvent {
+  final bool isEdition;
+  VahulIsEditionChange(this.isEdition);
+}
+
 //* Evento para lanzar petición para crear un nuevo vahul
 class SubmitVahulForm extends NewVahulEvent {}
 
