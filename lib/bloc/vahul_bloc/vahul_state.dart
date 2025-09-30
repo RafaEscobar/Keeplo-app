@@ -49,9 +49,9 @@ class VahulState extends Equatable{
   @override
   List<Object?> get props => [
     vahules,
+    initialVahules,
     status,
     errorMessage,
-    initialVahules,
     hasMore,
     page,
     loadingMore,

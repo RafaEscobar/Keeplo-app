@@ -2,6 +2,7 @@
 import 'package:keeplo/bloc/vahul_bloc/vahul_state.dart';
 import 'package:keeplo/models/vahul.dart';
 
+//* Clase abstracta base
 abstract class VahulEvent {}
 
 //* Evento para cambiar valor de la variable -page-

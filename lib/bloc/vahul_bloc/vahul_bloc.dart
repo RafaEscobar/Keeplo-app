@@ -82,6 +82,7 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
     }
   }
 
+  //* Método para eliminar un vahul
   Future<void> _onVahulDeleteEvent(VahulDeleteEvent event, Emitter<VahulState> emit) async {
     try {
       emit(state.copyWith(status: VahulStatus.removing));
