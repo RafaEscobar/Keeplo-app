@@ -173,7 +173,7 @@ class _NewItemScreenState extends State<NewItemScreen> {
                             SizedBox(height: 10,),
                             Visibility(
                               visible: state.formError && state.image!.path.isEmpty,
-                              child: Text("La imagen del baúl es obligatoria", style: TextStyle(color: AppTheme.error, fontWeight: FontWeight.bold))
+                              child: Text("La imagen del item es obligatoria", style: TextStyle(color: AppTheme.error, fontWeight: FontWeight.bold))
                             ),
                             SizedBox(height: 14,),
                             GestureDetector(
