@@ -33,16 +33,14 @@ class _NewItemScreenState extends State<NewItemScreen> {
   bool localValue = true;
 
   void runValidation() {
-    /*
-    NewVahulBloc bloc = context.read<NewVahulBloc>();
+    NewItemBloc bloc = context.read<NewItemBloc>();
     if (bloc.state.name.isNotEmpty && bloc.state.image != null && bloc.state.image!.path.isNotEmpty) {
-      context.read<NewVahulBloc>().add(VahulUserIdChange(context.read<AuthBloc>().state.user!.id));
-      context.read<NewVahulBloc>().add(SubmitVahulForm());
+      context.read<NewItemBloc>().add(ItemVahulIdChange(context.read<VahulBloc>().state.currentVahul!.id));
+      context.read<NewItemBloc>().add(SubmitItemForm());
     } else {
-      context.read<NewVahulBloc>().add(VahulFormErrorChange(true));
+      context.read<NewItemBloc>().add(ItemFormErrorChange(true));
       SimpleToast.info(context: context, message: "Por favor, proporcione los campos obligatorios.", size: 14, iconSize: 50);
     }
-    */
   }
 
   @override
@@ -161,7 +159,7 @@ class _NewItemScreenState extends State<NewItemScreen> {
                               value: localValue,
                               activeColor: Colors.red,
                               onChanged: (bool value) {
-                                //context.read<NewItemBloc>().add(StatusEntityChange(value ? 1 : 0));
+                                context.read<NewItemBloc>().add(StatusEntityChange(value ? 1 : 0));
                                 setState(() {
                                   localValue = value;
                                 });

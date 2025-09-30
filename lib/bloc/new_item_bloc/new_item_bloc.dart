@@ -1,8 +1,12 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keeplo/bloc/new_item_bloc/new_item_event.dart';
 import 'package:keeplo/bloc/new_item_bloc/new_item_state.dart';
+import 'package:keeplo/services/api_service.dart';
+import 'package:keeplo/services/preferences.dart';
+import 'package:keeplo/utils/images.dart';
 
 class NewItemBloc extends Bloc<NewItemEvent, NewItemState>{
   NewItemBloc() : super(NewItemState()){
@@ -16,6 +20,7 @@ class NewItemBloc extends Bloc<NewItemEvent, NewItemState>{
     on<ItemStatusChange>(_onItemStatusChange);
     on<StatusEntityChange>(_onStatusEntityChange);
     on<ItemAmountChange>(_onItemAmountChange);
+    on<SubmitItemForm>(_onSubmitItemForm);
   }
 
   //* Método para cambiar valor de la variable -name- del state
@@ -111,6 +116,42 @@ class NewItemBloc extends Bloc<NewItemEvent, NewItemState>{
       messageError: '',
       formError: false
     ));
+  }
+
+  //* Método que realiza la petición para crear un nuevo vahul
+  Future<void> _onSubmitItemForm(SubmitItemForm event, Emitter<NewItemState> emit) async {
+    emit(state.copyWith(status: NewItemStatus.loading));
+
+    try {
+      if (state.image == null) {
+        emit(state.copyWith(status: NewItemStatus.fail,));
+        return;
+      }
+      final multipartFile = await Images.getMultipartFile(state.name, state.image!, state.image!.path);
+
+      final formData = FormData.fromMap({
+        'name': state.name,
+        if(state.observations.isNotEmpty) 'observations': state.observations,
+        'status': state.entityStatus,
+        'amount': state.amount,
+        'vahul_id': state.vahulId,
+        'image': multipartFile,
+      });
+
+      final Response response = await ApiService.request(
+        '/items',
+        auth: Preferences.token,
+        body: formData,
+      );
+
+      if (response.statusCode == 201) {
+        emit(state.copyWith(status: NewItemStatus.success));
+      } else {
+        emit(state.copyWith(status: NewItemStatus.fail, messageError: response.data['message']));
+      }
+    } catch (e) {
+      emit(state.copyWith(status: NewItemStatus.fail, messageError: e.toString()));
+    }
   }
 
 
