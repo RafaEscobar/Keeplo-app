@@ -66,7 +66,10 @@ class _NewItemScreenState extends State<NewItemScreen> {
               if (state.status == NewItemStatus.success) {
                 context.read<ItemBloc>().add(GetItemsEvent());
                 context.read<ItemBloc>().add(ItemNewPageEvent(1));
-                Navigator.of(context);
+                if (Navigator.of(context).canPop()) {
+                  Navigator.of(context).pop();
+                }
+                //Navigator.of(context).pop();
               } else if (state.status == NewItemStatus.fail) {
                 SimpleToast.info(context: context, message: state.messageError, size: 14, iconSize: 50);
                 context.read<NewItemBloc>().add(ItemStatusChange(NewItemStatus.initial));
@@ -150,7 +153,7 @@ class _NewItemScreenState extends State<NewItemScreen> {
                               cursorColor: Colors.white,
                               min: 1,
                               max: 200,
-                              value: 10,
+                              value: 1,
                               onChanged: (value) => context.read<NewItemBloc>().add(ItemAmountChange(value)),
                             ),
                             SizedBox(height: 20,),

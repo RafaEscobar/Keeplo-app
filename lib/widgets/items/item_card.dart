@@ -26,16 +26,13 @@ class ItemCard extends StatelessWidget {
                 ),
               );
             } else if (state.status == ItemStatus.itemRemoved) {
-              // primero cerrar el diálogo de progreso (si está abierto)
+              //* Cerrar el diálogo de progreso (si está abierto)
               if (Navigator.of(listenerContext).canPop()) {
-                Navigator.of(listenerContext).pop(); // cierra el progress dialog
+                Navigator.of(listenerContext).pop();
               }
-              // luego cerrar el AlertDialog
-              Navigator.of(listenerContext).pop(); // cierra el alert dialog que contiene este BlocListener
+              //* Luego cerrar el AlertDialog
+              Navigator.of(listenerContext).pop();
 
-              // y finalmente refrescar la lista
-              // usa el contexto de la página principal para disparar GetItemsEvent,
-              // puedes usar listenerContext si el Bloc está provisto en un ancestor común
               listenerContext.read<ItemBloc>().add(GetItemsEvent());
             }
           },
