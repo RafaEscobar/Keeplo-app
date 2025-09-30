@@ -5,7 +5,7 @@ import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_event.dart';
 import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_state.dart';
 import 'package:keeplo/services/api_service.dart';
 import 'package:keeplo/services/preferences.dart';
-import 'package:path/path.dart' as p;
+import 'package:keeplo/utils/images.dart';
 
 class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
   NewVahulBloc() : super(NewVahulState()) {
@@ -105,7 +105,7 @@ class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
         emit(state.copyWith(status: NewVahulStatus.fail,));
         return;
       }
-      final multipartFile = await _getMultipartFile(state.name, state.image!);
+      final multipartFile = await Images.getMultipartFile(state.name, state.image!, state.image!.path);
 
       final formData = FormData.fromMap({
         'name': state.name,
@@ -128,22 +128,6 @@ class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
     } catch (e) {
       emit(state.copyWith(status: NewVahulStatus.fail, messageError: e.toString()));
     }
-  }
-
-  //* Método que tratar la imagen y asignar un nombre limpio
-  Future<MultipartFile> _getMultipartFile(String name, File image) async {
-    final safeName = name.replaceAll(RegExp(r'[^A-Za-z0-9_\-]'), '_'); //? Limpiamos el nombre de nuestro vahul
-
-    final ext = p.extension(image.path); //? Obtenemos la extensión de nuestra imagen cargada
-    final filename = '${safeName}_image$ext'; //? Generamos el nombre con: nombreLimpio_colorNúmerico_image_extension
-
-    // Generamos el MultipartFile a partir de la imagen y el nombre construido
-    final file = await MultipartFile.fromFile(
-      state.image!.path,
-      filename: filename,
-    );
-
-    return file; // Retornamos la -construcción segura- de la imagen
   }
 
 }
