@@ -10,6 +10,7 @@ class NewItemState extends Equatable{
   final File? image;
   final int vahulId;
   final NewItemStatus status; //* Status de este State
+  final int entityStatus;
   final String messageError; //* Mensaje de error para toast
   final bool formError;
 
@@ -19,6 +20,7 @@ class NewItemState extends Equatable{
     this.image,
     this.vahulId = 0,
     this.status = NewItemStatus.initial,
+    this.entityStatus = 1,
     this.messageError = '',
     this.formError = false
   });
@@ -29,6 +31,7 @@ class NewItemState extends Equatable{
     File? image,
     int? vahulId,
     NewItemStatus? status,
+    int? entityStatus,
     String? messageError,
     bool? formError,
   }) => NewItemState(
@@ -38,9 +41,19 @@ class NewItemState extends Equatable{
     vahulId: vahulId ?? this.vahulId,
     status: status ?? this.status,
     messageError: messageError ?? this.messageError,
-    formError: formError ?? this.formError
+    formError: formError ?? this.formError,
+    entityStatus: entityStatus ?? this.entityStatus
   );
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [
+    name,
+    observations,
+    image,
+    vahulId,
+    status,
+    entityStatus,
+    messageError,
+    formError,
+  ];
 }

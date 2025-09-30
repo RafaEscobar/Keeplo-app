@@ -14,8 +14,8 @@ class ItemNameChange extends NewItemEvent {
 
 //* Evento para controlar valor de la variable -observations- en el state
 class ItemObservationsChange extends NewItemEvent {
-  final String description;
-  ItemObservationsChange(this.description);
+  final String observations;
+  ItemObservationsChange(this.observations);
 }
 
 //* Evento para controlar valor de la variable -amount- en el state
@@ -26,8 +26,8 @@ class ItemAmountChange extends NewItemEvent {
 
 //* Evento para controlar valor de la variable -vahulId- en el state
 class ItemVahulIdChange extends NewItemEvent {
-  final int userId;
-  ItemVahulIdChange(this.userId);
+  final int vahulId;
+  ItemVahulIdChange(this.vahulId);
 }
 
 //* Evento para controlar valor de la variable -messageError- en el state
