@@ -11,7 +11,7 @@ class NewVahulState extends Equatable{
   final int userId;
   final NewVahulStatus status; //* Status de este State
   final String messageError; //* Mensaje de error para toast
-  final bool formError;
+  final bool formError; //* Bandera para lanzar error de validación
 
   const NewVahulState({
     this.name = '',
@@ -43,5 +43,5 @@ class NewVahulState extends Equatable{
   );
 
   @override
-  List<Object?> get props => [name, description, userId, status, messageError, image, formError];
+  List<Object?> get props => [name, description, image, userId, status, messageError, formError];
 }

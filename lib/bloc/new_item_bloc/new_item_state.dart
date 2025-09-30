@@ -10,10 +10,10 @@ class NewItemState extends Equatable{
   final File? image;
   final int vahulId;
   final int amount;
-  final NewItemStatus status; //* Status de este State
   final int entityStatus;
+  final NewItemStatus status; //* Status de este State
   final String messageError; //* Mensaje de error para toast
-  final bool formError;
+  final bool formError; //* Bandera para lanzar error de validación
 
   const NewItemState({
     this.name = '',

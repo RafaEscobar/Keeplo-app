@@ -20,6 +20,40 @@ class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
     on<VahulFormErrorChange>(_onVahulFormErrorChange);
   }
 
+  //* Método que realiza la petición para crear un nuevo vahul
+  Future<void> _onSubmitVahulForm(SubmitVahulForm event, Emitter<NewVahulState> emit) async {
+    emit(state.copyWith(status: NewVahulStatus.loading));
+
+    try {
+      if (state.image == null) {
+        emit(state.copyWith(status: NewVahulStatus.fail,));
+        return;
+      }
+      final multipartFile = await Images.getMultipartFile(state.name, state.image!, state.image!.path);
+
+      final formData = FormData.fromMap({
+        'name': state.name,
+        if(state.description.isNotEmpty) 'description': state.description,
+        'user_id': state.userId,
+        'image': multipartFile,
+      });
+
+      final Response response = await ApiService.request(
+        '/vahuls',
+        auth: Preferences.token,
+        body: formData,
+      );
+
+      if (response.statusCode == 201) {
+        emit(state.copyWith(status: NewVahulStatus.success));
+      } else {
+        emit(state.copyWith(status: NewVahulStatus.fail, messageError: response.data['message']));
+      }
+    } catch (e) {
+      emit(state.copyWith(status: NewVahulStatus.fail, messageError: e.toString()));
+    }
+  }
+
   //* Método para cambiar valor de la variable -name- del state
   void _onVahulNameChange(VahulNameChange event, Emitter<NewVahulState> emit) {
     try {
@@ -95,39 +129,4 @@ class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
       formError: false
     ));
   }
-
-  //* Método que realiza la petición para crear un nuevo vahul
-  Future<void> _onSubmitVahulForm(SubmitVahulForm event, Emitter<NewVahulState> emit) async {
-    emit(state.copyWith(status: NewVahulStatus.loading));
-
-    try {
-      if (state.image == null) {
-        emit(state.copyWith(status: NewVahulStatus.fail,));
-        return;
-      }
-      final multipartFile = await Images.getMultipartFile(state.name, state.image!, state.image!.path);
-
-      final formData = FormData.fromMap({
-        'name': state.name,
-        if(state.description.isNotEmpty) 'description': state.description,
-        'user_id': state.userId,
-        'image': multipartFile,
-      });
-
-      final Response response = await ApiService.request(
-        '/vahuls',
-        auth: Preferences.token,
-        body: formData,
-      );
-
-      if (response.statusCode == 201) {
-        emit(state.copyWith(status: NewVahulStatus.success));
-      } else {
-        emit(state.copyWith(status: NewVahulStatus.fail, messageError: response.data['message']));
-      }
-    } catch (e) {
-      emit(state.copyWith(status: NewVahulStatus.fail, messageError: e.toString()));
-    }
-  }
-
 }

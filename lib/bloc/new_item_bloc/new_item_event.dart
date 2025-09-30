@@ -1,10 +1,8 @@
 import 'dart:io';
-
 import 'package:keeplo/bloc/new_item_bloc/new_item_state.dart';
 
+//* Clase base abstracta
 abstract class NewItemEvent {}
-
-class NewItemClean extends NewItemEvent {}
 
 //* Evento para controlar valor de la variable -name- en el state
 class ItemNameChange extends NewItemEvent {
@@ -42,7 +40,7 @@ class ItemImageChange extends NewItemEvent {
   ItemImageChange(this.image);
 }
 
-//* Evento para controlar valor del status de la entidad item
+//* Evento para controlar valor del -status- de la entidad item
 class StatusEntityChange extends NewItemEvent {
   final int newStatus;
   StatusEntityChange(this.newStatus);
@@ -59,6 +57,9 @@ class ItemFormErrorChange extends NewItemEvent {
   final bool formError;
   ItemFormErrorChange(this.formError);
 }
+
+//* Evento para limpiar el state
+class NewItemClean extends NewItemEvent {}
 
 //* Evento para lanzar petición para crear un nuevo vahul
 class SubmitItemForm extends NewItemEvent {}

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_state.dart';
 
+//* Clase base abstracta
 abstract class NewVahulEvent {}
 
 //* Evento para controlar valor de la variable -name- en el state
