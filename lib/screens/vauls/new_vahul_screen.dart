@@ -71,6 +71,8 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isEdition = context.read<NewVahulBloc>().state.isEdition;
+    Vahul? vahul = context.read<VahulBloc>().state.currentVahul;
     return Scaffold(
       appBar: AppBar(
         title: Text("Nuevo baúl", style: TextStyle(fontSize: Responsive.regularTextSize(context), color: Colors.white, fontWeight: FontWeight.w600),),
@@ -140,6 +142,7 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
                                   ),
                                   SizedBox(height: 20,),
                                   SimpleInput(
+                                    controller: _descriptionController,
                                     onChange: (value) => context.read<NewVahulBloc>().add(VahulDescriptionChange(value!)),
                                     textStyle: TextStyle(fontSize: Responsive.regularTextSize(context)),
                                     name: 'description',
@@ -172,10 +175,16 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
                                         body: BlocSelector<NewVahulBloc, NewVahulState, File?>(
                                           selector: (state) => state.image,
                                           builder: (context, image) {
-                                            return (image == null || image.path.isEmpty) ? SvgPicture.asset(
-                                                "assets/icons/image.svg",
-                                                colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
-                                              ) : ClipOval(child: Image.file(File(image.path), fit: BoxFit.cover,));
+                                            return (image == null || image.path.isEmpty) ?
+                                              (
+                                                !isEdition ?
+                                                SvgPicture.asset(
+                                                  "assets/icons/image.svg",
+                                                  colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                                                ) :
+                                                ClipOval(child: Image.network(vahul!.img, fit: BoxFit.cover,))
+                                              ) :
+                                              ClipOval(child: Image.file(File(image.path), fit: BoxFit.cover,));
                                           },
                                         ),
                                       ),
