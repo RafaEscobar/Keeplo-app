@@ -9,6 +9,7 @@ import 'package:keeplo/models/vahul.dart';
 import 'package:keeplo/theme/app_theme.dart';
 import 'package:keeplo/widgets/dashboard/simple_search_bar.dart';
 import 'package:keeplo/widgets/items/item_card.dart';
+import 'package:keeplo/widgets/items/new_item.dart';
 import 'package:keeplo/widgets/vahul/vahul_info.dart';
 import 'package:keeplo/widgets/vahul/vahuls_header.dart';
 
@@ -119,7 +120,7 @@ class _VahulDetailsState extends State<VahulDetails> {
             ),
           ),
         ),
-        //floatingActionButton: DashNewVahul()
+        floatingActionButton: NewItem()
       ),
     );
   }
