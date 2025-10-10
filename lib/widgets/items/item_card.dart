@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:keeplo/bloc/bloc_barrel.dart';
+import 'package:keeplo/bloc/new_item_bloc/new_item_event.dart';
+import 'package:keeplo/bloc/new_item_bloc/new_item_state.dart';
 import 'package:keeplo/models/item.dart';
+import 'package:keeplo/screens/items/new_item_screen.dart';
 import 'package:keeplo/theme/app_theme.dart';
 import 'package:keeplo/utils/items/item_actions.dart';
 import 'package:keeplo/widgets/simple_pill.dart';
@@ -33,7 +38,9 @@ class ItemCard extends StatelessWidget {
         if (direction == DismissDirection.startToEnd) {
           ItemActions.onDelete(context, item.id);
         } else {
-          // Editar item [TODO]
+          context.read<NewItemBloc>().add(ItemIsEditionChange(true));
+          context.read<NewItemBloc>().add(ItemStatusChange(NewItemStatus.initial));
+          context.goNamed(NewItemScreen.routeName);
         }
         return false;
       },

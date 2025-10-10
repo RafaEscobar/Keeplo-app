@@ -14,6 +14,7 @@ class NewItemState extends Equatable{
   final NewItemStatus status; //* Status de este State
   final String messageError; //* Mensaje de error para toast
   final bool formError; //* Bandera para lanzar error de validación
+  final bool isEdition; //* Bandera para diferenciar formulario de edición
 
   const NewItemState({
     this.name = '',
@@ -24,7 +25,8 @@ class NewItemState extends Equatable{
     this.status = NewItemStatus.initial,
     this.entityStatus = 1,
     this.messageError = '',
-    this.formError = false
+    this.formError = false,
+    this.isEdition = false
   });
 
   NewItemState copyWith({
@@ -37,6 +39,7 @@ class NewItemState extends Equatable{
     int? entityStatus,
     String? messageError,
     bool? formError,
+    bool? isEdition
   }) => NewItemState(
     name: name ?? this.name,
     observations: observations ?? this.observations,
@@ -46,7 +49,9 @@ class NewItemState extends Equatable{
     status: status ?? this.status,
     messageError: messageError ?? this.messageError,
     formError: formError ?? this.formError,
-    entityStatus: entityStatus ?? this.entityStatus
+    entityStatus: entityStatus ?? this.entityStatus,
+    isEdition: isEdition ?? this.isEdition
+
   );
 
   @override
@@ -60,5 +65,6 @@ class NewItemState extends Equatable{
     entityStatus,
     messageError,
     formError,
+    isEdition
   ];
 }

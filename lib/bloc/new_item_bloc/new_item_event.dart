@@ -58,6 +58,11 @@ class ItemFormErrorChange extends NewItemEvent {
   ItemFormErrorChange(this.formError);
 }
 
+class ItemIsEditionChange extends NewItemEvent {
+  final bool isEdition;
+  ItemIsEditionChange(this.isEdition);
+}
+
 //* Evento para limpiar el state
 class NewItemClean extends NewItemEvent {}
 

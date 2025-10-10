@@ -21,6 +21,7 @@ class NewItemBloc extends Bloc<NewItemEvent, NewItemState>{
     on<StatusEntityChange>(_onStatusEntityChange);
     on<ItemAmountChange>(_onItemAmountChange);
     on<SubmitItemForm>(_onSubmitItemForm);
+    on<ItemIsEditionChange>(_onItemIsEditionChange);
   }
 
   //* Método que realiza la petición para crear un nuevo vahul
@@ -140,6 +141,14 @@ class NewItemBloc extends Bloc<NewItemEvent, NewItemState>{
     }
   }
 
+  //* Método para cambiar el -status- del state
+  void _onItemIsEditionChange(ItemIsEditionChange event, Emitter<NewItemState> emit){
+    try {
+      emit(state.copyWith(isEdition: event.isEdition));
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
 
   //* Método para limpiar nuestro state
   void _onNewItemClean(NewItemClean event, Emitter<NewItemState> emit) {

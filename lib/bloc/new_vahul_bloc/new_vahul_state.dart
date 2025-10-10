@@ -12,7 +12,7 @@ class NewVahulState extends Equatable{
   final NewVahulStatus status; //* Status de este State
   final String messageError; //* Mensaje de error para toast
   final bool formError; //* Bandera para lanzar error de validación
-  final bool isEdition;
+  final bool isEdition; //* Bandera para diferenciar formulario de edición
 
   const NewVahulState({
     this.name = '',
