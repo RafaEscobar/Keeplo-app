@@ -61,13 +61,11 @@ class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
     emit(state.copyWith(status: NewVahulStatus.loading));
 
     try {
-      if (state.image == null) {
-        emit(state.copyWith(status: NewVahulStatus.fail,));
-        return;
-      }
       MultipartFile multipartFile = MultipartFile.fromString('value');
-      if (state.image != null && state.image!.path.isNotEmpty) {
-        multipartFile = await Images.getMultipartFile(state.name, state.image!, state.image!.path);
+      if (state.image != null) {
+        if (state.image != null && state.image!.path.isNotEmpty) {
+          multipartFile = await Images.getMultipartFile(state.name, state.image!, state.image!.path);
+        }
       }
 
       final formData = FormData.fromMap({
@@ -75,15 +73,16 @@ class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
         if(state.description.isNotEmpty) 'description': state.description,
         'user_id': state.userId,
         if (state.image != null && state.image!.path.isNotEmpty) 'image': multipartFile,
+        '_method': "PATCH"
       });
 
       final Response response = await ApiService.request(
         '/vahuls/${event.vahulId}',
         auth: Preferences.token,
-        patchBody: formData,
+        body: formData,
       );
 
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         emit(state.copyWith(status: NewVahulStatus.success));
       } else {
         emit(state.copyWith(status: NewVahulStatus.fail, messageError: response.data['message']));

@@ -66,9 +66,11 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
   void initState() {
     super.initState();
     Vahul? vahul = context.read<VahulBloc>().state.currentVahul;
-    if (vahul != null) _setData(vahul);
     _nameController = TextEditingController(text: vahul?.name ?? '');
     _descriptionController = TextEditingController(text: vahul?.description ?? '');
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (vahul != null) _setData(vahul);
+    },);
   }
 
   @override

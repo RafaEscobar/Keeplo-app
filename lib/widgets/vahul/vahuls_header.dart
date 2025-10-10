@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_bloc.dart';
 import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_event.dart';
+import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_state.dart';
 import 'package:keeplo/bloc/vahul_bloc/vahul_bloc.dart';
 import 'package:keeplo/bloc/vahul_bloc/vahul_event.dart';
 import 'package:keeplo/bloc/vahul_bloc/vahul_state.dart';
@@ -35,6 +36,7 @@ class VahulsHeader extends StatelessWidget implements PreferredSize{
                 GestureDetector(
                   onTap: () {
                     context.read<NewVahulBloc>().add(VahulIsEditionChange(true));
+                    context.read<NewVahulBloc>().add(VahulStatusChange(NewVahulStatus.initial));
                     context.goNamed(NewVahulScreen.routeName);
                   },
                   child: Column(
