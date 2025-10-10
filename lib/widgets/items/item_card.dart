@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:keeplo/bloc/bloc_barrel.dart';
-import 'package:keeplo/bloc/item_bloc/item_bloc.dart';
 import 'package:keeplo/bloc/item_bloc/item_event.dart';
 import 'package:keeplo/bloc/item_bloc/item_state.dart';
 import 'package:keeplo/models/item.dart';

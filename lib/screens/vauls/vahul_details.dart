@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:keeplo/bloc/bloc_barrel.dart';
-import 'package:keeplo/bloc/item_bloc/item_bloc.dart';
 import 'package:keeplo/bloc/item_bloc/item_event.dart';
 import 'package:keeplo/bloc/item_bloc/item_state.dart';
 import 'package:keeplo/enums/empty_state_type.dart';
@@ -63,6 +62,7 @@ class _VahulDetailsState extends State<VahulDetails> {
     return GestureDetector(
       onTap: () => _searchFocusNode.unfocus(),
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: AppTheme.primary,
         appBar: VahulsHeader(),
         body: SafeArea(
