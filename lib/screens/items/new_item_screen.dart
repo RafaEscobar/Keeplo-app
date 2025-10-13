@@ -60,18 +60,18 @@ class _NewItemScreenState extends State<NewItemScreen> {
     context.read<NewItemBloc>().add(ItemObservationsChange(item.observations));
     context.read<NewItemBloc>().add(ItemVahulIdChange(item.vahulId));
     context.read<NewItemBloc>().add(StatusEntityChange(item.status));
-    context.read<NewItemBloc>().add(ItemAmountChange(item.amount as double));
+    context.read<NewItemBloc>().add(ItemAmountChange(item.amount));
     localValue = item.status as bool;
   }
 
   @override
   void initState() {
     super.initState();
-    Item? vahul = context.read<NewItemBloc>().state.currentItem;
-    _nameController = TextEditingController(text: vahul?.name ?? '');
-    _observationsController = TextEditingController(text: vahul?.observations ?? '');
+    Item? item = context.read<NewItemBloc>().state.currentItem;
+    _nameController = TextEditingController(text: item?.name ?? '');
+    _observationsController = TextEditingController(text: item?.observations ?? '');
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (vahul != null) _setData(vahul);
+      if (item != null) _setData(item);
     },);
   }
 
@@ -151,6 +151,7 @@ class _NewItemScreenState extends State<NewItemScreen> {
                             ),
                             SizedBox(height: 20,),
                             SimpleInput(
+                              controller: _observationsController,
                               onChange: (value) => context.read<NewItemBloc>().add(ItemObservationsChange(value!)),
                               textStyle: TextStyle(fontSize: Responsive.regularTextSize(context)),
                               name: 'description',
@@ -188,7 +189,7 @@ class _NewItemScreenState extends State<NewItemScreen> {
                               min: 1,
                               max: 200,
                               value: 1,
-                              onChanged: (value) => context.read<NewItemBloc>().add(ItemAmountChange(value)),
+                              onChanged: (value) => context.read<NewItemBloc>().add(ItemAmountChange(value as int)),
                             ),
                             SizedBox(height: 20,),
                             Text("Estatus del item:", style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.w600),),

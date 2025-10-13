@@ -19,7 +19,7 @@ class ItemObservationsChange extends NewItemEvent {
 
 //* Evento para controlar valor de la variable -amount- en el state
 class ItemAmountChange extends NewItemEvent {
-  final double amount;
+  final int amount;
   ItemAmountChange(this.amount);
 }
 

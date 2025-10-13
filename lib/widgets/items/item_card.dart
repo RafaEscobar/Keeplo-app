@@ -38,6 +38,7 @@ class ItemCard extends StatelessWidget {
         if (direction == DismissDirection.startToEnd) {
           ItemActions.onDelete(context, item.id);
         } else {
+          context.read<NewItemBloc>().add(SetCurrentItem(item));
           context.read<NewItemBloc>().add(ItemIsEditionChange(true));
           context.read<NewItemBloc>().add(ItemStatusChange(NewItemStatus.initial));
           context.goNamed(NewItemScreen.routeName);
@@ -46,7 +47,6 @@ class ItemCard extends StatelessWidget {
       },
       child: GestureDetector(
         onTap: () {
-          context.read<NewItemBloc>().add(SetCurrentItem(item));
           ItemActions.openItemDetails(context: context, item: item);
         },
         child: Container(

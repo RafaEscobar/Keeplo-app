@@ -192,7 +192,7 @@ class NewItemBloc extends Bloc<NewItemEvent, NewItemState>{
 
   void _onSetCurrentItem(SetCurrentItem event, Emitter<NewItemState> emit){
     try {
-      emit(state.copyWith());
+      emit(state.copyWith(currentItem: event.item));
     } catch (e) {
       throw Exception(e.toString());
     }
