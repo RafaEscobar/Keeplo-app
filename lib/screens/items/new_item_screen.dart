@@ -30,6 +30,7 @@ class _NewItemScreenState extends State<NewItemScreen> {
   late TextEditingController _nameController;
   late TextEditingController _observationsController;
   bool localValue = true;
+  double localAmount = 1;
 
   void runValidation() {
     NewItemBloc bloc = context.read<NewItemBloc>();
@@ -61,7 +62,8 @@ class _NewItemScreenState extends State<NewItemScreen> {
     context.read<NewItemBloc>().add(ItemVahulIdChange(item.vahulId));
     context.read<NewItemBloc>().add(StatusEntityChange(item.status));
     context.read<NewItemBloc>().add(ItemAmountChange(item.amount));
-    localValue = item.status as bool;
+    localValue = item.status == 1;
+    localAmount = (item.amount).toDouble();
   }
 
   @override
@@ -188,8 +190,11 @@ class _NewItemScreenState extends State<NewItemScreen> {
                               cursorColor: Colors.white,
                               min: 1,
                               max: 200,
-                              value: 1,
-                              onChanged: (value) => context.read<NewItemBloc>().add(ItemAmountChange(value as int)),
+                              value: localAmount,
+                              onChanged: (value) {
+                                localAmount = value;
+                                context.read<NewItemBloc>().add(ItemAmountChange((value).toInt()));
+                              }
                             ),
                             SizedBox(height: 20,),
                             Text("Estatus del item:", style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.w600),),

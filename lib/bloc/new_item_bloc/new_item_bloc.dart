@@ -39,7 +39,7 @@ class NewItemBloc extends Bloc<NewItemEvent, NewItemState>{
 
       final formData = FormData.fromMap({
         'name': state.name,
-        if(state.observations.isNotEmpty) 'observations': state.observations,
+        if(state.observations.isNotEmpty) 'observation': state.observations,
         'status': state.entityStatus,
         'amount': state.amount,
         'vahul_id': state.vahulId,

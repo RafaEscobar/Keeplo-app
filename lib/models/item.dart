@@ -22,7 +22,7 @@ class Item {
     id: json['id'] ?? 0,
     name: json['name'] ?? '',
     status: json['status'] ?? '',
-    observations: json['observations'] ?? '',
+    observations: json['observation'] ?? '',
     amount: json['amount'] ?? 0,
     vahulId: json['vahul_id'] ?? 0,
     image: json['image'] ?? ''
