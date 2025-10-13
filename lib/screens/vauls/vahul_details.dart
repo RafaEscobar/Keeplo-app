@@ -71,7 +71,7 @@ class _VahulDetailsState extends State<VahulDetails> {
             child: Column(
               spacing: 26,
               children: [
-                VahulInfo(imagePath: 'imagePath', description: vahul.description),
+                VahulInfo(imagePath: vahul.img, description: vahul.description),
                 Divider(
                   height: .6,
                   color: Colors.white30,

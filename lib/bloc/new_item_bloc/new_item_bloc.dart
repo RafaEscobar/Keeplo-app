@@ -35,7 +35,7 @@ class NewItemBloc extends Bloc<NewItemEvent, NewItemState>{
         emit(state.copyWith(status: NewItemStatus.fail,));
         return;
       }
-      final multipartFile = await Images.getMultipartFile(state.name, state.image!, state.image!.path);
+      final multipartFile = await Images.getMultipartFile(state.name, state.image!);
 
       final formData = FormData.fromMap({
         'name': state.name,
@@ -70,7 +70,7 @@ class NewItemBloc extends Bloc<NewItemEvent, NewItemState>{
       MultipartFile multipartFile = MultipartFile.fromString('value');
       if (state.image != null) {
         if (state.image != null && state.image!.path.isNotEmpty) {
-          multipartFile = await Images.getMultipartFile(state.name, state.image!, state.image!.path);
+          multipartFile = await Images.getMultipartFile(state.name, state.image!);
         }
       }
 
