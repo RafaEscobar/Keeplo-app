@@ -60,7 +60,7 @@ class _NewItemScreenState extends State<NewItemScreen> {
     context.read<NewItemBloc>().add(ItemObservationsChange(item.observations));
     context.read<NewItemBloc>().add(ItemVahulIdChange(item.vahulId));
     context.read<NewItemBloc>().add(StatusEntityChange(item.status));
-    context.read<NewItemBloc>().add(ItemAmountChange(item.amount));
+    context.read<NewItemBloc>().add(ItemAmountChange(item.amount as double));
     localValue = item.status as bool;
   }
 

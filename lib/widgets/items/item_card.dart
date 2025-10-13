@@ -46,6 +46,7 @@ class ItemCard extends StatelessWidget {
       },
       child: GestureDetector(
         onTap: () {
+          context.read<NewItemBloc>().add(SetCurrentItem(item));
           ItemActions.openItemDetails(context: context, item: item);
         },
         child: Container(

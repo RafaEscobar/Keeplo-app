@@ -14,7 +14,7 @@ class Item {
   final String name;
   final int status;
   final String observations;
-  final double amount;
+  final int amount;
   final int vahulId;
   final String image;
 
