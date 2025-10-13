@@ -11,9 +11,9 @@ class SimpleImage extends StatelessWidget {
       imagePath,
       loadingBuilder: (context, child, loadingProgress) {
         if (loadingProgress == null) return child;
-        return const Center(child: CircularProgressIndicator());
+        return const Center(child: CircularProgressIndicator(color: Colors.white,));
       },
-      errorBuilder: (context, error, stackTrace) => Icon(Icons.question_mark_rounded),
+      errorBuilder: (context, error, stackTrace) => Icon(Icons.question_mark_rounded, color: Colors.white, size: 34,),
       fit: BoxFit.cover,
       width: width,
     );
