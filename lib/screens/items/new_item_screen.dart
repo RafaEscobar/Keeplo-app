@@ -15,6 +15,7 @@ import 'package:keeplo/utils/vahul_actions.dart';
 import 'package:keeplo/widgets/forms/add_image_.dart';
 import 'package:keeplo/widgets/forms/simple_input.dart';
 import 'package:keeplo/widgets/simple_button.dart';
+import 'package:keeplo/widgets/simple_image.dart';
 
 class NewItemScreen extends StatefulWidget {
   const NewItemScreen({super.key});
@@ -231,7 +232,7 @@ class _NewItemScreenState extends State<NewItemScreen> {
                                             "assets/icons/image.svg",
                                             colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
                                           ) :
-                                          ClipOval(child: Image.network(vahul!.image, fit: BoxFit.cover,))
+                                          ClipOval(child: SimpleImage(imagePath: vahul!.image))
                                         ) :
                                         ClipOval(child: Image.file(File(image.path), fit: BoxFit.cover,));
                                     },

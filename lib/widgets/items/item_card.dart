@@ -7,6 +7,7 @@ import 'package:keeplo/models/item.dart';
 import 'package:keeplo/screens/items/new_item_screen.dart';
 import 'package:keeplo/theme/app_theme.dart';
 import 'package:keeplo/utils/items/item_actions.dart';
+import 'package:keeplo/widgets/simple_image.dart';
 import 'package:keeplo/widgets/simple_pill.dart';
 
 class ItemCard extends StatelessWidget {
@@ -58,7 +59,7 @@ class ItemCard extends StatelessWidget {
               SizedBox(
                 width: 60,
                 height: 60,
-                child: ClipOval(child: Image.network("https://i.ibb.co/VcrM7rBV/a.png", fit: BoxFit.cover,))
+                child: ClipOval(child: SimpleImage(imagePath: item.image))
               ),
               Expanded(
                 child: Column(

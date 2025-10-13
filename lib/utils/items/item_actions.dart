@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:keeplo/models/item.dart';
 import 'package:keeplo/theme/app_theme.dart';
 import 'package:keeplo/widgets/simple_button.dart';
+import 'package:keeplo/widgets/simple_image.dart';
 import 'package:keeplo/widgets/simple_modal.dart';
 import 'package:keeplo/widgets/simple_pill.dart';
 
@@ -70,7 +71,9 @@ class ItemActions {
         padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 10),
         child: Column(
           children: [
-            ClipOval(child: Image.network("https://i.ibb.co/VcrM7rBV/a.png", fit: BoxFit.cover, width: 100,)),
+            ClipOval(
+              child: SimpleImage(imagePath: item.image, width: 100,)
+            ),
             SizedBox(height: 20,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

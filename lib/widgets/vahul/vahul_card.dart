@@ -4,6 +4,7 @@ import 'package:keeplo/bloc/bloc_barrel.dart';
 import 'package:keeplo/bloc/vahul_bloc/vahul_event.dart';
 import 'package:keeplo/models/vahul.dart';
 import 'package:keeplo/screens/vauls/vahul_details.dart';
+import 'package:keeplo/widgets/simple_image.dart';
 
 class VahulCard extends StatelessWidget {
   const VahulCard({super.key, required this.vahul, required this.callBack});
@@ -28,11 +29,8 @@ class VahulCard extends StatelessWidget {
               width: 80,
               height: 80,
               child: ClipOval(
-                child: Image.network(
-                  "https://i.ibb.co/VcrM7rBV/a.png",
-                  //vahul.img,
-                  fit: BoxFit.cover,
-                ),
+                child: SimpleImage(imagePath: vahul.img)
+
               ),
             ),
             Expanded(

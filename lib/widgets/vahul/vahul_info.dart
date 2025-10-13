@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:keeplo/widgets/simple_image.dart';
 
 class VahulInfo extends StatelessWidget{
   const VahulInfo({super.key, required this.imagePath, required this.description});
@@ -18,10 +19,7 @@ class VahulInfo extends StatelessWidget{
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
-            child: Image.network(
-              "https://i.postimg.cc/K8CGhdNR/a.jpg",
-              fit: BoxFit.cover,
-            ),
+            child: SimpleImage(imagePath: imagePath)
           ),
         ),
         const SizedBox(width: 10),

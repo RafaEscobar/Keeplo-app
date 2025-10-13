@@ -17,6 +17,7 @@ import 'package:keeplo/utils/vahul_actions.dart';
 import 'package:keeplo/widgets/forms/add_image_.dart';
 import 'package:keeplo/widgets/forms/simple_input.dart';
 import 'package:keeplo/widgets/simple_button.dart';
+import 'package:keeplo/widgets/simple_image.dart';
 
 class NewVahulScreen extends StatefulWidget {
   const NewVahulScreen({super.key});
@@ -195,7 +196,7 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
                                                   "assets/icons/image.svg",
                                                   colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
                                                 ) :
-                                                ClipOval(child: Image.network(vahul!.img, fit: BoxFit.cover,))
+                                                ClipOval(child: SimpleImage(imagePath: vahul!.img))
                                               ) :
                                               ClipOval(child: Image.file(File(image.path), fit: BoxFit.cover,));
                                           },
