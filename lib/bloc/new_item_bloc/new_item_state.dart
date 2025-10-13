@@ -16,7 +16,6 @@ class NewItemState extends Equatable{
   final String messageError; //* Mensaje de error para toast
   final bool formError; //* Bandera para lanzar error de validación
   final bool isEdition; //* Bandera para diferenciar formulario de edición
-  final int itemId; //* Identificador númerico del item
   final Item? currentItem; //* Iten temporal
 
   const NewItemState({
@@ -30,7 +29,6 @@ class NewItemState extends Equatable{
     this.messageError = '',
     this.formError = false,
     this.isEdition = false,
-    this.itemId = -1,
     this.currentItem
   });
 
@@ -58,7 +56,6 @@ class NewItemState extends Equatable{
     formError: formError ?? this.formError,
     entityStatus: entityStatus ?? this.entityStatus,
     isEdition: isEdition ?? this.isEdition,
-    itemId: itemId ?? this.itemId,
     currentItem: currentItem ?? this.currentItem
   );
 
@@ -74,7 +71,6 @@ class NewItemState extends Equatable{
     messageError,
     formError,
     isEdition,
-    itemId,
     currentItem
   ];
 }

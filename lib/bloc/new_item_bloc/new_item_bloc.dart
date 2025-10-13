@@ -76,7 +76,7 @@ class NewItemBloc extends Bloc<NewItemEvent, NewItemState>{
 
       final formData = FormData.fromMap({
         'name': state.name,
-        if(state.observations.isNotEmpty) 'observations': state.observations,
+        if(state.observations.isNotEmpty) 'observation': state.observations,
         'status': state.entityStatus,
         'amount': state.amount,
         'vahul_id': state.vahulId,
@@ -85,12 +85,12 @@ class NewItemBloc extends Bloc<NewItemEvent, NewItemState>{
       });
 
       final Response response = await ApiService.request(
-        '/items/${state.itemId}',
+        '/items/${state.currentItem!.id}',
         auth: Preferences.token,
         body: formData,
       );
 
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         emit(state.copyWith(status: NewItemStatus.success));
       } else {
         emit(state.copyWith(status: NewItemStatus.fail, messageError: response.data['message']));

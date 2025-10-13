@@ -64,10 +64,7 @@ class ItemIsEditionChange extends NewItemEvent {
   ItemIsEditionChange(this.isEdition);
 }
 
-class SubmitItemUpdate extends NewItemEvent {
-  final int itemId;
-  SubmitItemUpdate(this.itemId);
-}
+class SubmitItemUpdate extends NewItemEvent {}
 
 class SetCurrentItem extends NewItemEvent {
   final Item item;

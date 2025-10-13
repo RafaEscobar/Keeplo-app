@@ -44,7 +44,7 @@ class _NewItemScreenState extends State<NewItemScreen> {
     } else {
       if (bloc.state.name.isNotEmpty) {
         context.read<NewItemBloc>().add(ItemVahulIdChange(context.read<VahulBloc>().state.currentVahul!.id));
-        context.read<NewItemBloc>().add(SubmitItemUpdate(context.read<NewItemBloc>().state.itemId)) ;
+        context.read<NewItemBloc>().add(SubmitItemUpdate()) ;
       } else {
         _onErroValidation();
       }
