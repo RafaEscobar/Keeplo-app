@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:keeplo/bloc/new_item_bloc/new_item_state.dart';
+import 'package:keeplo/models/item.dart';
 
 //* Clase base abstracta
 abstract class NewItemEvent {}
@@ -61,6 +62,16 @@ class ItemFormErrorChange extends NewItemEvent {
 class ItemIsEditionChange extends NewItemEvent {
   final bool isEdition;
   ItemIsEditionChange(this.isEdition);
+}
+
+class SubmitItemUpdate extends NewItemEvent {
+  final int itemId;
+  SubmitItemUpdate(this.itemId);
+}
+
+class SetCurrentItem extends NewItemEvent {
+  final Item item;
+  SetCurrentItem(this.item);
 }
 
 //* Evento para limpiar el state

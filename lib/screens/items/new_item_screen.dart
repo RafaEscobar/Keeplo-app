@@ -7,6 +7,7 @@ import 'package:keeplo/bloc/bloc_barrel.dart';
 import 'package:keeplo/bloc/item_bloc/item_event.dart';
 import 'package:keeplo/bloc/new_item_bloc/new_item_event.dart';
 import 'package:keeplo/bloc/new_item_bloc/new_item_state.dart';
+import 'package:keeplo/models/item.dart';
 import 'package:keeplo/theme/app_theme.dart';
 import 'package:keeplo/utils/responsive.dart';
 import 'package:keeplo/utils/simple_toast.dart';
@@ -26,19 +27,52 @@ class NewItemScreen extends StatefulWidget {
 class _NewItemScreenState extends State<NewItemScreen> {
   FocusNode nameFocusNode = FocusNode();
   FocusNode observationsFocusNode = FocusNode();
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _observationsController = TextEditingController();
+  late TextEditingController _nameController;
+  late TextEditingController _observationsController;
   bool localValue = true;
 
   void runValidation() {
     NewItemBloc bloc = context.read<NewItemBloc>();
-    if (bloc.state.name.isNotEmpty && bloc.state.image != null && bloc.state.image!.path.isNotEmpty) {
-      context.read<NewItemBloc>().add(ItemVahulIdChange(context.read<VahulBloc>().state.currentVahul!.id));
-      context.read<NewItemBloc>().add(SubmitItemForm());
+    if (!bloc.state.isEdition) {
+      if (bloc.state.name.isNotEmpty && bloc.state.image != null && bloc.state.image!.path.isNotEmpty) {
+        context.read<NewItemBloc>().add(ItemVahulIdChange(context.read<VahulBloc>().state.currentVahul!.id));
+        context.read<NewItemBloc>().add(SubmitItemForm());
+      } else {
+        _onErroValidation();
+      }
     } else {
-      context.read<NewItemBloc>().add(ItemFormErrorChange(true));
-      SimpleToast.info(context: context, message: "Por favor, proporcione los campos obligatorios.", size: 14, iconSize: 50);
+      if (bloc.state.name.isNotEmpty) {
+        context.read<NewItemBloc>().add(ItemVahulIdChange(context.read<VahulBloc>().state.currentVahul!.id));
+        context.read<NewItemBloc>().add(SubmitItemUpdate(context.read<NewItemBloc>().state.itemId)) ;
+      } else {
+        _onErroValidation();
+      }
     }
+  }
+
+  void _onErroValidation() {
+    context.read<NewItemBloc>().add(ItemFormErrorChange(true));
+    SimpleToast.info(context: context, message: "Por favor, proporcione los campos obligatorios.", size: 14, iconSize: 50);
+  }
+
+  void _setData(Item item) {
+    context.read<NewItemBloc>().add(ItemNameChange(item.name));
+    context.read<NewItemBloc>().add(ItemObservationsChange(item.observations));
+    context.read<NewItemBloc>().add(ItemVahulIdChange(item.vahulId));
+    context.read<NewItemBloc>().add(StatusEntityChange(item.status));
+    context.read<NewItemBloc>().add(ItemAmountChange(item.amount));
+    localValue = item.status as bool;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Item? vahul = context.read<NewItemBloc>().state.currentItem;
+    _nameController = TextEditingController(text: vahul?.name ?? '');
+    _observationsController = TextEditingController(text: vahul?.observations ?? '');
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (vahul != null) _setData(vahul);
+    },);
   }
 
   @override
@@ -52,6 +86,8 @@ class _NewItemScreenState extends State<NewItemScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isEdition = context.read<NewItemBloc>().state.isEdition;
+    Item? vahul = context.read<NewItemBloc>().state.currentItem;
     return Scaffold(
       appBar: AppBar(
         title: Text("Nuevo item", style: TextStyle(fontSize: Responsive.regularTextSize(context), color: Colors.white, fontWeight: FontWeight.w600),),
@@ -182,10 +218,16 @@ class _NewItemScreenState extends State<NewItemScreen> {
                                   body: BlocSelector<NewItemBloc, NewItemState, File?>(
                                     selector: (state) => state.image,
                                     builder: (context, image) {
-                                      return (image == null || image.path.isEmpty) ? SvgPicture.asset(
-                                          "assets/icons/image.svg",
-                                          colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
-                                        ) : ClipOval(child: Image.file(File(image.path), fit: BoxFit.cover,));
+                                      return (image == null || image.path.isEmpty) ?
+                                        (
+                                          !isEdition ?
+                                          SvgPicture.asset(
+                                            "assets/icons/image.svg",
+                                            colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                                          ) :
+                                          ClipOval(child: Image.network(vahul!.image, fit: BoxFit.cover,))
+                                        ) :
+                                        ClipOval(child: Image.file(File(image.path), fit: BoxFit.cover,));
                                     },
                                   ),
                                 ),

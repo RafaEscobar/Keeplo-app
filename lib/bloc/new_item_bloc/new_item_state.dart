@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:equatable/equatable.dart';
+import 'package:keeplo/models/item.dart';
 
 enum NewItemStatus {initial, loading, success, fail}
 
@@ -15,6 +16,8 @@ class NewItemState extends Equatable{
   final String messageError; //* Mensaje de error para toast
   final bool formError; //* Bandera para lanzar error de validación
   final bool isEdition; //* Bandera para diferenciar formulario de edición
+  final int itemId; //* Identificador númerico del item
+  final Item? currentItem; //* Iten temporal
 
   const NewItemState({
     this.name = '',
@@ -26,7 +29,9 @@ class NewItemState extends Equatable{
     this.entityStatus = 1,
     this.messageError = '',
     this.formError = false,
-    this.isEdition = false
+    this.isEdition = false,
+    this.itemId = -1,
+    this.currentItem
   });
 
   NewItemState copyWith({
@@ -39,7 +44,9 @@ class NewItemState extends Equatable{
     int? entityStatus,
     String? messageError,
     bool? formError,
-    bool? isEdition
+    bool? isEdition,
+    int? itemId,
+    Item? currentItem
   }) => NewItemState(
     name: name ?? this.name,
     observations: observations ?? this.observations,
@@ -50,8 +57,9 @@ class NewItemState extends Equatable{
     messageError: messageError ?? this.messageError,
     formError: formError ?? this.formError,
     entityStatus: entityStatus ?? this.entityStatus,
-    isEdition: isEdition ?? this.isEdition
-
+    isEdition: isEdition ?? this.isEdition,
+    itemId: itemId ?? this.itemId,
+    currentItem: currentItem ?? this.currentItem
   );
 
   @override
@@ -65,6 +73,8 @@ class NewItemState extends Equatable{
     entityStatus,
     messageError,
     formError,
-    isEdition
+    isEdition,
+    itemId,
+    currentItem
   ];
 }

@@ -22,6 +22,8 @@ class NewItemBloc extends Bloc<NewItemEvent, NewItemState>{
     on<ItemAmountChange>(_onItemAmountChange);
     on<SubmitItemForm>(_onSubmitItemForm);
     on<ItemIsEditionChange>(_onItemIsEditionChange);
+    on<SubmitItemUpdate>(_onSubmitItemUpdate);
+    on<SetCurrentItem>(_onSetCurrentItem);
   }
 
   //* Método que realiza la petición para crear un nuevo vahul
@@ -46,6 +48,44 @@ class NewItemBloc extends Bloc<NewItemEvent, NewItemState>{
 
       final Response response = await ApiService.request(
         '/items',
+        auth: Preferences.token,
+        body: formData,
+      );
+
+      if (response.statusCode == 201) {
+        emit(state.copyWith(status: NewItemStatus.success));
+      } else {
+        emit(state.copyWith(status: NewItemStatus.fail, messageError: response.data['message']));
+      }
+    } catch (e) {
+      emit(state.copyWith(status: NewItemStatus.fail, messageError: e.toString()));
+    }
+  }
+
+  //* Método que realiza la petición para crear un nuevo vahul
+  Future<void> _onSubmitItemUpdate(SubmitItemUpdate event, Emitter<NewItemState> emit) async {
+    emit(state.copyWith(status: NewItemStatus.loading));
+
+    try {
+      MultipartFile multipartFile = MultipartFile.fromString('value');
+      if (state.image != null) {
+        if (state.image != null && state.image!.path.isNotEmpty) {
+          multipartFile = await Images.getMultipartFile(state.name, state.image!, state.image!.path);
+        }
+      }
+
+      final formData = FormData.fromMap({
+        'name': state.name,
+        if(state.observations.isNotEmpty) 'observations': state.observations,
+        'status': state.entityStatus,
+        'amount': state.amount,
+        'vahul_id': state.vahulId,
+        if (state.image != null && state.image!.path.isNotEmpty) 'image': multipartFile,
+        '_method': "PATCH"
+      });
+
+      final Response response = await ApiService.request(
+        '/items/${state.itemId}',
         auth: Preferences.token,
         body: formData,
       );
@@ -145,6 +185,14 @@ class NewItemBloc extends Bloc<NewItemEvent, NewItemState>{
   void _onItemIsEditionChange(ItemIsEditionChange event, Emitter<NewItemState> emit){
     try {
       emit(state.copyWith(isEdition: event.isEdition));
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  void _onSetCurrentItem(SetCurrentItem event, Emitter<NewItemState> emit){
+    try {
+      emit(state.copyWith());
     } catch (e) {
       throw Exception(e.toString());
     }
