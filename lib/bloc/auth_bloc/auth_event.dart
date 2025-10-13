@@ -1,6 +1,7 @@
 import 'package:keeplo/bloc/auth_bloc/auth_state.dart';
 import 'package:keeplo/models/user.dart';
 
+//* Clase base abstracta
 abstract class AuthEvent {}
 
 //* Evento para controlar valor de la variable -name- en el state

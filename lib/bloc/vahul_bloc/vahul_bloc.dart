@@ -12,6 +12,10 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
     on<LoadMoreVahulesEvent>(_loadMoreVahules);
     on<VahulNewPageEvent>(_onVahulNewPageEvent);
     on<VahulOrderChange>(_onVahulOrderChange);
+    on<VahulChangeStatus>(_onVahulChangeStatus);
+    on<VahulDeleteEvent>(_onVahulDeleteEvent);
+    on<SetCurrentVahulEvent>(_onSetCurrentVahulEvent);
+    on<CurrentVahulClean>(_onCurrentVahulClean);
   }
 
   //* Método para obtener el listado de vahules
@@ -79,6 +83,22 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
     }
   }
 
+  //* Método para eliminar un vahul
+  Future<void> _onVahulDeleteEvent(VahulDeleteEvent event, Emitter<VahulState> emit) async {
+    try {
+      emit(state.copyWith(status: VahulStatus.removing));
+      final response = await ApiService.request('/vahuls/${event.vahulId}', deleteBody: {}, auth: Preferences.token);
+      if (response.statusCode == 204) {
+        emit(state.copyWith(status: VahulStatus.vahulRemoved));
+      } else {
+        emit(state.copyWith(status: VahulStatus.failure, errorMessage: "${response.data["message"]}"));
+      }
+    } catch (e) {
+      emit(state.copyWith(status: VahulStatus.failure));
+      throw e.toString();
+    }
+  }
+
   //* Método para cambiar de page
   void _onVahulNewPageEvent(VahulNewPageEvent event, Emitter<VahulState> emit) {
     try {
@@ -96,4 +116,39 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
       throw e.toString();
     }
   }
+
+  //* Método para cambiar dínamicamente el tipo de ordenamiento
+  void _onVahulChangeStatus(VahulChangeStatus event, Emitter<VahulState> emit){
+    try {
+      emit(state.copyWith(status: event.status));
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  //* Método para setear el vahul actual
+  void _onSetCurrentVahulEvent(SetCurrentVahulEvent event, Emitter<VahulState> emit){
+    try {
+      emit(state.copyWith(currentVahul: event.currentVahul));
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  void _onCurrentVahulClean(CurrentVahulClean event, Emitter<VahulState> emit) {
+    try {
+      emit(state.copyWith(
+        currentVahul: Vahul(
+          id: 0,
+          name: '',
+          description: '',
+          userId: 0,
+          img: ''
+        )
+      ));
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
 }

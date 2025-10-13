@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:keeplo/utils/responsive.dart';
 
 class SimpleEmptyState extends StatelessWidget {
   const SimpleEmptyState({super.key, required this.label, required this.imageUrl});
@@ -8,8 +8,9 @@ class SimpleEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Center(
+    return Center(
+      child: Padding(
+        padding: EdgeInsets.only(right: 20, left: 20, top: context.isTabletLandscape ? 0 : 40),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -17,16 +18,16 @@ class SimpleEmptyState extends StatelessWidget {
             Center(
               child: Image.asset(
                 imageUrl,
-                width: 300.w,
+                width: context.isTabletLandscape ? 160 : context.isTabletPortrait ? 280 : 200,
               )
             ),
             Text(
               label,
-              style: TextStyle(color: Colors.white, fontSize: 26),
+              style: TextStyle(color: Colors.white, fontSize: context.isTabletLandscape ? 20 : context.isTabletPortrait ? 30 : 20),
               textAlign: TextAlign.center,
             ),
           ],
-        )
+        ),
       )
     );
   }

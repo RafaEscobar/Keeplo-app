@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:keeplo/bloc/bloc_barrel.dart';
-import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_event.dart';
-import 'package:keeplo/bloc/vahul_bloc/vahul_event.dart';
-import 'package:keeplo/screens/vauls/new_vahul_screen.dart';
+import 'package:keeplo/bloc/new_item_bloc/new_item_bloc.dart';
+import 'package:keeplo/bloc/new_item_bloc/new_item_event.dart';
+import 'package:keeplo/screens/items/new_item_screen.dart';
 import 'package:keeplo/theme/app_theme.dart';
 import 'package:keeplo/utils/responsive.dart';
 
-class DashNewVahul extends StatelessWidget {
-  const DashNewVahul({super.key});
+class NewItem extends StatelessWidget{
+  const NewItem({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +18,8 @@ class DashNewVahul extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(20),
         onTap: () {
-          context.read<NewVahulBloc>().add(NewVahulClean());
-          context.read<VahulBloc>().add(CurrentVahulClean());
-          context.goNamed(NewVahulScreen.routeName);
+          context.read<NewItemBloc>().add(NewItemClean());
+          context.goNamed(NewItemScreen.routeName);
         },
         splashColor: Colors.white.withAlpha(20),
         highlightColor: Colors.white.withAlpha(60),
@@ -37,7 +36,7 @@ class DashNewVahul extends StatelessWidget {
             spacing: 6,
             children: [
               Icon(Icons.add, color: Colors.white, size: context.isTabletLandscape ? 36 : 24,),
-              Text("Nuevo baúl", style: TextStyle(color: Colors.white, fontSize: Responsive.minTextSize(context)),),
+              Text("Nuevo item", style: TextStyle(color: Colors.white, fontSize: Responsive.minTextSize(context)),),
             ],
           )
         ),

@@ -29,7 +29,9 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (_) => TokenBloc(),),
           BlocProvider(create: (_) => AuthBloc(),),
           BlocProvider(create: (_) => VahulBloc()),
-          BlocProvider(create: (_) => NewVahulBloc(),)
+          BlocProvider(create: (_) => NewVahulBloc(),),
+          BlocProvider(create: (_) => ItemBloc(),),
+          BlocProvider(create: (_) => NewItemBloc(),)
         ],
         child: MaterialApp.router(
           theme: AppTheme.lightTheme,

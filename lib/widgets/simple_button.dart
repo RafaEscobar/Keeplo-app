@@ -8,10 +8,14 @@ class SimpleButton extends StatelessWidget{
     required this.text,
     required this.callback,
     this.padding = const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+    this.backgroundColor = Colors.white,
+    this.textColor = AppTheme.primary,
   });
   final String text;
   final Function() callback;
   final EdgeInsetsGeometry padding;
+  final Color backgroundColor;
+  final Color textColor;
 
   @override
   Widget build(BuildContext context){
@@ -19,14 +23,14 @@ class SimpleButton extends StatelessWidget{
       padding: padding,
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: backgroundColor,
         borderRadius: BorderRadius.circular(20)
       ),
       child: GestureDetector(
         onTap: callback,
         child: Text(
           text,
-          style: TextStyle(color: AppTheme.primary, fontSize: context.isTabletLandscape ? 28 : context.isTabletPortrait ? 22 : 16, fontWeight: FontWeight.bold),
+          style: TextStyle(color: textColor, fontSize: context.isTabletLandscape ? 28 : context.isTabletPortrait ? 22 : 16, fontWeight: FontWeight.bold),
           textAlign: TextAlign.center,
         ),
       ),

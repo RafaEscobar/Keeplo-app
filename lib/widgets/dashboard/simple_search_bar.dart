@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:keeplo/bloc/item_bloc/item_bloc.dart';
+import 'package:keeplo/bloc/item_bloc/item_event.dart';
+import 'package:keeplo/bloc/item_bloc/item_state.dart';
 import 'package:keeplo/bloc/vahul_bloc/vahul_bloc.dart';
 import 'package:keeplo/bloc/vahul_bloc/vahul_event.dart';
+import 'package:keeplo/bloc/vahul_bloc/vahul_state.dart';
 import 'package:keeplo/widgets/filter_button.dart';
 
-class DashSearchBar extends StatelessWidget {
-  const DashSearchBar({super.key, required this.focusNode});
+class SimpleSearchBar extends StatelessWidget {
+  const SimpleSearchBar({super.key, required this.focusNode, this.forVahul = true});
   final FocusNode focusNode;
+  final bool forVahul;
 
   @override
   Widget build(BuildContext context) {
@@ -16,16 +21,31 @@ class DashSearchBar extends StatelessWidget {
         FilterButton(
           icon: Icons.sort,
           callback: () {
-            context.read<VahulBloc>().add(VahulOrderChange());
-            context.read<VahulBloc>().add(VahulNewPageEvent(1));
-            context.read<VahulBloc>().add(GetVahulesEvent());
+            if (forVahul) {
+              context.read<VahulBloc>().add(VahulOrderChange());
+              context.read<VahulBloc>().add(VahulNewPageEvent(1));
+              context.read<VahulBloc>().add(GetVahulesEvent());
+            } else {
+              context.read<ItemBloc>().add(ItemOrderChange());
+              context.read<ItemBloc>().add(ItemNewPageEvent(1));
+              context.read<ItemBloc>().add(GetItemsEvent());
+            }
           },
         ),
         Expanded(
           child: SizedBox(
             height: 44,
             child: TextField(
-              onChanged: (value) => context.read<VahulBloc>().add(SearchVahulEvent(value)),
+              onChanged: (value) {
+                forVahul ?
+                  context.read<VahulBloc>().add(SearchVahulEvent(value)) :
+                  context.read<ItemBloc>().add(SearchItemEvent(value));
+                if (value.isEmpty) {
+                  forVahul ?
+                    context.read<VahulBloc>().add(VahulChangeStatus(VahulStatus.initial)) :
+                    context.read<ItemBloc>().add(ItemChangeStatus(ItemStatus.initial));
+                }
+              },
               cursorColor: Colors.white,
               focusNode: focusNode,
               style: TextStyle(color: Colors.white),

@@ -9,8 +9,8 @@ import 'package:keeplo/theme/app_theme.dart';
 import 'package:keeplo/utils/responsive.dart';
 import 'package:keeplo/widgets/dashboard/dash_header.dart';
 import 'package:keeplo/widgets/dashboard/dash_new_vahul.dart';
-import 'package:keeplo/widgets/dashboard/dash_search_bar.dart';
-import 'package:keeplo/widgets/dashboard/vahul_card.dart';
+import 'package:keeplo/widgets/dashboard/simple_search_bar.dart';
+import 'package:keeplo/widgets/vahul/vahul_card.dart';
 
 class DashboardScreen extends StatefulWidget{
   const DashboardScreen({super.key});
@@ -64,6 +64,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       child: GestureDetector(
         onTap: () => _searchFocusNode.unfocus(),
         child: Scaffold(
+          resizeToAvoidBottomInset: false,
           backgroundColor: AppTheme.primary,
           appBar: DashHeader(),
           body: SafeArea(
@@ -72,7 +73,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               child: Column(
                 spacing: 26,
                 children: [
-                  DashSearchBar(focusNode: _searchFocusNode,),
+                  SimpleSearchBar(focusNode: _searchFocusNode,),
                   BlocBuilder<VahulBloc, VahulState>(
                     builder: (context, state) {
                       if (state.status == VahulStatus.loading) {
@@ -103,7 +104,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               childAspectRatio: context.isTabletLandscape ? 1 : context.isTabletPortrait ? 0.9 : 0.6,
                             ),
                             itemBuilder: (context, index) {
-                              return VahulCard(vahul: list[index]);
+                              return VahulCard(vahul: list[index], callBack: () => _searchFocusNode.unfocus(),);
                             },
                           ),
                         )

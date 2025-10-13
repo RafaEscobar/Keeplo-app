@@ -7,17 +7,20 @@ import 'package:keeplo/services/preferences.dart';
 
 class ItemBloc extends Bloc<ItemEvent, ItemState>{
   ItemBloc() : super(ItemState()){
-    on<GetItemEvent>(_getVahules);
+    on<GetItemsEvent>(_getItems);
     on<SearchItemEvent>(_onSearchVahulEvent);
     on<LoadMoreItemsEvent>(_loadMoreVahules);
     on<ItemNewPageEvent>(_onVahulNewPageEvent);
     on<ItemOrderChange>(_onVahulOrderChange);
+    on<ItemChangeStatus>(_onItemChangeStatus);
+    on<SetVahulIdEvent>(_onSetVahulIdEvent);
+    on<ItemDeleteEvent>(_onItemDeleteEvent);
   }
 
-    //* Método para obtener el listado de vahules
-  Future<void> _getVahules(GetItemEvent event, Emitter<ItemState> emit) async {
+  //* Método para obtener el listado de vahules
+  Future<void> _getItems(GetItemsEvent event, Emitter<ItemState> emit) async {
     try {
-      emit(state.copyWith(status: ItemStatus.initial));
+      emit(state.copyWith(status: ItemStatus.loading));
       String order = state.isAscOrder ? 'asc' : 'desc';
       final respose = await ApiService.request("/items?limit=24&order=$order&vahul_id=${state.vahulId}", auth: Preferences.token);
       if (respose.statusCode == 200) {
@@ -64,6 +67,21 @@ class ItemBloc extends Bloc<ItemEvent, ItemState>{
     }
   }
 
+  //* Método para realizar carga de eliminación de item
+  Future<void> _onItemDeleteEvent(ItemDeleteEvent event, Emitter<ItemState> emit) async {
+    try {
+      emit(state.copyWith(status: ItemStatus.removing));
+      final response = await ApiService.request("/items/${event.itemId}", auth: Preferences.token, deleteBody: {});
+      if (response.statusCode == 204) {
+        emit(state.copyWith(status: ItemStatus.itemRemoved));
+      } else {
+        emit(state.copyWith(status: ItemStatus.failure, errorMessage: "${response.data["message"]}"));
+      }
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
   //* Método para buscar vahules por nombre (funcionamiento local)
   void _onSearchVahulEvent(SearchItemEvent event, Emitter<ItemState> emit){
     try {
@@ -79,7 +97,7 @@ class ItemBloc extends Bloc<ItemEvent, ItemState>{
     }
   }
 
-  //* Método para cambiar de page
+  //* Método para cambiar de -page-
   void _onVahulNewPageEvent(ItemNewPageEvent event, Emitter<ItemState> emit) {
     try {
       emit(state.copyWith(page: event.newPage));
@@ -97,4 +115,21 @@ class ItemBloc extends Bloc<ItemEvent, ItemState>{
     }
   }
 
+  //* Método para cambiar valor del -status- del state
+  void _onItemChangeStatus(ItemChangeStatus event, Emitter<ItemState> emit) {
+    try {
+      emit(state.copyWith(status: event.status));
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  //* Método para asignar un valor al -vahulId-
+  void _onSetVahulIdEvent(SetVahulIdEvent event, Emitter<ItemState> emit) {
+    try {
+      emit(state.copyWith(vahulId: event.vahuldId));
+    } catch (e) {
+      throw e.toString();
+    }
+  }
 }

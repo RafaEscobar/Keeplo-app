@@ -1,7 +1,7 @@
 import 'dart:io';
-
 import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_state.dart';
 
+//* Clase base abstracta
 abstract class NewVahulEvent {}
 
 //* Evento para controlar valor de la variable -name- en el state
@@ -14,12 +14,6 @@ class VahulNameChange extends NewVahulEvent {
 class VahulDescriptionChange extends NewVahulEvent {
   final String description;
   VahulDescriptionChange(this.description);
-}
-
-//* Evento para controlar valor de la variable -color- en el state
-class VahulColorChange extends NewVahulEvent {
-  final String color;
-  VahulColorChange(this.color);
 }
 
 //* Evento para controlar valor de la variable -userId- en el state
@@ -52,8 +46,20 @@ class VahulFormErrorChange extends NewVahulEvent {
   VahulFormErrorChange(this.formError);
 }
 
+//* Evento para controlar valor de la variable -isEdition- en el state
+class VahulIsEditionChange extends NewVahulEvent {
+  final bool isEdition;
+  VahulIsEditionChange(this.isEdition);
+}
+
 //* Evento para lanzar petición para crear un nuevo vahul
 class SubmitVahulForm extends NewVahulEvent {}
+
+//* Evento para lanzar petición para actualizar un nuevo vahul
+class SubmitVahulUpdateForm extends NewVahulEvent {
+  final int vahulId;
+  SubmitVahulUpdateForm(this.vahulId);
+}
 
 //* Evento para limpiar state
 class NewVahulClean extends NewVahulEvent {}
