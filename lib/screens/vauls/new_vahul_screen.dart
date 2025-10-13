@@ -45,7 +45,7 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
     } else {
       if (bloc.state.name.isNotEmpty) {
         context.read<NewVahulBloc>().add(VahulUserIdChange(context.read<AuthBloc>().state.user!.id));
-        context.read<NewVahulBloc>().add(SubmitVahulUpdateForm(context.read<VahulBloc>().state.currentVahul!.id)) ;
+        context.read<NewVahulBloc>().add(SubmitVahulUpdateForm(context.read<VahulBloc>().state.currentVahul!.id));
       } else {
         _onErroValidation();
       }
@@ -95,7 +95,11 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
       body: PopScope(
         canPop: true,
         onPopInvokedWithResult: (didPop, result) {
-          if(context.read<NewVahulBloc>().state.isEdition) {context.goNamed(VahulDetails.routeName);}
+          Future.microtask(() {
+            if (context.mounted) {
+              context.goNamed(VahulDetails.routeName);
+            }
+          });
         },
         child: SafeArea(
           child: SingleChildScrollView(

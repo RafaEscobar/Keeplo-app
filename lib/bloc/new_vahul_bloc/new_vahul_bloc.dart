@@ -83,7 +83,7 @@ class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
       );
 
       if (response.statusCode == 200) {
-        emit(state.copyWith(status: NewVahulStatus.success));
+        emit(state.copyWith(status: NewVahulStatus.success, ));
       } else {
         emit(state.copyWith(status: NewVahulStatus.fail, messageError: response.data['message']));
       }
