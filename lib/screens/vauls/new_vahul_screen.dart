@@ -97,7 +97,9 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
         onPopInvokedWithResult: (didPop, result) {
           Future.microtask(() {
             if (context.mounted) {
-              context.goNamed(VahulDetails.routeName);
+              if (isEdition) {
+                context.goNamed(VahulDetails.routeName);
+              }
             }
           });
         },
