@@ -78,15 +78,22 @@ class ItemActions {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  spacing: 2,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(item.name, style: TextStyle(color: Colors.white, fontSize: 22),),
-                    Text("Cantidad: ${item.amount}", style: TextStyle(color: Colors.white, fontSize: 18),),
-                  ],
+                Expanded(
+                  child: Column(
+                    spacing: 2,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        item.name,
+                        style: TextStyle(color: Colors.white, fontSize: 22),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text("Cantidad: ${item.amount}", style: TextStyle(color: Colors.white, fontSize: 18),),
+                    ],
+                  ),
                 ),
-                SimplePill(status: true)
+                SimplePill(status: item.status == 1)
               ],
             ),
             SizedBox(height: 10,),

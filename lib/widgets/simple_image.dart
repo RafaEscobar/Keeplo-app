@@ -16,6 +16,7 @@ class SimpleImage extends StatelessWidget {
       errorBuilder: (context, error, stackTrace) => Icon(Icons.question_mark_rounded, color: Colors.white, size: 34,),
       fit: BoxFit.cover,
       width: width,
+      height: width,
     );
   }
 }
