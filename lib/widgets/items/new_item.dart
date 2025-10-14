@@ -23,8 +23,8 @@ class NewItem extends StatelessWidget{
         splashColor: Colors.white.withAlpha(20),
         highlightColor: Colors.white.withAlpha(60),
         child: Container(
+          width: context.isTabletLandscape ? 200 : ((context.isTabletPortrait) ? 220 : 148),
           margin: EdgeInsets.only(right: context.isTabletLandscape ? 200 : 0),
-          width: context.isTabletLandscape ? 220 : 148,
           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           decoration: BoxDecoration(
             color: Colors.transparent,
@@ -35,8 +35,8 @@ class NewItem extends StatelessWidget{
             mainAxisAlignment: MainAxisAlignment.center,
             spacing: 6,
             children: [
-              Icon(Icons.add, color: Colors.white, size: context.isTabletLandscape ? 36 : 24,),
-              Text("Nuevo item", style: TextStyle(color: Colors.white, fontSize: Responsive.minTextSize(context)),),
+              Icon(Icons.add, color: Colors.white, size: context.isTabletLandscape ? 30 : ((context.isTabletPortrait) ? 36 : 24),),
+              Text("Nuevo item", style: TextStyle(color: Colors.white, fontSize: context.isTabletLandscape ? 22 : ((context.isTabletPortrait) ? 26 : 18) ),),
             ],
           )
         ),
