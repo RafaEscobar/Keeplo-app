@@ -261,7 +261,7 @@ class _NewItemScreenState extends State<NewItemScreen> {
       ),
       bottomNavigationBar: Container(
         margin: EdgeInsets.only(bottom: 18),
-        padding: EdgeInsets.symmetric(horizontal: 20),
+        padding: context.isTabletLandscape ? EdgeInsetsGeometry.symmetric(horizontal: 180) : EdgeInsetsGeometry.symmetric(horizontal: 20),
         child: SimpleButton(
           text: "Guardar",
           callback: () {

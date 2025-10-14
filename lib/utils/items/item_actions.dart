@@ -4,6 +4,7 @@ import 'package:keeplo/bloc/item_bloc/item_state.dart';
 import 'package:flutter/material.dart';
 import 'package:keeplo/models/item.dart';
 import 'package:keeplo/theme/app_theme.dart';
+import 'package:keeplo/utils/responsive.dart';
 import 'package:keeplo/widgets/simple_button.dart';
 import 'package:keeplo/widgets/simple_image.dart';
 import 'package:keeplo/widgets/simple_modal.dart';
@@ -35,29 +36,36 @@ class ItemActions {
               listenerContext.read<ItemBloc>().add(GetItemsEvent());
             }
           },
-          child: AlertDialog(
-            backgroundColor: AppTheme.primary,
-            title: const Text(
-              "¿Realmente deseas eliminar este baúl?",
-              style: TextStyle(fontSize: 18, color: Colors.white),
-              textAlign: TextAlign.center,
+          child: Center(
+            child: SizedBox(
+              width: context.isTabletLandscape ? 500 : (context.isTabletPortrait ? 380 : 300),
+              child: AlertDialog(
+                backgroundColor: AppTheme.primary,
+                title: Text(
+                  "¿Realmente deseas eliminar este item?",
+                  style: TextStyle(fontSize: context.isTabletLandscape ? 30 : 18, color: Colors.white),
+                  textAlign: TextAlign.center,
+                ),
+                actionsAlignment: MainAxisAlignment.spaceEvenly,
+                actions: [
+                  SimpleButton(
+                    text: "Eliminar",
+                    callback: () {
+                      context.read<ItemBloc>().add(ItemDeleteEvent(itemId));
+                    },
+                    backgroundColor: AppTheme.error,
+                    textColor: Colors.white,
+                    padding: EdgeInsetsGeometry.symmetric(horizontal: 2, vertical: 2),
+                  ),
+                  SizedBox(height: 15,),
+                  SimpleButton(
+                    text: "Cancelar",
+                    callback: () => Navigator.of(context).pop(),
+                    padding: EdgeInsetsGeometry.symmetric(horizontal: 2, vertical: 2),
+                  ),
+                ],
+              ),
             ),
-            actionsAlignment: MainAxisAlignment.spaceEvenly,
-            actions: [
-              SimpleButton(
-                text: "Eliminar",
-                callback: () {
-                  context.read<ItemBloc>().add(ItemDeleteEvent(itemId));
-                },
-                backgroundColor: AppTheme.error,
-                textColor: Colors.white,
-              ),
-              SizedBox(height: 15,),
-              SimpleButton(
-                text: "Cancelar",
-                callback: () => Navigator.of(context).pop(),
-              ),
-            ],
           ),
         );
       },
