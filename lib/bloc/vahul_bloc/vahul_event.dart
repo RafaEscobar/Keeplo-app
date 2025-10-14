@@ -1,6 +1,5 @@
 //* Clase abstracta base
 import 'package:keeplo/bloc/vahul_bloc/vahul_state.dart';
-import 'package:keeplo/models/vahul.dart';
 
 //* Clase abstracta base
 abstract class VahulEvent {}
@@ -35,12 +34,6 @@ class VahulDeleteEvent extends VahulEvent {
   VahulDeleteEvent(this.vahulId);
 }
 
-//* Método para setear vahul actual
-class SetCurrentVahulEvent extends VahulEvent {
-  final Vahul currentVahul;
-  SetCurrentVahulEvent(this.currentVahul);
-}
-
 //* Evento para obtener listado de vahules
 class GetVahulesEvent extends VahulEvent {}
 
@@ -49,6 +42,3 @@ class VahulCleanBloc extends VahulEvent {}
 
 //* Evento para cambiar dínamicamente valor del ordenamiento de la lista de vahules
 class VahulOrderChange extends VahulEvent {}
-
-//* Evento para limpiar currentVahul
-class CurrentVahulClean extends VahulEvent {}

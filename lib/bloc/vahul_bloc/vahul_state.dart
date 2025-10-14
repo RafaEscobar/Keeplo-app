@@ -11,7 +11,6 @@ class VahulState extends Equatable{
   final int page; //* Page actual para el paginado
   final bool loadingMore; //* Bandera para mostrar CircularProgressIndicator si estamos cargando la siguiente page
   final bool isAscOrder; //* Bandera para controlar ordenamiento; true = ordenamiento ascendente | false = ordenamiento descendente (por defecto)
-  final Vahul? currentVahul; //* Vahul actual para la pantalla de detalle
 
   const VahulState({
     this.vahules = const [],
@@ -22,7 +21,6 @@ class VahulState extends Equatable{
     this.page = 1,
     this.loadingMore = false,
     this.isAscOrder = false,
-    this.currentVahul
   });
 
   VahulState copyWith({
@@ -43,7 +41,6 @@ class VahulState extends Equatable{
     page: page ?? this.page,
     loadingMore: loadingMore ?? this.loadingMore,
     isAscOrder: isAscOrder ?? this.isAscOrder,
-    currentVahul: currentVahul ?? this.currentVahul
   );
 
   @override
@@ -56,6 +53,5 @@ class VahulState extends Equatable{
     page,
     loadingMore,
     isAscOrder,
-    currentVahul
   ];
 }

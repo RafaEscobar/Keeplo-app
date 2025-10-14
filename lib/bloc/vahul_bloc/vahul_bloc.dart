@@ -14,8 +14,6 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
     on<VahulOrderChange>(_onVahulOrderChange);
     on<VahulChangeStatus>(_onVahulChangeStatus);
     on<VahulDeleteEvent>(_onVahulDeleteEvent);
-    on<SetCurrentVahulEvent>(_onSetCurrentVahulEvent);
-    on<CurrentVahulClean>(_onCurrentVahulClean);
   }
 
   //* Método para obtener el listado de vahules
@@ -125,30 +123,4 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
       throw e.toString();
     }
   }
-
-  //* Método para setear el vahul actual
-  void _onSetCurrentVahulEvent(SetCurrentVahulEvent event, Emitter<VahulState> emit){
-    try {
-      emit(state.copyWith(currentVahul: event.currentVahul));
-    } catch (e) {
-      throw e.toString();
-    }
-  }
-
-  void _onCurrentVahulClean(CurrentVahulClean event, Emitter<VahulState> emit) {
-    try {
-      emit(state.copyWith(
-        currentVahul: Vahul(
-          id: 0,
-          name: '',
-          description: '',
-          userId: 0,
-          img: ''
-        )
-      ));
-    } catch (e) {
-      throw e.toString();
-    }
-  }
-
 }

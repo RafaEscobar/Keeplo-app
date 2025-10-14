@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_state.dart';
+import 'package:keeplo/models/vahul.dart';
 
 //* Clase base abstracta
 abstract class NewVahulEvent {}
@@ -61,5 +62,14 @@ class SubmitVahulUpdateForm extends NewVahulEvent {
   SubmitVahulUpdateForm(this.vahulId);
 }
 
+//* Método para setear vahul actual
+class SetCurrentVahulEvent extends NewVahulEvent {
+  final Vahul currentVahul;
+  SetCurrentVahulEvent(this.currentVahul);
+}
+
 //* Evento para limpiar state
 class NewVahulClean extends NewVahulEvent {}
+
+//* Evento para limpiar currentVahul
+class CurrentVahulClean extends NewVahulEvent {}

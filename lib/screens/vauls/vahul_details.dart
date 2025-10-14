@@ -30,7 +30,7 @@ class _VahulDetailsState extends State<VahulDetails> {
     super.initState();
     _scrollController.addListener(_onScroll);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      int vahulId = context.read<VahulBloc>().state.currentVahul!.id;
+      int vahulId = context.read<NewVahulBloc>().state.currentVahul!.id;
       context.read<ItemBloc>().add(SetVahulIdEvent(vahulId));
       context.read<ItemBloc>().add(GetItemsEvent());
     },);
@@ -58,7 +58,7 @@ class _VahulDetailsState extends State<VahulDetails> {
 
   @override
   Widget build(BuildContext context) {
-    Vahul vahul = context.read<VahulBloc>().state.currentVahul!;
+    Vahul vahul = context.read<NewVahulBloc>().state.currentVahul!;
     return GestureDetector(
       onTap: () => _searchFocusNode.unfocus(),
       child: Scaffold(

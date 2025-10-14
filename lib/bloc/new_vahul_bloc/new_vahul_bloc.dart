@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_event.dart';
 import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_state.dart';
+import 'package:keeplo/models/vahul.dart';
 import 'package:keeplo/services/api_service.dart';
 import 'package:keeplo/services/preferences.dart';
 import 'package:keeplo/utils/images.dart';
@@ -20,6 +21,8 @@ class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
     on<VahulFormErrorChange>(_onVahulFormErrorChange);
     on<SubmitVahulUpdateForm>(_onSubmitVahulUpdateForm);
     on<VahulIsEditionChange>(_onVahulIsEditionChange);
+    on<SetCurrentVahulEvent>(_onSetCurrentVahulEvent);
+    on<CurrentVahulClean>(_onCurrentVahulClean);
   }
 
   //* Método que realiza la petición para crear un nuevo vahul
@@ -164,6 +167,15 @@ class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
     }
   }
 
+  //* Método para setear el vahul actual
+  void _onSetCurrentVahulEvent(SetCurrentVahulEvent event, Emitter<NewVahulState> emit){
+    try {
+      emit(state.copyWith(currentVahul: event.currentVahul));
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
   //* Método para limpiar nuestro state
   void _onNewVahulClean(NewVahulClean event, Emitter<NewVahulState> emit) {
     emit(state.copyWith(
@@ -176,5 +188,21 @@ class NewVahulBloc extends Bloc<NewVahulEvent, NewVahulState>{
       formError: false,
       isEdition: false
     ));
+  }
+
+  void _onCurrentVahulClean(CurrentVahulClean event, Emitter<NewVahulState> emit) {
+    try {
+      emit(state.copyWith(
+        currentVahul: Vahul(
+          id: 0,
+          name: '',
+          description: '',
+          userId: 0,
+          img: ''
+        )
+      ));
+    } catch (e) {
+      throw e.toString();
+    }
   }
 }

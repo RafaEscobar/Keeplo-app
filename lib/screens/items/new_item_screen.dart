@@ -37,14 +37,14 @@ class _NewItemScreenState extends State<NewItemScreen> {
     NewItemBloc bloc = context.read<NewItemBloc>();
     if (!bloc.state.isEdition) {
       if (bloc.state.name.isNotEmpty && bloc.state.image != null && bloc.state.image!.path.isNotEmpty) {
-        context.read<NewItemBloc>().add(ItemVahulIdChange(context.read<VahulBloc>().state.currentVahul!.id));
+        context.read<NewItemBloc>().add(ItemVahulIdChange(context.read<NewVahulBloc>().state.currentVahul!.id));
         context.read<NewItemBloc>().add(SubmitItemForm());
       } else {
         _onErroValidation();
       }
     } else {
       if (bloc.state.name.isNotEmpty) {
-        context.read<NewItemBloc>().add(ItemVahulIdChange(context.read<VahulBloc>().state.currentVahul!.id));
+        context.read<NewItemBloc>().add(ItemVahulIdChange(context.read<NewVahulBloc>().state.currentVahul!.id));
         context.read<NewItemBloc>().add(SubmitItemUpdate()) ;
       } else {
         _onErroValidation();

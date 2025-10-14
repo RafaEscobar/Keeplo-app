@@ -45,7 +45,7 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
     } else {
       if (bloc.state.name.isNotEmpty) {
         context.read<NewVahulBloc>().add(VahulUserIdChange(context.read<AuthBloc>().state.user!.id));
-        context.read<NewVahulBloc>().add(SubmitVahulUpdateForm(context.read<VahulBloc>().state.currentVahul!.id));
+        context.read<NewVahulBloc>().add(SubmitVahulUpdateForm(context.read<NewVahulBloc>().state.currentVahul!.id));
       } else {
         _onErroValidation();
       }
@@ -66,7 +66,7 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
   @override
   void initState() {
     super.initState();
-    Vahul? vahul = context.read<VahulBloc>().state.currentVahul;
+    Vahul? vahul = context.read<NewVahulBloc>().state.currentVahul;
     _nameController = TextEditingController(text: vahul?.name ?? '');
     _descriptionController = TextEditingController(text: vahul?.description ?? '');
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -86,7 +86,7 @@ class _NewVahulScreenState extends State<NewVahulScreen> {
   @override
   Widget build(BuildContext context) {
     bool isEdition = context.read<NewVahulBloc>().state.isEdition;
-    Vahul? vahul = context.read<VahulBloc>().state.currentVahul;
+    Vahul? vahul = context.read<NewVahulBloc>().state.currentVahul;
     return Scaffold(
       appBar: AppBar(
         title: Text("Nuevo baúl", style: TextStyle(fontSize: Responsive.regularTextSize(context), color: Colors.white, fontWeight: FontWeight.w600),),
