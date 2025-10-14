@@ -44,30 +44,48 @@ class DashHeader extends StatelessWidget implements PreferredSize{
           padding: EdgeInsetsGeometry.symmetric(horizontal: 10),
           child: Column(
             children: [
-              Text("Perfil", style: TextStyle(fontSize: 30, color: Colors.white, fontWeight: FontWeight.w600),),
+              Text("Perfil", style: TextStyle(fontSize: Responsive.regularTextSize(context), color: Colors.white, fontWeight: FontWeight.w600),),
               SizedBox(height: 16,),
               Align(
                 alignment: Alignment.centerLeft,
-                child: Text(name, style: TextStyle(fontSize: 24, color: Colors.white),),
+                child: Text(name, style: TextStyle(fontSize: Responsive.sizeModalOptions(context), color: Colors.white),),
               ),
               SizedBox(height: 10,),
               Align(
                 alignment: Alignment.centerLeft,
-                child: Text(email, style: TextStyle(fontSize: 24, color: Colors.white),),
+                child: Text(email, style: TextStyle(fontSize: Responsive.sizeModalOptions(context), color: Colors.white),),
               ),
               SizedBox(height: 36,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   GestureDetector(
-                    onTap: () => (),
-                    child: Icon(Icons.edit, color: Colors.white, size: 32,),
+                    onTap: () {
+                      
+                    },
+                    child: Container(
+                      color: Colors.transparent,
+                      child: Column(
+                        spacing: 6,
+                        children: [
+                          Icon(Icons.edit, color: Colors.white, size: Responsive.modalIconSize(context),),
+                          Text("Editar perfil", style: TextStyle(fontSize: Responsive.sizeModalText(context), color: Colors.white),),
+                        ],
+                      ),
+                    ),
                   ),
                   GestureDetector(
-                    onTap: () {
-                      context.read<AuthBloc>().add(LogoutSubmitted());
-                    },
-                    child: Icon(Icons.login_rounded, color: Colors.white, size: 32,),
+                    onTap: () => context.read<AuthBloc>().add(LogoutSubmitted()),
+                    child: Container(
+                      color: Colors.transparent,
+                      child: Column(
+                        spacing: 6,
+                        children: [
+                          Icon(Icons.login_rounded, color: Colors.white, size: Responsive.modalIconSize(context),),
+                          Text("Cerrar sesión", style: TextStyle(fontSize: Responsive.sizeModalText(context), color: Colors.white),),
+                        ],
+                      ),
+                    ),
                   )
                 ],
               )

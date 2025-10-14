@@ -10,6 +10,18 @@ class Responsive {
 
   // Tamaño minimo de texto
   static double minTextSize(BuildContext context) => context.isTabletLandscape ? 26 : 16;
+
+  // Tamaño minimo de texto
+  static double modal(BuildContext context) => context.isTabletLandscape ? 26 : 16;
+
+  // Tamaño de textos de opciones en modal
+  static double sizeModalOptions(BuildContext context) => context.isTabletLandscape ? 24 : 18;
+
+  // Tamaño de textos simples en modal
+  static double sizeModalText(BuildContext context) => context.isTabletLandscape ? 20 : 18;
+
+  // Tamaño de textos de opciones en modal
+  static double modalIconSize(BuildContext context) => context.isTabletLandscape ? 38 : 32;
 }
 
 const double kTabletBreakpoint = 600.0;

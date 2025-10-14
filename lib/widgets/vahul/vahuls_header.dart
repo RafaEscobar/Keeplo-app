@@ -28,7 +28,7 @@ class VahulsHeader extends StatelessWidget implements PreferredSize{
         padding: EdgeInsetsGeometry.symmetric(horizontal: 10),
         child: Column(
           children: [
-            Text("Opciones", style: TextStyle(fontSize: 24, color: Colors.white, fontWeight: FontWeight.w600),),
+            Text("Opciones", style: TextStyle(fontSize: Responsive.regularTextSize(context), color: Colors.white, fontWeight: FontWeight.w600),),
             SizedBox(height: 28,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -41,8 +41,8 @@ class VahulsHeader extends StatelessWidget implements PreferredSize{
                   },
                   child: Column(
                     children: [
-                      Icon(Icons.edit, size: 32, color: Colors.white,),
-                      Text("Editar", style: TextStyle(color: Colors.white, fontSize: 18),)
+                      Icon(Icons.edit, size: Responsive.modalIconSize(context), color: Colors.white,),
+                      Text("Editar", style: TextStyle(color: Colors.white, fontSize: Responsive.sizeModalText(context)),)
                     ],
                   ),
                 ),
@@ -53,8 +53,8 @@ class VahulsHeader extends StatelessWidget implements PreferredSize{
                   },
                   child: Column(
                     children: [
-                      Icon(Icons.delete, size: 32, color: Colors.white,),
-                      Text("Eliminar", style: TextStyle(color: Colors.white, fontSize: 18),)
+                      Icon(Icons.delete, size: Responsive.modalIconSize(context), color: Colors.white,),
+                      Text("Eliminar", style: TextStyle(color: Colors.white, fontSize: Responsive.sizeModalText(context)),)
                     ],
                   ),
                 )
