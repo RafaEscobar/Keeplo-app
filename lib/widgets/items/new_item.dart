@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:keeplo/bloc/bloc_barrel.dart';
-import 'package:keeplo/bloc/new_item_bloc/new_item_bloc.dart';
 import 'package:keeplo/bloc/new_item_bloc/new_item_event.dart';
 import 'package:keeplo/screens/items/new_item_screen.dart';
 import 'package:keeplo/theme/app_theme.dart';
@@ -24,6 +23,7 @@ class NewItem extends StatelessWidget{
         splashColor: Colors.white.withAlpha(20),
         highlightColor: Colors.white.withAlpha(60),
         child: Container(
+          margin: EdgeInsets.only(right: context.isTabletLandscape ? 200 : 0),
           width: context.isTabletLandscape ? 220 : 148,
           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           decoration: BoxDecoration(

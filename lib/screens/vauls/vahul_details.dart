@@ -6,6 +6,7 @@ import 'package:keeplo/enums/empty_state_type.dart';
 import 'package:keeplo/models/item.dart';
 import 'package:keeplo/models/vahul.dart';
 import 'package:keeplo/theme/app_theme.dart';
+import 'package:keeplo/utils/responsive.dart';
 import 'package:keeplo/widgets/dashboard/simple_search_bar.dart';
 import 'package:keeplo/widgets/items/item_card.dart';
 import 'package:keeplo/widgets/items/new_item.dart';
@@ -67,7 +68,7 @@ class _VahulDetailsState extends State<VahulDetails> {
         appBar: VahulsHeader(),
         body: SafeArea(
           child: Padding(
-            padding: EdgeInsetsGeometry.symmetric(horizontal: 14, vertical: 10),
+            padding: EdgeInsetsGeometry.symmetric(horizontal: context.isTabletLandscape ? 200 : 14, vertical: 10),
             child: Column(
               spacing: 26,
               children: [
