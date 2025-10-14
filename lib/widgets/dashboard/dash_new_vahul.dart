@@ -24,7 +24,7 @@ class DashNewVahul extends StatelessWidget {
         splashColor: Colors.white.withAlpha(20),
         highlightColor: Colors.white.withAlpha(60),
         child: Container(
-          width: context.isTabletLandscape ? 200 : ((context.isTabletPortrait) ? 220 : 148),
+          width: context.isTabletLandscape ? 200 : ((context.isTabletPortrait) ? 220 : 160),
           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           decoration: BoxDecoration(
             color: Colors.transparent,

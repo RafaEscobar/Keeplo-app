@@ -23,7 +23,7 @@ class NewItem extends StatelessWidget{
         splashColor: Colors.white.withAlpha(20),
         highlightColor: Colors.white.withAlpha(60),
         child: Container(
-          width: context.isTabletLandscape ? 200 : ((context.isTabletPortrait) ? 220 : 148),
+          width: context.isTabletLandscape ? 200 : ((context.isTabletPortrait) ? 220 : 160),
           margin: EdgeInsets.only(right: context.isTabletLandscape ? 200 : 0),
           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           decoration: BoxDecoration(

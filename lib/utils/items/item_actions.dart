@@ -38,12 +38,12 @@ class ItemActions {
           },
           child: Center(
             child: SizedBox(
-              width: context.isTabletLandscape ? 500 : (context.isTabletPortrait ? 380 : 300),
+              width: context.isTabletLandscape ? 600 : (context.isTabletPortrait ? 400 : 400),
               child: AlertDialog(
                 backgroundColor: AppTheme.primary,
                 title: Text(
                   "¿Realmente deseas eliminar este item?",
-                  style: TextStyle(fontSize: context.isTabletLandscape ? 30 : 18, color: Colors.white),
+                  style: TextStyle(fontSize: context.isTabletLandscape ? 30 : 20, color: Colors.white),
                   textAlign: TextAlign.center,
                 ),
                 actionsAlignment: MainAxisAlignment.spaceEvenly,
@@ -55,7 +55,7 @@ class ItemActions {
                     },
                     backgroundColor: AppTheme.error,
                     textColor: Colors.white,
-                    padding: EdgeInsetsGeometry.symmetric(horizontal: 2, vertical: 2),
+                    padding: context.isTabletLandscape ? EdgeInsetsGeometry.symmetric(horizontal: 2, vertical: 2) : EdgeInsets.symmetric(horizontal: 20, vertical: 6),
                   ),
                   SizedBox(height: 15,),
                   SimpleButton(
