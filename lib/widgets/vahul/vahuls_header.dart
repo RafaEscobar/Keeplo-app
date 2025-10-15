@@ -89,29 +89,36 @@ class VahulsHeader extends StatelessWidget implements PreferredSize{
               context.pushNamed(DashboardScreen.routeName);
             }
           },
-          child: AlertDialog(
-            backgroundColor: AppTheme.primary,
-            title: const Text(
-              "¿Realmente deseas eliminar este baúl?",
-              style: TextStyle(fontSize: 18, color: Colors.white),
-              textAlign: TextAlign.center,
+          child: Center(
+            child: SizedBox(
+              width: context.isTabletLandscape ? 600 : (context.isTabletPortrait ? 540 : 400),
+              child: AlertDialog(
+                backgroundColor: AppTheme.primary,
+                title: Text(
+                  "¿Realmente deseas eliminar este baúl?",
+                  style: TextStyle(fontSize: context.isTablet ? 30 : 20, color: Colors.white),
+                  textAlign: TextAlign.center,
+                ),
+                actionsAlignment: MainAxisAlignment.spaceEvenly,
+                actions: [
+                  SimpleButton(
+                    text: "Eliminar",
+                    callback: () {
+                      context.read<VahulBloc>().add(VahulDeleteEvent(vahulId));
+                    },
+                    backgroundColor: AppTheme.error,
+                    textColor: Colors.white,
+                    padding: context.isTabletLandscape ? EdgeInsetsGeometry.symmetric(horizontal: 2, vertical: 2) : EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+                  ),
+                  SizedBox(height: 15,),
+                  SimpleButton(
+                    text: "Cancelar",
+                    callback: () => Navigator.of(context).pop(),
+                    padding: context.isTabletLandscape ? EdgeInsetsGeometry.symmetric(horizontal: 2, vertical: 2) : EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+                  ),
+                ],
+              ),
             ),
-            actionsAlignment: MainAxisAlignment.spaceEvenly,
-            actions: [
-              SimpleButton(
-                text: "Eliminar",
-                callback: () {
-                  context.read<VahulBloc>().add(VahulDeleteEvent(vahulId));
-                },
-                backgroundColor: AppTheme.error,
-                textColor: Colors.white,
-              ),
-              SizedBox(height: 15,),
-              SimpleButton(
-                text: "Cancelar",
-                callback: () => Navigator.of(context).pop(),
-              ),
-            ],
           ),
         );
       },
