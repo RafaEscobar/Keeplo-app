@@ -8,7 +8,6 @@ import 'package:keeplo/screens/main/login_screen.dart';
 import 'package:keeplo/services/preferences.dart';
 import 'package:keeplo/theme/app_theme.dart';
 import 'package:keeplo/utils/responsive.dart';
-import 'package:keeplo/utils/simple_toast.dart';
 import 'package:keeplo/widgets/simple_modal.dart';
 
 class DashHeader extends StatelessWidget implements PreferredSize{
@@ -57,38 +56,18 @@ class DashHeader extends StatelessWidget implements PreferredSize{
                 child: Text(email, style: TextStyle(fontSize: Responsive.sizeModalOptions(context), color: Colors.white),),
               ),
               SizedBox(height: 36,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      SimpleToast.info(context: context, message: "Proximamente", size: 14, iconSize: 60);
-                    },
-                    child: Container(
-                      color: Colors.transparent,
-                      child: Column(
-                        spacing: 6,
-                        children: [
-                          Icon(Icons.edit, color: Colors.white, size: Responsive.modalIconSize(context),),
-                          Text("Editar perfil", style: TextStyle(fontSize: Responsive.sizeModalText(context), color: Colors.white),),
-                        ],
-                      ),
-                    ),
+              GestureDetector(
+                onTap: () => context.read<AuthBloc>().add(LogoutSubmitted()),
+                child: Container(
+                  color: Colors.transparent,
+                  child: Column(
+                    spacing: 6,
+                    children: [
+                      Icon(Icons.login_rounded, color: Colors.white, size: Responsive.modalIconSize(context),),
+                      Text("Cerrar sesión", style: TextStyle(fontSize: Responsive.sizeModalText(context), color: Colors.white),),
+                    ],
                   ),
-                  GestureDetector(
-                    onTap: () => context.read<AuthBloc>().add(LogoutSubmitted()),
-                    child: Container(
-                      color: Colors.transparent,
-                      child: Column(
-                        spacing: 6,
-                        children: [
-                          Icon(Icons.login_rounded, color: Colors.white, size: Responsive.modalIconSize(context),),
-                          Text("Cerrar sesión", style: TextStyle(fontSize: Responsive.sizeModalText(context), color: Colors.white),),
-                        ],
-                      ),
-                    ),
-                  )
-                ],
+                ),
               )
             ],
           ),
