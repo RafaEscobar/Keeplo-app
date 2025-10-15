@@ -8,6 +8,7 @@ import 'package:keeplo/screens/main/login_screen.dart';
 import 'package:keeplo/services/preferences.dart';
 import 'package:keeplo/theme/app_theme.dart';
 import 'package:keeplo/utils/responsive.dart';
+import 'package:keeplo/utils/simple_toast.dart';
 import 'package:keeplo/widgets/simple_modal.dart';
 
 class DashHeader extends StatelessWidget implements PreferredSize{
@@ -61,7 +62,7 @@ class DashHeader extends StatelessWidget implements PreferredSize{
                 children: [
                   GestureDetector(
                     onTap: () {
-                      
+                      SimpleToast.info(context: context, message: "Proximamente", size: 14, iconSize: 60);
                     },
                     child: Container(
                       color: Colors.transparent,

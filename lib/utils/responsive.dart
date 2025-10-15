@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
 class Responsive {
-
   // Método para redimencionar valor de (.sp, .h y .w)	Scaled Pixels para textos
   static double resize({required double size, double reduction = 1}) => size * reduction;
 
   // Tamaño regular de texto
-  static double regularTextSize(BuildContext context) => context.isTabletLandscape ? 28 : (context.isTabletPortrait ? 24 : 18);
+  static double regularTextSize(BuildContext context) => context.isTabletLandscape ? 28 : (context.isTabletPortrait ? 24 : 20);
 
   // Tamaño minimo de texto
   static double minTextSize(BuildContext context) => context.isTabletLandscape ? 26 : 16;
