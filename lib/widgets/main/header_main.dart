@@ -16,12 +16,14 @@ class HeaderMain extends StatelessWidget {
         Align(
           alignment: Alignment.topRight,
           child: SizedBox(
-            width: isHorizontal ? 190 : 120.w,
-            height: isHorizontal ? 90 : 80.h,
-            child: Placeholder(),
+            width: isHorizontal ? 190 : 130.w,
+            height: isHorizontal ? 190 : 130.h,
+            child: Image.asset(
+              "assets/logos/name_app.png",
+              width: 200,
+            ),
           ),
         ),
-        SizedBox(height: 20.h,),
         Text(
           title,
           style: TextStyle(fontSize: isHorizontal ? 52 : 28.sp, fontWeight: FontWeight.w700, color: Colors.white),
