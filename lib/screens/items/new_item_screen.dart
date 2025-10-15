@@ -201,7 +201,7 @@ class _NewItemScreenState extends State<NewItemScreen> {
                             Text("Estatus del item:", style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.w600),),
                             Switch(
                               value: localValue,
-                              activeColor: Colors.red,
+                              activeThumbColor: Colors.red,
                               onChanged: (bool value) {
                                 context.read<NewItemBloc>().add(StatusEntityChange(value ? 1 : 0));
                                 setState(() {
