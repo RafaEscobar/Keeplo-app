@@ -1,16 +1,27 @@
-# keeplo
+# Keeplo
 
-A new Flutter project.
+![Keeplo Logo](ruta/a/tu/logo.png)
 
-## Getting Started
+**Keeplo** es una aplicación móvil diseñada para ayudarte a crear y gestionar listas simples, tipo inventario, de manera rápida, minimalista y eficiente. Perfecta para organizar tus tareas, pertenencias, compras o cualquier tipo de registro que necesites mantener ordenado.
 
-This project is a starting point for a Flutter application.
+---
 
-A few resources to get you started if this is your first Flutter project:
+## Características principales
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- ✅ Crear listas y elementos de forma sencilla.
+- ✅ Marcar elementos como completados o eliminarlos fácilmente.
+- ✅ Interfaz minimalista y amigable, optimizada para uso rápido.
+- ✅ Posibilidad de categorizar tus listas para mayor organización.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+---
+
+## Capturas de pantalla
+
+![Inicia sesión](ruta/a/captura2.png)
+![Crea una cuenta](ruta/a/captura2.png)
+![Pantalla de baúles](ruta/a/captura1.png)
+![Pantalla de items](ruta/a/captura2.png)
+![Crea un nuevo baúl](ruta/a/captura2.png)
+![Agrega un nuevo item a tu baúl](ruta/a/captura2.png)
+
+---
