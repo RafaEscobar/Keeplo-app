@@ -29,16 +29,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>{
 
     try {
       final response = await ApiService.request("/login", body: {"email": email, "password": password});
-      await Future.delayed(const Duration(seconds: 1));
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 && response.data?['data'] != null) {
         Preferences.token = response.data['data']['token']; // Guardamos el token recibido
         emit(state.copyWith(status: AuthStatus.success, user: User.fromJson(response.data['data']))); // Emitimos un status -success- y usuario
       } else {
-        emit(state.copyWith(status: AuthStatus.failure, errorMessage: response.data['message'])); // Lanzamos un status -failure- de otro error
+        String message = response.data['message'] ?? 'Error con código: ${response.statusCode}';
+        emit(state.copyWith(status: AuthStatus.failure, errorMessage: message)); // Lanzamos un status -failure- de otro error
       }
     } catch (e) {
-      emit(state.copyWith(status: AuthStatus.failure));
+      emit(state.copyWith(status: AuthStatus.failure, errorMessage: e.toString()));
       throw Exception(e.toString());
     }
   }
@@ -62,14 +62,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>{
           'password': password
         }
       );
-      if (response.statusCode == 201) {
+      if (response.statusCode == 201 && response.data?['data'] != null) {
         Preferences.token = response.data['data']['token']; // Guardamos el token recibido
         emit(state.copyWith(status: AuthStatus.success, user: User.fromJson(response.data['data']))); // Emitimos un status -success- y usuario
       } else {
-        emit(state.copyWith(status: AuthStatus.failure, errorMessage: response.data['message'])); // Lanzamos un status -failure-
+        String message = response.data['message'] ?? 'Error con código: ${response.statusCode}';
+        emit(state.copyWith(status: AuthStatus.failure, errorMessage: message)); // Lanzamos un status -failure-
       }
     } catch (e) {
-      emit(state.copyWith(status: AuthStatus.failure));
+      emit(state.copyWith(status: AuthStatus.failure, ));
     }
   }
 
