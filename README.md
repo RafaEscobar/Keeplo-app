@@ -25,3 +25,8 @@
 ![Agrega un nuevo item a tu baúl](ruta/a/captura2.png)
 
 ---
+
+## Todas las versiones hasta la fecha
+| Version | Tag | Link |
+|---------|-----------|-----------|
+| 1.0.0   | octubre 2025  | [Download](https://github.com/RafaEscobar/Keeplo-app/releases/download/1.0.0/app-arm64-v8a-release.apk) |
