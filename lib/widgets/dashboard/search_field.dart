@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:keeplo/bloc/bloc_barrel.dart';
 import 'package:keeplo/bloc/item_bloc/item_event.dart';
-import 'package:keeplo/bloc/item_bloc/item_state.dart';
 import 'package:keeplo/bloc/vahul_bloc/vahul_event.dart';
 
 class SearchField extends StatefulWidget {
@@ -30,7 +29,7 @@ class _SearchFieldState extends State<SearchField> {
         if (widget.forVahul) {
           context.read<VahulBloc>().add(ReverseVahulesList());
         } else {
-          context.read<ItemBloc>().add(ItemChangeStatus(ItemStatus.initial));
+          context.read<ItemBloc>().add(ReverseItemsList());
         }
       } else {
         if (widget.forVahul) {
