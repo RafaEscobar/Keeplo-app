@@ -70,7 +70,9 @@ class _NewItemScreenState extends State<NewItemScreen> {
   @override
   void initState() {
     super.initState();
-    Item? item = context.read<NewItemBloc>().state.currentItem;
+    NewItemBloc newItemBloc = context.read<NewItemBloc>();
+    Item? item;
+    if (newItemBloc.state.isEdition) item = context.read<NewItemBloc>().state.currentItem;
     _nameController = TextEditingController(text: item?.name ?? '');
     _observationsController = TextEditingController(text: item?.observations ?? '');
     WidgetsBinding.instance.addPostFrameCallback((_) {
