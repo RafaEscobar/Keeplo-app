@@ -134,7 +134,7 @@ class _NewItemScreenState extends State<NewItemScreen> {
                               textStyle: TextStyle(fontSize: Responsive.regularTextSize(context)),
                               name: 'name',
                               hintText: 'Nombre*',
-                              keyboardType: TextInputType.emailAddress,
+                              keyboardType: TextInputType.text,
                               contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                               focusNode: nameFocusNode,
                               maxLength: 60,
@@ -159,7 +159,7 @@ class _NewItemScreenState extends State<NewItemScreen> {
                               textStyle: TextStyle(fontSize: Responsive.regularTextSize(context)),
                               name: 'description',
                               hintText: 'Descripición',
-                              keyboardType: TextInputType.emailAddress,
+                              keyboardType: TextInputType.text,
                               contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                               focusNode: observationsFocusNode,
                               maxLength: 60,
@@ -201,7 +201,7 @@ class _NewItemScreenState extends State<NewItemScreen> {
                             Text("Estatus del item:", style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.w600),),
                             Switch(
                               value: localValue,
-                              activeThumbColor: Colors.red,
+                              activeTrackColor: AppTheme.info,
                               onChanged: (bool value) {
                                 context.read<NewItemBloc>().add(StatusEntityChange(value ? 1 : 0));
                                 setState(() {
