@@ -14,6 +14,7 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
     on<VahulOrderChange>(_onVahulOrderChange);
     on<VahulChangeStatus>(_onVahulChangeStatus);
     on<VahulDeleteEvent>(_onVahulDeleteEvent);
+    on<ReverseVahulesList>(_onReverseVahulesList);
   }
 
   //* Método para obtener el listado de vahules
@@ -67,14 +68,25 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
   }
 
   //* Método para buscar vahules por nombre (funcionamiento local)
-  void _onSearchVahulEvent(SearchVahulEvent event, Emitter<VahulState> emit){
+  Future<void> _onSearchVahulEvent(SearchVahulEvent event, Emitter<VahulState> emit) async {
     try {
-      emit(state.copyWith(
-        vahules: (event.text.isEmpty) ?
-          state.initialVahules :
-          state.vahules.where((vahul) => vahul.name.toLowerCase().contains(event.text.toLowerCase()),).toList(),
-        status: VahulStatus.searching
-      ));
+      if (event.text.isNotEmpty) {
+        emit(state.copyWith(status: VahulStatus.loading));
+        final respose = await ApiService.request("/vahuls?search=${event.text.toLowerCase()}", auth: Preferences.token);
+        if (respose.statusCode == 200) {
+          List<Vahul> list = (respose.data['data'] as List).map((vahul) => Vahul.fromJson(vahul)).toList();
+          emit(state.copyWith(
+            vahules: list,
+            status: VahulStatus.searching
+          ));
+        } else {
+          emit(state.copyWith(
+            vahules: state.initialVahules,
+            status: VahulStatus.failure,
+            errorMessage: "Algo salió mal en la búsqueda."
+          ));
+        }
+      }
     } catch (e) {
       emit(state.copyWith(status: VahulStatus.failure));
       throw e.toString();
@@ -119,6 +131,17 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
   void _onVahulChangeStatus(VahulChangeStatus event, Emitter<VahulState> emit){
     try {
       emit(state.copyWith(status: event.status));
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  void _onReverseVahulesList(ReverseVahulesList event, Emitter<VahulState> emit) {
+    try {
+      emit(state.copyWith(
+        vahules: state.initialVahules,
+        status: VahulStatus.initial
+      ));
     } catch (e) {
       throw e.toString();
     }

@@ -42,3 +42,6 @@ class VahulCleanBloc extends VahulEvent {}
 
 //* Evento para cambiar dínamicamente valor del ordenamiento de la lista de vahules
 class VahulOrderChange extends VahulEvent {}
+
+//* Evento para reestablecer lista de vahules a la que se tenia antes de buscar
+class ReverseVahulesList extends VahulEvent {}
