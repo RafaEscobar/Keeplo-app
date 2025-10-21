@@ -143,7 +143,7 @@ class ItemBloc extends Bloc<ItemEvent, ItemState>{
     }
   }
 
-    void _onReverseItemsList(ReverseItemsList event, Emitter<ItemState> emit) {
+  void _onReverseItemsList(ReverseItemsList event, Emitter<ItemState> emit) {
     try {
       emit(state.copyWith(
         items: state.initialItems,

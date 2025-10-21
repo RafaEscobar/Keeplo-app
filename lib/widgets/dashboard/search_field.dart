@@ -29,7 +29,9 @@ class _SearchFieldState extends State<SearchField> {
         if (widget.forVahul) {
           context.read<VahulBloc>().add(ReverseVahulesList());
         } else {
-          context.read<ItemBloc>().add(ReverseItemsList());
+          context.read<ItemBloc>().add(GetItemsEvent());
+          context.read<ItemBloc>().add(ItemNewPageEvent(1));
+          //context.read<ItemBloc>().add(ReverseItemsList());
         }
       } else {
         if (widget.forVahul) {
