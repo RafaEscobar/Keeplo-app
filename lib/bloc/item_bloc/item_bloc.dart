@@ -15,7 +15,6 @@ class ItemBloc extends Bloc<ItemEvent, ItemState>{
     on<ItemChangeStatus>(_onItemChangeStatus);
     on<SetVahulIdEvent>(_onSetVahulIdEvent);
     on<ItemDeleteEvent>(_onItemDeleteEvent);
-    on<ReverseItemsList>(_onReverseItemsList);
   }
 
   //* Método para obtener el listado de vahules
@@ -138,17 +137,6 @@ class ItemBloc extends Bloc<ItemEvent, ItemState>{
   void _onSetVahulIdEvent(SetVahulIdEvent event, Emitter<ItemState> emit) {
     try {
       emit(state.copyWith(vahulId: event.vahuldId));
-    } catch (e) {
-      throw e.toString();
-    }
-  }
-
-  void _onReverseItemsList(ReverseItemsList event, Emitter<ItemState> emit) {
-    try {
-      emit(state.copyWith(
-        items: state.initialItems,
-        status: ItemStatus.initial
-      ));
     } catch (e) {
       throw e.toString();
     }

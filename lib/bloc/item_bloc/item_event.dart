@@ -44,6 +44,3 @@ class ItemDeleteEvent extends ItemEvent {
 
 //* Evento para cambiar dínamicamente el valor del ordenamiento
 class ItemOrderChange extends ItemEvent {}
-
-//* Evento para reestablecer lista de items a la que se tenia antes de buscar
-class ReverseItemsList extends ItemEvent {}

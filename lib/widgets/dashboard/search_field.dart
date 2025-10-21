@@ -27,11 +27,11 @@ class _SearchFieldState extends State<SearchField> {
     _debounce = Timer(const Duration(milliseconds: 400), () {
       if (value.isEmpty) {
         if (widget.forVahul) {
-          context.read<VahulBloc>().add(ReverseVahulesList());
+          context.read<VahulBloc>().add(GetVahulesEvent());
+          context.read<VahulBloc>().add(VahulNewPageEvent(1));
         } else {
           context.read<ItemBloc>().add(GetItemsEvent());
           context.read<ItemBloc>().add(ItemNewPageEvent(1));
-          //context.read<ItemBloc>().add(ReverseItemsList());
         }
       } else {
         if (widget.forVahul) {

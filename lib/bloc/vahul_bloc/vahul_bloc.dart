@@ -14,7 +14,6 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
     on<VahulOrderChange>(_onVahulOrderChange);
     on<VahulChangeStatus>(_onVahulChangeStatus);
     on<VahulDeleteEvent>(_onVahulDeleteEvent);
-    on<ReverseVahulesList>(_onReverseVahulesList);
   }
 
   //* Método para obtener el listado de vahules
@@ -131,17 +130,6 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
   void _onVahulChangeStatus(VahulChangeStatus event, Emitter<VahulState> emit){
     try {
       emit(state.copyWith(status: event.status));
-    } catch (e) {
-      throw e.toString();
-    }
-  }
-
-  void _onReverseVahulesList(ReverseVahulesList event, Emitter<VahulState> emit) {
-    try {
-      emit(state.copyWith(
-        vahules: state.initialVahules,
-        status: VahulStatus.initial
-      ));
     } catch (e) {
       throw e.toString();
     }
