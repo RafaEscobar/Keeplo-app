@@ -47,7 +47,7 @@ class ItemBloc extends Bloc<ItemEvent, ItemState>{
       if (event.newPage <= state.page) return;
       emit(state.copyWith(loadingMore: true));
       String order = state.isAscOrder ? 'asc' : 'desc';
-      final respose = await ApiService.request("/items?limit=24&&order=$order&page=${event.newPage}&vahul_id=${state.vahulId}", auth: Preferences.token);
+      final respose = await ApiService.request("/items?limit=24&order=$order&page=${event.newPage}&vahul_id=${state.vahulId}", auth: Preferences.token);
       if (respose.statusCode == 200) {
         List<Item> list = state.items;
         list.addAll((respose.data['data'] as List).map((vahul) => Item.fromJson(vahul)).toList());
@@ -83,14 +83,23 @@ class ItemBloc extends Bloc<ItemEvent, ItemState>{
   }
 
   //* Método para buscar vahules por nombre (funcionamiento local)
-  void _onSearchVahulEvent(SearchItemEvent event, Emitter<ItemState> emit){
+  Future<void> _onSearchVahulEvent(SearchItemEvent event, Emitter<ItemState> emit) async {
     try {
-      emit(state.copyWith(
-        items: (event.word.isEmpty) ?
-          state.initialItems :
-          state.items.where((vahul) => vahul.name.toLowerCase().contains(event.word.toLowerCase()),).toList(),
-        status: ItemStatus.searching
-      ));
+      emit(state.copyWith(status: ItemStatus.loading));
+      final respose = await ApiService.request("/items?vahul_id=${state.vahulId}&search=${event.word.toLowerCase()}", auth: Preferences.token);
+      if (respose.statusCode == 200) {
+        List<Item> list = (respose.data['data'] as List).map((vahul) => Item.fromJson(vahul)).toList();
+        emit(state.copyWith(
+          items: list,
+          status: ItemStatus.searching
+        ));
+      } else {
+        emit(state.copyWith(
+          items: state.initialItems,
+          status: ItemStatus.failure,
+          errorMessage: "Algo salió mal en la búsqueda."
+        ));
+      }
     } catch (e) {
       emit(state.copyWith(status: ItemStatus.failure));
       throw e.toString();

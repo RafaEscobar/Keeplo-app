@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keeplo/bloc/new_item_bloc/new_item_event.dart';
@@ -208,7 +207,8 @@ class NewItemBloc extends Bloc<NewItemEvent, NewItemState>{
       amount: 1,
       status: NewItemStatus.initial,
       messageError: '',
-      formError: false
+      formError: false,
+      isEdition: false
     ));
   }
 }
