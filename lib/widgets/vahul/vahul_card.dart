@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:keeplo/bloc/bloc_barrel.dart';
+import 'package:keeplo/bloc/item_bloc/item_event.dart';
 import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_event.dart';
 import 'package:keeplo/models/vahul.dart';
 import 'package:keeplo/screens/vauls/vahul_details.dart';
@@ -13,6 +14,7 @@ class VahulCard extends StatelessWidget {
 
   void _navigateToDetails(BuildContext context) {
     callBack();
+    context.read<ItemBloc>().add(ClearItemPage());
     context.read<NewVahulBloc>().add(SetCurrentVahulEvent(vahul));
     context.goNamed(VahulDetails.routeName);
   }

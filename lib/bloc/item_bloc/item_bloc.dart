@@ -11,6 +11,7 @@ class ItemBloc extends Bloc<ItemEvent, ItemState>{
     on<SearchItemEvent>(_onSearchVahulEvent);
     on<LoadMoreItemsEvent>(_loadMoreVahules);
     on<ItemNewPageEvent>(_onVahulNewPageEvent);
+    on<ClearItemPage>(_onClearItemPage);
     on<ItemOrderChange>(_onVahulOrderChange);
     on<ItemChangeStatus>(_onItemChangeStatus);
     on<SetVahulIdEvent>(_onSetVahulIdEvent);
@@ -137,6 +138,15 @@ class ItemBloc extends Bloc<ItemEvent, ItemState>{
   void _onSetVahulIdEvent(SetVahulIdEvent event, Emitter<ItemState> emit) {
     try {
       emit(state.copyWith(vahulId: event.vahuldId));
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  //* Método para limpiar el valor del page del state
+  void _onClearItemPage(ClearItemPage event, Emitter<ItemState> emit) {
+    try {
+      emit(state.copyWith(page: 1));
     } catch (e) {
       throw e.toString();
     }

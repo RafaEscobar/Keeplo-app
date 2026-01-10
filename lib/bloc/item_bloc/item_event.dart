@@ -44,3 +44,6 @@ class ItemDeleteEvent extends ItemEvent {
 
 //* Evento para cambiar dínamicamente el valor del ordenamiento
 class ItemOrderChange extends ItemEvent {}
+
+//* Evento para limpiar (set en 1) la page actual del state
+class ClearItemPage extends ItemEvent {}
