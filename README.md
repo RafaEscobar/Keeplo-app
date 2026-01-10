@@ -31,3 +31,4 @@
 |---------|-----------|-----------|
 | 1.0.0   | octubre 2025  | [Download](https://github.com/RafaEscobar/Keeplo-app/releases/download/1.0.0/keeplo.apk) |
 | 1.0.1   | octubre 2025  | [Download](https://github.com/RafaEscobar/Keeplo-app/releases/download/1.0.1/apk.apk) |
+| 1.0.1   | octubre 2025  | [Download](https://github.com/RafaEscobar/Keeplo-app/releases/download/1.0.2/apk.apk) |
