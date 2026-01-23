@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:keeplo/widgets/simple_image.dart';
+import 'package:widget_zoom/widget_zoom.dart';
 
 class VahulInfo extends StatelessWidget{
   const VahulInfo({super.key, required this.imagePath, required this.description});
@@ -19,7 +20,10 @@ class VahulInfo extends StatelessWidget{
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
-            child: SimpleImage(imagePath: imagePath)
+            child: WidgetZoom(
+                heroAnimationTag: 'vaulCover',
+                zoomWidget: SimpleImage(imagePath: imagePath)
+            )
           ),
         ),
         const SizedBox(width: 10),

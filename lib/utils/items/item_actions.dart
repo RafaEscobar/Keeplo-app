@@ -9,6 +9,7 @@ import 'package:keeplo/widgets/simple_button.dart';
 import 'package:keeplo/widgets/simple_image.dart';
 import 'package:keeplo/widgets/simple_modal.dart';
 import 'package:keeplo/widgets/simple_pill.dart';
+import 'package:widget_zoom/widget_zoom.dart';
 
 class ItemActions {
   static void onDelete(BuildContext context, int itemId) {
@@ -80,7 +81,10 @@ class ItemActions {
         child: Column(
           children: [
             ClipOval(
-              child: SimpleImage(imagePath: item.image, width: 100,)
+              child: WidgetZoom(
+                heroAnimationTag: 'itemCover',
+                zoomWidget: SimpleImage(imagePath: item.image, width: 100,)
+              )
             ),
             SizedBox(height: 20,),
             Row(
