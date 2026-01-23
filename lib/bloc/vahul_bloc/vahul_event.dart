@@ -42,3 +42,9 @@ class VahulCleanBloc extends VahulEvent {}
 
 //* Evento para cambiar dínamicamente valor del ordenamiento de la lista de vahules
 class VahulOrderChange extends VahulEvent {}
+
+//* Evento para girar la ruleta
+class SpinRouletteWheelEvent extends VahulEvent {
+  final int vahulId;
+  SpinRouletteWheelEvent(this.vahulId);
+}
