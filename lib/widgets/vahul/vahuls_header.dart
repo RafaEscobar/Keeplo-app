@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_bloc.dart';
 import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_event.dart';
@@ -132,13 +133,22 @@ class VahulsHeader extends StatelessWidget implements PreferredSize{
       backgroundColor: AppTheme.primaryTwo,
       title: Text(vahul.name, style: TextStyle(fontSize: Responsive.regularTextSize(context))),
       actions: [
+        GestureDetector(
+          child: SvgPicture.asset(
+            width: context.isTabletLandscape ? 48 : 40,
+            "assets/icons/rulete.svg",
+            colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
+          )
+        ),
+        SizedBox(width: 14,),
         Container(
-          margin: EdgeInsets.only(right: 14),
+          margin: EdgeInsets.only(right: 8),
           child: GestureDetector(
             onTap: () => _openOptions(context: context, vahulId: vahul.id),
             child: Icon(Icons.more_vert_outlined, size: context.isTabletLandscape ? 38 : 27),
           ),
-        )
+        ),
+        SizedBox(width: 6,),
       ],
     );
   }
