@@ -83,7 +83,7 @@ class ItemActions {
             ClipOval(
               child: WidgetZoom(
                 heroAnimationTag: 'itemCover',
-                zoomWidget: SimpleImage(imagePath: item.image, width: 100,)
+                zoomWidget: SimpleImage(imagePath: item.image, width: 100, isBoxCover: false,)
               )
             ),
             SizedBox(height: 20,),

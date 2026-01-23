@@ -22,7 +22,7 @@ class VahulInfo extends StatelessWidget{
             borderRadius: BorderRadius.circular(20),
             child: WidgetZoom(
                 heroAnimationTag: 'vaulCover',
-                zoomWidget: SimpleImage(imagePath: imagePath)
+                zoomWidget: SimpleImage(imagePath: imagePath, isBoxCover: false,)
             )
           ),
         ),
