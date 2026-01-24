@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_bloc.dart';
 import 'package:keeplo/bloc/new_vahul_bloc/new_vahul_event.dart';
@@ -11,9 +12,11 @@ import 'package:keeplo/models/vahul.dart';
 import 'package:keeplo/screens/dashboard_screen.dart';
 import 'package:keeplo/screens/vauls/new_vahul_screen.dart';
 import 'package:keeplo/theme/app_theme.dart';
+import 'package:keeplo/utils/items/item_actions.dart';
 import 'package:keeplo/utils/responsive.dart';
 import 'package:keeplo/widgets/simple_button.dart';
 import 'package:keeplo/widgets/simple_modal.dart';
+import 'package:lottie/lottie.dart';
 
 class VahulsHeader extends StatelessWidget implements PreferredSize{
   const VahulsHeader({super.key});
@@ -125,6 +128,67 @@ class VahulsHeader extends StatelessWidget implements PreferredSize{
     );
   }
 
+  void _onSpinRulete(BuildContext context, int vahulId) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) {
+        return BlocListener<VahulBloc, VahulState>(
+          listener: (listenerContext, state) {
+            if (state.status == VahulStatus.spinning) {
+              showDialog(
+                context: listenerContext,
+                barrierDismissible: false,
+                builder: (_) => Container(
+                  color: AppTheme.primary,
+                  child: Center(
+                    child: Lottie.asset('assets/lotties/loading.json', width: 200),
+                  ),
+                )
+              );
+            } else if (state.status == VahulStatus.spinningRouletteWheel) {
+              if (Navigator.of(context).canPop()) {
+                Navigator.of(context).pop();
+              }
+              Navigator.of(dialogContext).pop();
+              ItemActions.openItemDetails(context: context, item: state.currentItem!);
+            }
+          },
+          child: Center(
+            child: SizedBox(
+              width: context.isTabletLandscape ? 600 : (context.isTabletPortrait ? 540 : 400),
+              child: AlertDialog(
+                backgroundColor: AppTheme.primary,
+                title: Text(
+                  "¿Quieres girar la ruleta?",
+                  style: TextStyle(fontSize: context.isTablet ? 30 : 20, color: Colors.white),
+                  textAlign: TextAlign.center,
+                ),
+                actionsAlignment: MainAxisAlignment.spaceEvenly,
+                actions: [
+                  SimpleButton(
+                    text: "Si",
+                    callback: () {
+                      context.read<VahulBloc>().add(SpinRouletteWheelEvent(vahulId));
+                    },
+                    backgroundColor: Colors.green,
+                    textColor: Colors.white,
+                    padding: context.isTabletLandscape ? EdgeInsetsGeometry.symmetric(horizontal: 2, vertical: 2) : EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+                  ),
+                  SizedBox(height: 15,),
+                  SimpleButton(
+                    text: "Cancelar",
+                    callback: () => Navigator.of(context).pop(),
+                    padding: context.isTabletLandscape ? EdgeInsetsGeometry.symmetric(horizontal: 2, vertical: 2) : EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Vahul vahul = context.read<NewVahulBloc>().state.currentVahul!;
@@ -132,13 +196,23 @@ class VahulsHeader extends StatelessWidget implements PreferredSize{
       backgroundColor: AppTheme.primaryTwo,
       title: Text(vahul.name, style: TextStyle(fontSize: Responsive.regularTextSize(context))),
       actions: [
+        GestureDetector(
+          onTap: () => _onSpinRulete(context, vahul.id),
+          child: SvgPicture.asset(
+            width: context.isTabletLandscape ? 48 : 40,
+            "assets/icons/rulete.svg",
+            colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
+          )
+        ),
+        SizedBox(width: 14,),
         Container(
-          margin: EdgeInsets.only(right: 14),
+          margin: EdgeInsets.only(right: 8),
           child: GestureDetector(
             onTap: () => _openOptions(context: context, vahulId: vahul.id),
             child: Icon(Icons.more_vert_outlined, size: context.isTabletLandscape ? 38 : 27),
           ),
-        )
+        ),
+        SizedBox(width: 6,),
       ],
     );
   }
