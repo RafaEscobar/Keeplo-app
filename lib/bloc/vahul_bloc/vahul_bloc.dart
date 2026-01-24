@@ -1,6 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keeplo/bloc/vahul_bloc/vahul_event.dart';
 import 'package:keeplo/bloc/vahul_bloc/vahul_state.dart';
+import 'package:keeplo/models/item.dart';
 import 'package:keeplo/models/vahul.dart';
 import 'package:keeplo/services/api_service.dart';
 import 'package:keeplo/services/preferences.dart';
@@ -14,6 +16,7 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
     on<VahulOrderChange>(_onVahulOrderChange);
     on<VahulChangeStatus>(_onVahulChangeStatus);
     on<VahulDeleteEvent>(_onVahulDeleteEvent);
+    on<SpinRouletteWheelEvent>(_onSpinRouletteWheel);
   }
 
   //* Método para obtener el listado de vahules
@@ -132,6 +135,27 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
       emit(state.copyWith(status: event.status));
     } catch (e) {
       throw e.toString();
+    }
+  }
+
+  //* Método para limpiar nuestro state
+  Future<void> _onSpinRouletteWheel(SpinRouletteWheelEvent event, Emitter<VahulState> emit) async {
+    emit(state.copyWith(status: VahulStatus.spinning));
+    try {
+      final Response response = await ApiService.request(
+        '/random-item?vahul_id=${event.vahulId}',
+        auth: Preferences.token,
+      );
+      await Future.delayed(Duration(seconds: 1));
+
+      if (response.statusCode == 204) {
+        emit(state.copyWith(status: VahulStatus.noItem));
+      } else if(response.statusCode == 200) {
+        Item item = Item.fromJson(response.data['data']);
+        emit(state.copyWith(status: VahulStatus.spinningRouletteWheel, currentItem: item));
+      }
+    } catch (e) {
+      emit(state.copyWith(status: VahulStatus.failure, errorMessage: e.toString()));
     }
   }
 }
