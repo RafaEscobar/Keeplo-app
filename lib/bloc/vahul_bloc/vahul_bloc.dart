@@ -138,7 +138,7 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
     }
   }
 
-    //* Método para limpiar nuestro state
+  //* Método para limpiar nuestro state
   Future<void> _onSpinRouletteWheel(SpinRouletteWheelEvent event, Emitter<VahulState> emit) async {
     emit(state.copyWith(status: VahulStatus.spinning));
     try {
@@ -146,7 +146,7 @@ class VahulBloc extends Bloc<VahulEvent, VahulState>{
         '/random-item?vahul_id=${event.vahulId}',
         auth: Preferences.token,
       );
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(Duration(seconds: 1));
 
       if (response.statusCode == 204) {
         emit(state.copyWith(status: VahulStatus.noItem));
